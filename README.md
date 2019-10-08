@@ -1,0 +1,2 @@
+# lazada-order
+auto-order
