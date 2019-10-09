@@ -1,0 +1,23 @@
+{
+  "name": "lazada-order",
+  "version": "1.0.0",
+  "description": "auto order",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igsnow/lazada-order.git"
+  },
+  "author": "zhangzhiyong@Vcanbuy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/igsnow/lazada-order/issues"
+  },
+  "homepage": "https://github.com/igsnow/lazada-order#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "puppeteer": "^1.18.1"
+  }
+}
