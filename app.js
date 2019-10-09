@@ -36,6 +36,15 @@ app.get('/:url/:sku/:pwd', function (req, res, page) {
             // waitUntil: 'load'
         });
 
+        // 延时，模拟用户操作时长
+        // await page.waitFor(300);
+
+        let accountEL = await page.$('.mod-input-loginName input')
+        await page.waitForSelector(accountEL);
+        page.type(accountEL, 'Hello')
+        res.send('c')
+        return
+
         // 监听到导航栏url变化时，当登录成功时跳转到1688详情页
         if (page.url() === loginUrl) {
             while (true) {
