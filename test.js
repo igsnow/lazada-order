@@ -34,10 +34,10 @@ const puppeteer = require('puppeteer');
     // console.log(pwd);
 
     await page.waitForSelector(accountEl);
-    page.type(accountEl, '716810918@qq.com')
-    await page.waitFor(500);
+    page.type(accountEl, '716810918@qq.com', {delay: 10})
+    await page.waitFor(3000);
     await page.waitForSelector(pwdEl);
-    page.type(pwdEl, 'gyj388153@')
+    page.type(pwdEl, 'gyj388153@', {delay: 10})
 
     await page.waitFor(500);
     // await page.tap('.mod-login-btn button')
