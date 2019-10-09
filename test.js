@@ -30,12 +30,28 @@ const puppeteer = require('puppeteer');
     let accountEl = '.mod-input-loginName input';
     let pwdEl = '.mod-input-password input';
     await page.waitForSelector(accountEl);
-    page.type(accountEl, '716810918@qq.com', {delay: 10})
+    page.type(accountEl, '716810918@qq.com', {delay: 10});
     await page.waitFor(3000);
     await page.waitForSelector(pwdEl);
-    page.type(pwdEl, 'gyj388153@', {delay: 10})
+    page.type(pwdEl, 'gyj388153@', {delay: 10});
     await page.waitFor(1000);
 
+    await handleSide(page)
+
+    let isError = await page.$('.errloading');
+    if (!!isError) {
+        console.log('报错了....')
+        await page.tap('.errloading a');
+        console.log('已刷新...')
+        await handleSide(page)
+    }
+
+
+    // await browser.close();
+
+})();
+
+async function handleSide(page) {
     // 拖动验证滑块
     const start = await page.waitForSelector('.nc_iconfont.btn_slide');
     const startInfo = await start.boundingBox();
@@ -49,10 +65,6 @@ const puppeteer = require('puppeteer');
     for (let i = 0; i < endInfo.width; i = i + 5) {
         await page.mouse.move(startInfo.x + i, endInfo.y);
     }
-    await page.waitFor(3000)
+    await page.waitFor(3000);
     await page.mouse.up();
-
-
-    await browser.close();
-
-})();
+}
