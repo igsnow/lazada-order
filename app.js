@@ -1,15 +1,16 @@
 const express = require('express');
 const app = express();
 
-
-// {"account":"716810918@qq.com","pwd":"gyj388153@"}
 // {"firstSku":"白色","secondSku":"XXl","num":3}
+// {"account":"716810918@qq.com","pwd":"gyj388153@"}
 
-app.get('/:sku/:pwd', function (req, res, page) {
+app.get('/:url/:sku/:info', function (req, res, page) {
     const puppeteer = require('puppeteer');
     const url = req.params.url;
     const sku = req.params.sku;
-    const pwd = req.params.pwd;
+    const info = req.params.info && JSON.parse(req.params.info);
+    let account = info && info.account;
+    let pwd = info && info.pwd;
 
     (async () => {
         const browser = await puppeteer.launch({
@@ -40,10 +41,10 @@ app.get('/:sku/:pwd', function (req, res, page) {
         let accountEl = '.mod-input-loginName input';
         let pwdEl = '.mod-input-password input';
         await page.waitForSelector(accountEl);
-        page.type(accountEl, '716810918@qq.com', {delay: 10})
+        page.type(accountEl, account, {delay: 10})
         await page.waitFor(3000);
         await page.waitForSelector(pwdEl);
-        page.type(pwdEl, 'gyj388153@', {delay: 10})
+        page.type(pwdEl, pwd, {delay: 10})
         await page.waitFor(1000);
 
         // 拖动验证滑块
