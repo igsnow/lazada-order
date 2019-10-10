@@ -1,8 +1,8 @@
 const puppeteer = require('puppeteer');
 
 
-// {"firstSku":"白色","secondSku":"XXl","num":3}
-// {"account":"716810918@qq.com","pwd":"gyj388153@"}
+let skuStr = '{"Color Family": "Blue", "Size": "3Xl", "Quantity": 3}';
+let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 
 (async () => {
     const browser = await puppeteer.launch({
@@ -22,7 +22,7 @@ const puppeteer = require('puppeteer');
 
     // 先跳转到登录页
     let loginUrl = 'https://member.lazada.com.my/user/login?spm=a2o4k.home.header.d5.1f062e7e5nKtIB&redirect=https%3A%2F%2Fwww.lazada.com.my%2F%3Fspm%3Da2o4k.login_signup.header.dhome.4d3f49fb8YhnCt';
-    let detailUrl = 'https://www.lazada.com.my/products/100-cotton-cadar-bedsheet-pillow-case-20-colour-i495564195-s904218335.html?';
+    let detailUrl = 'https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?';
 
     await page.goto(loginUrl, {
         waitUntil: 'domcontentloaded'
@@ -58,7 +58,7 @@ const puppeteer = require('puppeteer');
             if (page.url() !== loginUrl) {
                 console.log('=>登录成功！即将跳转详情页')
                 await page.goto(detailUrl, {
-                    waitUntil: 'domcontentloaded'
+                    waitUntil: 'load'
                 });
                 console.log('=>已跳转至详情页')
                 break;
@@ -67,6 +67,19 @@ const puppeteer = require('puppeteer');
     }
 
     // 选择sku逻辑
+    let skuObj = JSON.parse(skuStr)
+    console.log(skuObj);
+
+    let skuWrap = await page.$$eval('#module_sku-select .sku-selector .sku-prop', (e, skuObj) => {
+        let arr = [];
+        for (let i = 0; i < e.length; i++) {
+            let title = e[i].children[0].children[0].innerHTML;
+            arr.push(title)
+        }
+        return arr
+    }, skuObj);
+
+    console.log(skuWrap)
 
 
     // await browser.close();
