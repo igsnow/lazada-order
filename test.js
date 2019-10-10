@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 
 
-let skuStr = '{"Color Family": "Blue", "Size": "3Xl", "Quantity": 3}';
+let skuStr = '{"Color Family": "Blue", "Size": "5XL", "Quantity": 3}';
 let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 
 (async () => {
@@ -70,7 +70,7 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
     let skuObj = JSON.parse(skuStr)
     console.log(skuObj);
 
-    let skuWrap = await page.$$eval('#module_sku-select .sku-selector .sku-prop', (e, skuObj) => {
+    let skuKeyArr = await page.$$eval('#module_sku-select .sku-selector .sku-prop', (e, skuObj) => {
         let arr = [];
         for (let i = 0; i < e.length; i++) {
             let title = e[i].children[0].children[0].innerHTML;
@@ -79,7 +79,37 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
         return arr
     }, skuObj);
 
-    console.log(skuWrap)
+    console.log(skuKeyArr)
+
+    // 若有Color Family等sku属性
+
+    // 若有Size等sku属性
+    if (skuKeyArr.includes('Size')) {
+        console.log('has size')
+        let sizeVal = skuObj.Size;
+
+        // 先判断系统默认选中的sku属性是否是需要的属性
+        let hasSelected = await page.$eval('.sku-variable-size-selected', (e, sizeVal) => {
+            if (e.title === sizeVal) return true
+            return false
+        }, sizeVal);
+        console.log('Size是否已经默认选中: ' + hasSelected);
+
+        if (!hasSelected) {
+            let sizeIdx = await page.$$eval('.sku-variable-size', (e, sizeVal) => {
+                let index = 0;
+                for (let i = 0; i < e.length; i++) {
+                    if (e[i].title === sizeVal) {
+                        index = i;
+                        break
+                    }
+                }
+                let len = e.length
+                return {index, len}
+            }, sizeVal);
+            console.log(sizeIdx);
+        }
+    }
 
 
     // await browser.close();
