@@ -66,9 +66,6 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
         }
     }
 
-    await page.tap('.next-number-picker-handler-up');
-
-
     // 选择sku逻辑
     let skuObj = JSON.parse(skuStr)
     console.log(skuObj);
@@ -111,9 +108,9 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
                 return {index, len}
             }, sizeVal);
             console.log(sizeIdx);
-            // await page.tap('.sku-prop-selection .sku-variable-size:nth-child(3)');
+            await page.$eval('.sku-prop-selection .sku-variable-size:nth-child(' + (sizeIdx.index + 1) + ')', elem => elem.click());
 
-            // next-number-picker-handler-up
+            // await page.$eval('.next-number-picker-handler-up', elem => elem.click());
 
         }
     }
