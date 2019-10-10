@@ -66,6 +66,8 @@ const puppeteer = require('puppeteer');
         }
     }
 
+    // 选择sku逻辑
+
 
     // await browser.close();
 
