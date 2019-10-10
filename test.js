@@ -53,7 +53,7 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
         console.log('=>准备登录')
         while (true) {
             await page.waitForNavigation({
-                waitUntil: 'load'
+                waitUntil: 'domcontentloaded'
             })
             if (page.url() !== loginUrl) {
                 console.log('=>登录成功！即将跳转详情页')
@@ -65,6 +65,9 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
             }
         }
     }
+
+    await page.tap('.next-number-picker-handler-up');
+
 
     // 选择sku逻辑
     let skuObj = JSON.parse(skuStr)
@@ -108,6 +111,10 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
                 return {index, len}
             }, sizeVal);
             console.log(sizeIdx);
+            // await page.tap('.sku-prop-selection .sku-variable-size:nth-child(3)');
+
+            // next-number-picker-handler-up
+
         }
     }
 
