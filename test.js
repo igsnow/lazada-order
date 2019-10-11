@@ -105,13 +105,6 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
     newClassArr.splice(idx, 1);
     // console.log(newClassArr);
 
-    // let sizeIdx = await page.$eval('.sku-variable-size', (e) => {
-    //     return e.title
-    // });
-    // console.log(sizeIdx);
-    // return
-
-
     for (let i = 0; i < newClassArr.length; i++) {
         for (let j = 0; j < newClassArr[i].length; j++) {
             if (newClassArr[i][j] && newClassArr[i][j].className) {
@@ -122,9 +115,13 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 
                 // 获取sku值对应要点击的下标
                 let title = newClassArr[i][j].title;
-                let res = await page.$eval('.sku-prop .' + newClassArr[i][j].className, (ele, title) => {
+                let res = await page.$$eval('.sku-prop .' + newClassArr[i][j].className, (ele, title) => {
+                    let arr = [];
+                    for (let k = 0; k < ele.length; k++) {
+                        arr.push(ele[k].title)
+                    }
                     // if (ele.title === title) return 2
-                    return ele.title
+                    return arr
                 }, title);
 
                 console.log(res);
