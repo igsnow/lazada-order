@@ -110,11 +110,20 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
             console.log(sizeIdx);
             await page.$eval('.sku-prop-selection .sku-variable-size:nth-child(' + (sizeIdx.index + 2) + ')', el => el.click());
 
-            // await page.$eval('.next-number-picker-handler-up', elem => elem.click());
 
         }
     }
 
+    // 填充商品数量
+    await page.$eval('.next-number-picker-input input', (input, num) => input.value = num, skuObj.Quantity);
+    // 点击"+"号
+    // await page.$eval('.next-number-picker-handler-up', elem => elem.click());
+
+    // 模拟延时1s
+    await page.waitFor(1000);
+    // 加入购物车
+    await page.tap('.pdp-button_theme_orange');
+    console.log('=>加入购物车成功')
 
     // await browser.close();
 
