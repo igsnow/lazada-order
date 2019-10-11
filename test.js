@@ -81,14 +81,52 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
             let optionArr = e[i].children[0].children[1].children[1].children;
             let itemArr = [];
             for (let j = 0; j < optionArr.length; j++) {
-                itemArr.push(optionArr[j].className)
+                itemArr.push({
+                    className: optionArr[j].className,
+                    title: optionArr[j].title || ''
+                })
             }
             classArr.push(itemArr)
         }
         return {keyArr, classArr}
     }, skuObj);
 
-    console.log(skuInfo)
+    // console.log(skuInfo)
+
+    // 先处理除Color Family之外的sku的点击，图片sku比较特殊
+    let allClassArr = skuInfo.classArr;
+    let idx = 0;
+    for (let i = 0; i < allClassArr.length; i++) {
+        if (allClassArr[i] && allClassArr[i].className && allClassArr[i].className.includes('sku-variable-img-wrap')) {
+            idx = i
+        }
+    }
+    let newClassArr = JSON.parse(JSON.stringify(allClassArr));
+    newClassArr.splice(idx, 1);
+    console.log(newClassArr);
+
+    for (let i = 0; i < newClassArr.length; i++) {
+        for (let j = 0; j < newClassArr[i].length; j++) {
+            if (newClassArr[i][j] && newClassArr[i][j].className) {
+                if (newClassArr[i][j].className.indexOf('selected') > -1 || newClassArr[i][j].className.indexOf('disabled') > -1) {
+                    console.log('selected ' + i + ' ' + j)
+                    continue
+                }
+
+                // 获取sku值对应要点击的下标
+                let title = newClassArr[i][j].title;
+                let res = await page.$$eval('.sku-prop .' + newClassArr[i][j].className, (ele, title) => {
+                    // if (ele.title === title) return 2
+                    return ele.title
+                }, title);
+
+                console.log(res);
+
+                // await page.$eval('.sku-prop .' + newClassArr[i][j].className + ':nth-child(' + res + ')', el => el.click());
+            }
+        }
+    }
+
 
     return
 
