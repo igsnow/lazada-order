@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 
 
-let skuStr = '{"Color Family": "Blue", "Size": "5XL", "Bedding Size": "Single",  "Quantity": 3}';
+let skuStr = '{"Color Family": "Blue", "Size": "5XL", "Quantity": 3}';
 let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 
 (async () => {
@@ -70,21 +70,32 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
     let skuObj = JSON.parse(skuStr)
     console.log(skuObj);
 
-    let skuKeyArr = await page.$$eval('#module_sku-select .sku-selector .sku-prop', (e, skuObj) => {
-        let arr = [];
+    let skuInfo = await page.$$eval('#module_sku-select .sku-selector .sku-prop', (e, skuObj) => {
+        let keyArr = [];
+        let classArr = [];
         for (let i = 0; i < e.length; i++) {
             let title = e[i].children[0].children[0].innerHTML;
-            arr.push(title)
+            // 获取sku键的集合
+            keyArr.push(title);
+            // 获取sku可选值的className
+            let optionArr = e[i].children[0].children[1].children[1].children;
+            let itemArr = [];
+            for (let j = 0; j < optionArr.length; j++) {
+                itemArr.push(optionArr[j].className)
+            }
+            classArr.push(itemArr)
         }
-        return arr
+        return {keyArr, classArr}
     }, skuObj);
 
-    console.log(skuKeyArr)
+    console.log(skuInfo)
+
+    return
 
     // 若有Color Family等sku属性
 
     // 若有Size等sku属性
-    if (skuKeyArr.includes('Size')) {
+    if (skuInfo.includes('Size')) {
         console.log('has size')
         let sizeVal = skuObj.Size;
 
