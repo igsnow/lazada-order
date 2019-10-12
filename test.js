@@ -38,7 +38,7 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
     let pwdEl = '.mod-input-password input';
     await page.waitForSelector(accountEl);
     page.type(accountEl, '716810918@qq.com', {delay: 10});
-    await page.waitFor(2000);
+    await page.waitFor(1000);
     await page.waitForSelector(pwdEl);
     page.type(pwdEl, 'gyj388153@', {delay: 10});
     await page.waitFor(1000);
@@ -86,7 +86,7 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 
     // 处理图片sku，由于图片元素没有title属性，比较复杂单独分析
     let imgSkuArr = classArr[idx];
-    console.log(imgSkuArr);
+    // console.log(imgSkuArr);
 
     await handleImgTap(page, imgSkuArr, skuObj, idx);
 
@@ -104,17 +104,17 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
                 }
                 // 若已经默认选中，但值不是想要的值，则跳过
                 if (newClassArr[i][j].className.indexOf('selected') > -1 && newClassArr[i][j].title !== newClassArr[i][j].value) {
-                    console.log('sku default selected error' + i + ' ' + j)
+                    console.log('sku default selected error ' + i + ' ' + j)
                     continue
                 }
                 // 若已经默认选中，则不再操作且值是想要的值，则不再操作
                 if (newClassArr[i][j].className.indexOf('selected') > -1 && newClassArr[i][j].title === newClassArr[i][j].value) {
-                    console.log('sku default selected success' + i + ' ' + j)
+                    console.log('sku default selected success ' + i + ' ' + j)
                     break
                 }
                 // 若sku的当前option与预设的sku的value值相同，则点击
                 if (newClassArr[i][j].title === newClassArr[i][j].value) {
-                    console.log('sku selected success' + newClassArr[i][j])
+                    console.log('sku selected success ' + i + ' ' + j)
                     await page.$eval('.sku-prop .' + newClassArr[i][j].className + ':nth-child(' + (j + 1) + ')', el => el.click());
                     break
                 }
@@ -155,7 +155,7 @@ async function handleSide(page) {
     for (let i = 0; i < endInfo.width; i = i + 5) {
         await page.mouse.move(startInfo.x + i, endInfo.y);
     }
-    await page.waitFor(3000);
+    await page.waitFor(1000);
     await page.mouse.up();
 }
 
@@ -200,7 +200,7 @@ async function handleImgTap(page, imgSkuArr, skuObj, idx) {
         }
         // 若已经默认选中，且值是想要的值，则不再操作
         if (imgSkuArr[i].className.indexOf('selected') > -1 && imgSkuArr[i].skuName === imgSkuArr[i].value) {
-            console.log('img default selected success' + i)
+            console.log('img default selected success ' + i)
             break
         }
         await page.$eval('.sku-prop .sku-variable-img-wrap' + ':nth-child(' + (i + 1) + ')', el => el.click());
@@ -210,7 +210,7 @@ async function handleImgTap(page, imgSkuArr, skuObj, idx) {
         let imgSkuArr2 = classArr[idx];
         // console.log(imgSkuArr2);
         if (imgSkuArr2[i].skuName === imgSkuArr2[i].value) {
-            console.log('img selected success' + imgSkuArr2[i])
+            console.log('img selected success ' + i)
             break
         }
     }
