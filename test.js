@@ -66,57 +66,38 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
         }
     }
 
-    // 选择sku逻辑
-    let skuObj = JSON.parse(skuStr)
-    let skuInfo = await page.$$eval('#module_sku-select .sku-selector .sku-prop', (e, skuObj) => {
-        let keyArr = [];
-        let classArr = [];
-        for (let i = 0; i < e.length; i++) {
-            let title = e[i].children[0].children[0].innerHTML;
-            // 获取sku键的集合
-            keyArr.push(title);
-            // 获取skuImg点击后上面显示的sku-name
-            let skuName = e[i].children[0].children[1].children[0].children[0].innerHTML;
-            // 获取sku可选值的className
-            let optionArr = e[i].children[0].children[1].children[1].children;
-            let itemArr = [];
-            for (let j = 0; j < optionArr.length; j++) {
-                // 根据sku的key值获取sku的属性，绑定到sku的每个options上，方便后续判断点击操作
-                itemArr.push({
-                    className: optionArr[j].className,
-                    title: optionArr[j].title || '',
-                    skuName: skuName || '',
-                    value: skuObj[title]
-                })
-            }
-            classArr.push(itemArr)
-        }
-        return {keyArr, classArr}
-    }, skuObj);
-    // console.log(skuInfo)
+    let skuObj = JSON.parse(skuStr);
+    // 选择sku信息
+    let classArr = await handleSku(page, skuObj);
+    // console.log(classArr)
 
     // 先处理除图片sku属性
-    let allClassArr = skuInfo.classArr;
     let idx = 0;
-    for (let i = 0; i < allClassArr.length; i++) {
-        if (allClassArr[i] && allClassArr[i].className && allClassArr[i].className.includes('sku-variable-img-wrap')) {
+    for (let i = 0; i < classArr.length; i++) {
+        if (classArr[i] && classArr[i].className && classArr[i].className.includes('sku-variable-img-wrap')) {
             idx = i
         }
     }
 
     // 处理图片sku
-    let imgSkuArr = allClassArr[idx];
+    let imgSkuArr = classArr[idx];
     console.log(imgSkuArr);
     for (let i = 0; i < imgSkuArr.length; i++) {
         if (imgSkuArr[i].className.indexOf('disabled') > -1) {
             console.log('disabled ' + i)
             continue
         }
+        // 若已经默认选中，则不再操作且值是想要的值，则不再操作
+        if (imgSkuArr[i].className.indexOf('selected') > -1 && imgSkuArr[i].skuName === imgSkuArr[i].value) {
+            console.log('selected ' + i)
+            continue
+        }
         await page.$eval('.sku-prop .sku-variable-img-wrap' + ':nth-child(' + (i + 1) + ')', el => el.click());
     }
 
+    return
 
-    let newClassArr = JSON.parse(JSON.stringify(allClassArr));
+    let newClassArr = JSON.parse(JSON.stringify(classArr));
     newClassArr.splice(idx, 1);
     // console.log(newClassArr);
 
@@ -143,37 +124,6 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
     }
 
     return
-
-    // 若有Color Family等sku属性
-
-    // 若有Size等sku属性
-    if (skuInfo.includes('Size')) {
-        console.log('has size')
-        let sizeVal = skuObj.Size;
-
-        // 先判断系统默认选中的sku属性是否是需要的属性
-        let hasSelected = await page.$eval('.sku-variable-size-selected', (e, sizeVal) => {
-            if (e.title === sizeVal) return true
-            return false
-        }, sizeVal);
-        console.log('Size是否已经默认选中: ' + hasSelected);
-
-        if (!hasSelected) {
-            let sizeIdx = await page.$$eval('.sku-variable-size', (e, sizeVal) => {
-                let index = 0;
-                for (let i = 0; i < e.length; i++) {
-                    if (e[i].title === sizeVal) {
-                        index = i;
-                        break
-                    }
-                }
-                let len = e.length
-                return {index, len}
-            }, sizeVal);
-            console.log(sizeIdx);
-            await page.$eval('.sku-prop-selection .sku-variable-size:nth-child(' + (sizeIdx.index + 2) + ')', el => el.click());
-        }
-    }
 
     // 填充商品数量
     await page.$eval('.next-number-picker-input input', (input, num) => input.value = num, skuObj.Quantity);
@@ -206,4 +156,29 @@ async function handleSide(page) {
     }
     await page.waitFor(3000);
     await page.mouse.up();
+}
+
+async function handleSku(page, skuObj) {
+    return await page.$$eval('#module_sku-select .sku-selector .sku-prop', (e, skuObj) => {
+        let classArr = [];
+        for (let i = 0; i < e.length; i++) {
+            let title = e[i].children[0].children[0].innerHTML;
+            // 获取skuImg点击后上面显示的sku-name
+            let skuName = e[i].children[0].children[1].children[0].children[0].innerHTML;
+            // 获取sku可选值的className
+            let optionArr = e[i].children[0].children[1].children[1].children;
+            let itemArr = [];
+            for (let j = 0; j < optionArr.length; j++) {
+                // 根据sku的key值获取sku的属性，绑定到sku的每个options上，方便后续判断点击操作
+                itemArr.push({
+                    className: optionArr[j].className,
+                    title: optionArr[j].title || '',
+                    skuName: skuName || '',
+                    value: skuObj[title]
+                })
+            }
+            classArr.push(itemArr)
+        }
+        return classArr
+    }, skuObj);
 }
