@@ -102,6 +102,11 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
             idx = i
         }
     }
+    // 图片sku
+    let imgSkuArr = allClassArr[idx];
+    console.log(imgSkuArr);
+    return
+
     let newClassArr = JSON.parse(JSON.stringify(allClassArr));
     newClassArr.splice(idx, 1);
     // console.log(newClassArr);
@@ -110,11 +115,17 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
     for (let i = 0; i < newClassArr.length; i++) {
         for (let j = 0; j < newClassArr[i].length; j++) {
             if (newClassArr[i][j] && newClassArr[i][j].className) {
-                // 若sku属性禁用或者已经默认选中，则不再操作
-                if (newClassArr[i][j].className.indexOf('selected') > -1 || newClassArr[i][j].className.indexOf('disabled') > -1) {
+                // 若sku属性禁用，则不再操作
+                if (newClassArr[i][j].className.indexOf('disabled') > -1) {
+                    console.log('disabled ' + i + ' ' + j)
+                    continue
+                }
+                // 若已经默认选中，则不再操作且值是想要的值，则不再操作
+                if (newClassArr[i][j].className.indexOf('selected') > -1 && newClassArr[i][j].title === newClassArr[i][j].value) {
                     console.log('selected ' + i + ' ' + j)
                     continue
                 }
+                // 若sku的当前option与预设的sku的value值相同，则点击
                 if (newClassArr[i][j].title === newClassArr[i][j].value) {
                     console.log(newClassArr[i][j])
                     await page.$eval('.sku-prop .' + newClassArr[i][j].className + ':nth-child(' + (j + 1) + ')', el => el.click());
