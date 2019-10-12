@@ -2,7 +2,9 @@ const puppeteer = require('puppeteer');
 
 
 // let skuStr = '{"Color Family": "White", "Size": "5XL", "Quantity": 3}';
-let skuStr = '{"Style": "Off-white", "Quantity": 5}';
+// let skuStr = '{"Style": "Off-white", "Quantity": 5}';
+let skuStr = '{"Color Family": "Grey", "Quantity": 5}';
+// let skuStr = '{"Color family": "Penguin Land", "Bedding Size": "King", "Quantity": 5}';
 let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 
 (async () => {
@@ -24,7 +26,9 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
     // 先跳转到登录页
     let loginUrl = 'https://member.lazada.com.my/user/login?spm=a2o4k.home.header.d5.1f062e7e5nKtIB&redirect=https%3A%2F%2Fwww.lazada.com.my%2F%3Fspm%3Da2o4k.login_signup.header.dhome.4d3f49fb8YhnCt';
     // let detailUrl = 'https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?';
-    let detailUrl = 'https://www.lazada.com.my/products/nana-kitchen-shelves-wall-hangers-304-stainless-steel-microwave-oven-shelf-holder-storage-supplies-storage-shelf-angle-frame-i151234272-s592786175.html?'
+    // let detailUrl = 'https://www.lazada.com.my/products/nana-kitchen-shelves-wall-hangers-304-stainless-steel-microwave-oven-shelf-holder-storage-supplies-storage-shelf-angle-frame-i151234272-s592786175.html?'
+    let detailUrl = 'https://www.lazada.com.my/products/teemi-unisex-3-in-1-combo-set-15-laptop-backpack-sling-bag-pouch-large-capacity-multi-compartment-travel-casual-business-college-student-i465790066-s750828099.html?spm=a2o4k.home.flashSale.4.139a2e7eYD1dkM&search=1&mp=1&c=fs&clickTrackInfo=%7B%22rs%22%3A%220.8502431920777898%22%2C%22submission_discount%22%3A%2265%25%22%2C%22rmc%22%3A%224%22%2C%22type%22%3A%22entrance%22%2C%22isw%22%3A%220.3%22%2C%22userid%22%3A%22%22%2C%22sca%22%3A%223%22%2C%22hourtonow%22%3A%2215%22%2C%22abid%22%3A%22142638%22%2C%22itemid%22%3A%22465790066_2_i2i_1.22_0.8502431920777898%22%2C%22pvid%22%3A%22c2d2d232-d940-456e-8d98-f44e29340377%22%2C%22pos%22%3A%222%22%2C%22ccw%22%3A%220.1%22%2C%22rms%22%3A%220.01834862385321101%22%2C%22c2i%22%3A%220.1984223654120736%22%2C%22scm%22%3A%221007.17760.142638.%22%2C%22rmw%22%3A%220.03750043403280131%22%2C%22isrw%22%3A%220.1%22%2C%22rkw%22%3A%220.4%22%2C%22ss%22%3A%220.11057109992381349%22%2C%22i2i%22%3A%220.007%22%2C%22ms%22%3A%221.22%22%2C%22itr%22%3A%220.19047619047619047%22%2C%22mt%22%3A%22i2i%22%2C%22its%22%3A%22210%22%2C%22promotion_price%22%3A%2223.90%22%2C%22anonid%22%3A%22dOwiiS7GOqgFfaD53agAB3tHHaCY9nmg%22%2C%22ppw%22%3A%220.0%22%2C%22isc%22%3A%2240%22%2C%22iss2%22%3A%220.5338241656079694%22%2C%22iss1%22%3A%220.03816793893129771%22%2C%22config%22%3A%22%22%7D&scm=1007.17760.142638.0'
+    // let detailUrl = 'https://www.lazada.com.my/products/akemi-cotton-essentials-jovial-king-comforter-set-i517440839-s997040405.html?spm=a2o6s.10415192.0.0.7d8651ddHFXxXi'
     await page.goto(loginUrl, {
         waitUntil: 'domcontentloaded'
     });
@@ -82,11 +86,9 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 
     // 处理图片sku，由于图片元素没有title属性，比较复杂单独分析
     let imgSkuArr = classArr[idx];
-    // console.log(imgSkuArr);
+    console.log(imgSkuArr);
 
     await handleImgTap(page, imgSkuArr, skuObj, idx);
-
-    return
 
     let newClassArr = JSON.parse(JSON.stringify(classArr));
     newClassArr.splice(idx, 1);
@@ -97,18 +99,24 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
             if (newClassArr[i][j] && newClassArr[i][j].className) {
                 // 若sku属性禁用，则不再操作
                 if (newClassArr[i][j].className.indexOf('disabled') > -1) {
-                    console.log('disabled ' + i + ' ' + j)
+                    console.log('sku disabled ' + i + ' ' + j)
+                    continue
+                }
+                // 若已经默认选中，但值不是想要的值，则跳过
+                if (newClassArr[i][j].className.indexOf('selected') > -1 && newClassArr[i][j].title !== newClassArr[i][j].value) {
+                    console.log('sku default selected error' + i + ' ' + j)
                     continue
                 }
                 // 若已经默认选中，则不再操作且值是想要的值，则不再操作
                 if (newClassArr[i][j].className.indexOf('selected') > -1 && newClassArr[i][j].title === newClassArr[i][j].value) {
-                    console.log('selected ' + i + ' ' + j)
-                    continue
+                    console.log('sku default selected success' + i + ' ' + j)
+                    break
                 }
                 // 若sku的当前option与预设的sku的value值相同，则点击
                 if (newClassArr[i][j].title === newClassArr[i][j].value) {
-                    console.log(newClassArr[i][j])
+                    console.log('sku selected success' + newClassArr[i][j])
                     await page.$eval('.sku-prop .' + newClassArr[i][j].className + ':nth-child(' + (j + 1) + ')', el => el.click());
+                    break
                 }
             }
         }
@@ -182,13 +190,18 @@ async function handleImgTap(page, imgSkuArr, skuObj, idx) {
     for (let i = 0; i < imgSkuArr.length; i++) {
         // 若sku属性禁用，则跳过
         if (imgSkuArr[i].className.indexOf('disabled') > -1) {
-            console.log('disabled ' + i)
+            console.log('img disabled ' + i)
             continue
         }
-        // 若已经默认选中，则不再操作且值是想要的值，则不再操作
-        if (imgSkuArr[i].className.indexOf('selected') > -1 && imgSkuArr[i].skuName === imgSkuArr[i].value) {
-            console.log('selected ' + i)
+        // 若已经默认选中，但值不是想要的值，则跳过
+        if (imgSkuArr[i].className.indexOf('selected') > -1 && imgSkuArr[i].skuName !== imgSkuArr[i].value) {
+            console.log('img default selected error ' + i)
             continue
+        }
+        // 若已经默认选中，且值是想要的值，则不再操作
+        if (imgSkuArr[i].className.indexOf('selected') > -1 && imgSkuArr[i].skuName === imgSkuArr[i].value) {
+            console.log('img default selected success' + i)
+            break
         }
         await page.$eval('.sku-prop .sku-variable-img-wrap' + ':nth-child(' + (i + 1) + ')', el => el.click());
 
@@ -197,7 +210,7 @@ async function handleImgTap(page, imgSkuArr, skuObj, idx) {
         let imgSkuArr2 = classArr[idx];
         // console.log(imgSkuArr2);
         if (imgSkuArr2[i].skuName === imgSkuArr2[i].value) {
-            console.log('sku img selected success')
+            console.log('img selected success' + imgSkuArr2[i])
             break
         }
     }
