@@ -79,23 +79,10 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
         }
     }
 
-    // 处理图片sku
+    // 处理图片sku，由于图片元素没有title属性，比较复杂单独分析
     let imgSkuArr = classArr[idx];
-    console.log(imgSkuArr);
-    for (let i = 0; i < imgSkuArr.length; i++) {
-        if (imgSkuArr[i].className.indexOf('disabled') > -1) {
-            console.log('disabled ' + i)
-            continue
-        }
-        // 若已经默认选中，则不再操作且值是想要的值，则不再操作
-        if (imgSkuArr[i].className.indexOf('selected') > -1 && imgSkuArr[i].skuName === imgSkuArr[i].value) {
-            console.log('selected ' + i)
-            continue
-        }
-        await page.$eval('.sku-prop .sku-variable-img-wrap' + ':nth-child(' + (i + 1) + ')', el => el.click());
-    }
-
-    return
+    // console.log(imgSkuArr);
+    await handleImgTap(page, imgSkuArr, skuObj, idx);
 
     let newClassArr = JSON.parse(JSON.stringify(classArr));
     newClassArr.splice(idx, 1);
@@ -123,8 +110,6 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
         }
     }
 
-    return
-
     // 填充商品数量
     await page.$eval('.next-number-picker-input input', (input, num) => input.value = num, skuObj.Quantity);
     // 点击"+"号，可能网站会有坑，直接修改input输入框的值，加入购物车时不生效，可以采取先增一个再减少一个即可
@@ -132,6 +117,9 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 
     // 模拟延时1s
     await page.waitFor(1000);
+
+    return
+
     // 加入购物车
     await page.tap('.pdp-button_theme_orange');
     console.log('=>加入购物车成功')
@@ -140,6 +128,7 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 
 })();
 
+// 滑块处理函数
 async function handleSide(page) {
     // 拖动验证滑块
     const start = await page.waitForSelector('.nc_iconfont.btn_slide');
@@ -158,6 +147,7 @@ async function handleSide(page) {
     await page.mouse.up();
 }
 
+// 提取sku元素的className
 async function handleSku(page, skuObj) {
     return await page.$$eval('#module_sku-select .sku-selector .sku-prop', (e, skuObj) => {
         let classArr = [];
@@ -181,4 +171,30 @@ async function handleSku(page, skuObj) {
         }
         return classArr
     }, skuObj);
+}
+
+// 图片sku点击
+async function handleImgTap(page, imgSkuArr, skuObj, idx) {
+    for (let i = 0; i < imgSkuArr.length; i++) {
+        // 若sku属性禁用，则跳过
+        if (imgSkuArr[i].className.indexOf('disabled') > -1) {
+            console.log('disabled ' + i)
+            continue
+        }
+        // 若已经默认选中，则不再操作且值是想要的值，则不再操作
+        if (imgSkuArr[i].className.indexOf('selected') > -1 && imgSkuArr[i].skuName === imgSkuArr[i].value) {
+            console.log('selected ' + i)
+            continue
+        }
+        await page.$eval('.sku-prop .sku-variable-img-wrap' + ':nth-child(' + (i + 1) + ')', el => el.click());
+
+        // 点击之后，重新获取当前元素的skuName，判断是否与期望一致
+        let classArr = await handleSku(page, skuObj);
+        let imgSkuArr2 = classArr[idx];
+        // console.log(imgSkuArr2);
+        if (imgSkuArr2[i].skuName === imgSkuArr2[i].value) {
+            console.log('sku img selected success')
+            break
+        }
+    }
 }
