@@ -68,7 +68,6 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 
     // 选择sku逻辑
     let skuObj = JSON.parse(skuStr)
-    console.log(skuObj);
 
     let skuInfo = await page.$$eval('#module_sku-select .sku-selector .sku-prop', (e, skuObj) => {
         let keyArr = [];
@@ -81,9 +80,11 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
             let optionArr = e[i].children[0].children[1].children[1].children;
             let itemArr = [];
             for (let j = 0; j < optionArr.length; j++) {
+                // 根据sku的key值获取sku的属性，绑定到sku的每个options上，方便后续判断点击操作
                 itemArr.push({
                     className: optionArr[j].className,
-                    title: optionArr[j].title || ''
+                    title: optionArr[j].title || '',
+                    value: skuObj[title]
                 })
             }
             classArr.push(itemArr)
@@ -105,28 +106,19 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
     newClassArr.splice(idx, 1);
     // console.log(newClassArr);
 
+
     for (let i = 0; i < newClassArr.length; i++) {
         for (let j = 0; j < newClassArr[i].length; j++) {
             if (newClassArr[i][j] && newClassArr[i][j].className) {
+                // 若sku属性禁用或者已经默认选中，则不再操作
                 if (newClassArr[i][j].className.indexOf('selected') > -1 || newClassArr[i][j].className.indexOf('disabled') > -1) {
                     console.log('selected ' + i + ' ' + j)
                     continue
                 }
-
-                // 获取sku值对应要点击的下标
-                let title = newClassArr[i][j].title;
-                let res = await page.$$eval('.sku-prop .' + newClassArr[i][j].className, (ele, title) => {
-                    let arr = [];
-                    for (let k = 0; k < ele.length; k++) {
-                        arr.push(ele[k].title)
-                    }
-                    // if (ele.title === title) return 2
-                    return arr
-                }, title);
-
-                console.log(res);
-
-                // await page.$eval('.sku-prop .' + newClassArr[i][j].className + ':nth-child(' + res + ')', el => el.click());
+                if (newClassArr[i][j].title === newClassArr[i][j].value) {
+                    console.log(newClassArr[i][j])
+                    await page.$eval('.sku-prop .' + newClassArr[i][j].className + ':nth-child(' + (j + 1) + ')', el => el.click());
+                }
             }
         }
     }
@@ -162,14 +154,12 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
             }, sizeVal);
             console.log(sizeIdx);
             await page.$eval('.sku-prop-selection .sku-variable-size:nth-child(' + (sizeIdx.index + 2) + ')', el => el.click());
-
-
         }
     }
 
     // 填充商品数量
     await page.$eval('.next-number-picker-input input', (input, num) => input.value = num, skuObj.Quantity);
-    // 点击"+"号
+    // 点击"+"号，可能网站会有坑，直接修改input输入框的值，加入购物车时不生效，可以采取先增一个再减少一个即可
     // await page.$eval('.next-number-picker-handler-up', elem => elem.click());
 
     // 模拟延时1s
