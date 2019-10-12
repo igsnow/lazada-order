@@ -1,7 +1,8 @@
 const puppeteer = require('puppeteer');
 
 
-let skuStr = '{"Color Family": "White", "Size": "5XL", "Quantity": 3}';
+// let skuStr = '{"Color Family": "White", "Size": "5XL", "Quantity": 3}';
+let skuStr = '{"Style": "Off-white", "Quantity": 5}';
 let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 
 (async () => {
@@ -22,8 +23,8 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 
     // 先跳转到登录页
     let loginUrl = 'https://member.lazada.com.my/user/login?spm=a2o4k.home.header.d5.1f062e7e5nKtIB&redirect=https%3A%2F%2Fwww.lazada.com.my%2F%3Fspm%3Da2o4k.login_signup.header.dhome.4d3f49fb8YhnCt';
-    let detailUrl = 'https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?';
-    // let detailUrl = 'https://www.lazada.com.my/products/free-shipping-spinarez-spinal-1-kingqueensuper-singlesingle-10-inch-euro-top-foam-padding-coconut-fiber-bonell-spring-hybrid-mattress-tilam-10-years-warranty-i207914898-s259016584.html?spm=a2o4k.home.flashSale.2.1a762e7eDVXu0T&search=1&mp=1&c=fs&clickTrackInfo=%7B%22rs%22%3A%220.49123629950286524%22%2C%22submission_discount%22%3A%2246%25%22%2C%22rmc%22%3A%2244%22%2C%22type%22%3A%22entrance%22%2C%22isw%22%3A%220.3%22%2C%22userid%22%3A%22%22%2C%22sca%22%3A%2225%22%2C%22hourtonow%22%3A%2214%22%2C%22abid%22%3A%22142638%22%2C%22itemid%22%3A%22207914898_0_itself_0.10954014814395574_0.49123629950286524%22%2C%22pvid%22%3A%22910d9565-22fe-4afe-8b7c-1675c279870e%22%2C%22pos%22%3A%220%22%2C%22ccw%22%3A%220.1%22%2C%22rms%22%3A%220.42718446601941745%22%2C%22c2i%22%3A%220.15247942977625034%22%2C%22scm%22%3A%221007.17760.142638.%22%2C%22rmw%22%3A%220.04166714892533479%22%2C%22isrw%22%3A%220.1%22%2C%22rkw%22%3A%220.4%22%2C%22ss%22%3A%220.10954014814395574%22%2C%22i2i%22%3A%220.074%22%2C%22ms%22%3A%220.10954014814395574%22%2C%22itr%22%3A%220.18666666666666668%22%2C%22mt%22%3A%22itself%22%2C%22its%22%3A%22300%22%2C%22promotion_price%22%3A%22375.00%22%2C%22anonid%22%3A%22nfGIZqdRBp7NgyJKAy6Qth4TPM94qLx8%22%2C%22ppw%22%3A%220.0%22%2C%22isc%22%3A%2256%22%2C%22iss2%22%3A%220.49706300393758573%22%2C%22iss1%22%3A%220.01644157369348209%22%2C%22config%22%3A%22%22%7D&scm=1007.17760.142638.0'
+    // let detailUrl = 'https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?';
+    let detailUrl = 'https://www.lazada.com.my/products/nana-kitchen-shelves-wall-hangers-304-stainless-steel-microwave-oven-shelf-holder-storage-supplies-storage-shelf-angle-frame-i151234272-s592786175.html?'
     await page.goto(loginUrl, {
         waitUntil: 'domcontentloaded'
     });
@@ -82,7 +83,10 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
     // 处理图片sku，由于图片元素没有title属性，比较复杂单独分析
     let imgSkuArr = classArr[idx];
     // console.log(imgSkuArr);
+
     await handleImgTap(page, imgSkuArr, skuObj, idx);
+
+    return
 
     let newClassArr = JSON.parse(JSON.stringify(classArr));
     newClassArr.splice(idx, 1);
