@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 
 
-let skuStr = '{"Color Family": "Blue", "Size": "5XL", "Quantity": 3}';
+let skuStr = '{"Color Family": "White", "Size": "5XL", "Quantity": 3}';
 let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 
 (async () => {
@@ -68,7 +68,6 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 
     // 选择sku逻辑
     let skuObj = JSON.parse(skuStr)
-
     let skuInfo = await page.$$eval('#module_sku-select .sku-selector .sku-prop', (e, skuObj) => {
         let keyArr = [];
         let classArr = [];
@@ -76,6 +75,8 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
             let title = e[i].children[0].children[0].innerHTML;
             // 获取sku键的集合
             keyArr.push(title);
+            // 获取skuImg点击后上面显示的sku-name
+            let skuName = e[i].children[0].children[1].children[0].children[0].innerHTML;
             // 获取sku可选值的className
             let optionArr = e[i].children[0].children[1].children[1].children;
             let itemArr = [];
@@ -84,6 +85,7 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
                 itemArr.push({
                     className: optionArr[j].className,
                     title: optionArr[j].title || '',
+                    skuName: skuName || '',
                     value: skuObj[title]
                 })
             }
@@ -91,10 +93,9 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
         }
         return {keyArr, classArr}
     }, skuObj);
-
     // console.log(skuInfo)
 
-    // 先处理除Color Family之外的sku的点击，图片sku比较特殊
+    // 先处理除图片sku属性
     let allClassArr = skuInfo.classArr;
     let idx = 0;
     for (let i = 0; i < allClassArr.length; i++) {
@@ -102,15 +103,22 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
             idx = i
         }
     }
-    // 图片sku
+
+    // 处理图片sku
     let imgSkuArr = allClassArr[idx];
     console.log(imgSkuArr);
-    return
+    for (let i = 0; i < imgSkuArr.length; i++) {
+        if (imgSkuArr[i].className.indexOf('disabled') > -1) {
+            console.log('disabled ' + i)
+            continue
+        }
+        await page.$eval('.sku-prop .sku-variable-img-wrap' + ':nth-child(' + (i + 1) + ')', el => el.click());
+    }
+
 
     let newClassArr = JSON.parse(JSON.stringify(allClassArr));
     newClassArr.splice(idx, 1);
     // console.log(newClassArr);
-
 
     for (let i = 0; i < newClassArr.length; i++) {
         for (let j = 0; j < newClassArr[i].length; j++) {
@@ -133,7 +141,6 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
             }
         }
     }
-
 
     return
 
