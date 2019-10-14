@@ -1,20 +1,30 @@
-const express = require('express');
+const express = require("express");
+const bodyParser = require('body-parser');
+const puppeteer = require('puppeteer');
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
-let skuStr = '{"Color Family": "White", "Size": "5XL", "Quantity": 3}';
-// let skuStr = '{"Style": "White Color", "Quantity": 5}';
-// let skuStr = '{"Color Family": "Grey", "Quantity": 5}';
-// let skuStr = '{"Color family": "Penguin Land", "Bedding Size": "King", "Quantity": 5}';
-let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
+const loginUrl = 'https://member.lazada.com.my/user/login?spm=a2o4k.home.header.d5.1f062e7e5nKtIB&redirect=https%3A%2F%2Fwww.lazada.com.my%2F%3Fspm%3Da2o4k.login_signup.header.dhome.4d3f49fb8YhnCt';
+// const infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 
-app.get('/:url/:sku/:info', function (req, res, page) {
-    const puppeteer = require('puppeteer');
-    // const url = req.params.url;
-    // const sku = req.params.sku;
-    // const info = req.params.info && JSON.parse(req.params.info);
-    // console.log(info);
-    // let account = info && info.account;
-    // let pwd = info && info.pwd;
+// const detailUrl = 'https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?';
+// const detailUrl = 'https://www.lazada.com.my/products/nana-kitchen-shelves-wall-hangers-304-stainless-steel-microwave-oven-shelf-holder-storage-supplies-storage-shelf-angle-frame-i151234272-s592786175.html?'
+// const detailUrl = 'https://www.lazada.com.my/products/teemi-unisex-3-in-1-combo-set-15-laptop-backpack-sling-bag-pouch-large-capacity-multi-compartment-travel-casual-business-college-student-i465790066-s750828099.html?spm=a2o4k.home.flashSale.4.139a2e7eYD1dkM&search=1&mp=1&c=fs&clickTrackInfo=%7B%22rs%22%3A%220.8502431920777898%22%2C%22submission_discount%22%3A%2265%25%22%2C%22rmc%22%3A%224%22%2C%22type%22%3A%22entrance%22%2C%22isw%22%3A%220.3%22%2C%22userid%22%3A%22%22%2C%22sca%22%3A%223%22%2C%22hourtonow%22%3A%2215%22%2C%22abid%22%3A%22142638%22%2C%22itemid%22%3A%22465790066_2_i2i_1.22_0.8502431920777898%22%2C%22pvid%22%3A%22c2d2d232-d940-456e-8d98-f44e29340377%22%2C%22pos%22%3A%222%22%2C%22ccw%22%3A%220.1%22%2C%22rms%22%3A%220.01834862385321101%22%2C%22c2i%22%3A%220.1984223654120736%22%2C%22scm%22%3A%221007.17760.142638.%22%2C%22rmw%22%3A%220.03750043403280131%22%2C%22isrw%22%3A%220.1%22%2C%22rkw%22%3A%220.4%22%2C%22ss%22%3A%220.11057109992381349%22%2C%22i2i%22%3A%220.007%22%2C%22ms%22%3A%221.22%22%2C%22itr%22%3A%220.19047619047619047%22%2C%22mt%22%3A%22i2i%22%2C%22its%22%3A%22210%22%2C%22promotion_price%22%3A%2223.90%22%2C%22anonid%22%3A%22dOwiiS7GOqgFfaD53agAB3tHHaCY9nmg%22%2C%22ppw%22%3A%220.0%22%2C%22isc%22%3A%2240%22%2C%22iss2%22%3A%220.5338241656079694%22%2C%22iss1%22%3A%220.03816793893129771%22%2C%22config%22%3A%22%22%7D&scm=1007.17760.142638.0'
+// const detailUrl = 'https://www.lazada.com.my/products/akemi-cotton-essentials-jovial-king-comforter-set-i517440839-s997040405.html?spm=a2o6s.10415192.0.0.7d8651ddHFXxXi'
+
+// const skuStr = '{"Color Family": "White", "Size": "5XL", "Quantity": 3}';
+// const skuStr = '{"Style": "White Color", "Quantity": 5}';
+// const skuStr = '{"Color Family": "Grey", "Quantity": 5}';
+// const skuStr = '{"Color family": "Penguin Land", "Bedding Size": "King", "Quantity": 5}';
+
+
+app.post("/lazada/order", function (req, res) {
+    const detailUrl = req.body.detailUrl;
+    const skuObj = req.body.skuStr;
+    const info = req.body.infoStr;
+    const account = info && info.account;
+    const pwd = info && info.pwd;
 
     (async () => {
         const browser = await puppeteer.launch({
@@ -32,12 +42,6 @@ app.get('/:url/:sku/:info', function (req, res, page) {
             height: 900
         });
 
-        // 先跳转到登录页
-        let loginUrl = 'https://member.lazada.com.my/user/login?spm=a2o4k.home.header.d5.1f062e7e5nKtIB&redirect=https%3A%2F%2Fwww.lazada.com.my%2F%3Fspm%3Da2o4k.login_signup.header.dhome.4d3f49fb8YhnCt';
-        let detailUrl = 'https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?';
-        // let detailUrl = 'https://www.lazada.com.my/products/nana-kitchen-shelves-wall-hangers-304-stainless-steel-microwave-oven-shelf-holder-storage-supplies-storage-shelf-angle-frame-i151234272-s592786175.html?'
-        // let detailUrl = 'https://www.lazada.com.my/products/teemi-unisex-3-in-1-combo-set-15-laptop-backpack-sling-bag-pouch-large-capacity-multi-compartment-travel-casual-business-college-student-i465790066-s750828099.html?spm=a2o4k.home.flashSale.4.139a2e7eYD1dkM&search=1&mp=1&c=fs&clickTrackInfo=%7B%22rs%22%3A%220.8502431920777898%22%2C%22submission_discount%22%3A%2265%25%22%2C%22rmc%22%3A%224%22%2C%22type%22%3A%22entrance%22%2C%22isw%22%3A%220.3%22%2C%22userid%22%3A%22%22%2C%22sca%22%3A%223%22%2C%22hourtonow%22%3A%2215%22%2C%22abid%22%3A%22142638%22%2C%22itemid%22%3A%22465790066_2_i2i_1.22_0.8502431920777898%22%2C%22pvid%22%3A%22c2d2d232-d940-456e-8d98-f44e29340377%22%2C%22pos%22%3A%222%22%2C%22ccw%22%3A%220.1%22%2C%22rms%22%3A%220.01834862385321101%22%2C%22c2i%22%3A%220.1984223654120736%22%2C%22scm%22%3A%221007.17760.142638.%22%2C%22rmw%22%3A%220.03750043403280131%22%2C%22isrw%22%3A%220.1%22%2C%22rkw%22%3A%220.4%22%2C%22ss%22%3A%220.11057109992381349%22%2C%22i2i%22%3A%220.007%22%2C%22ms%22%3A%221.22%22%2C%22itr%22%3A%220.19047619047619047%22%2C%22mt%22%3A%22i2i%22%2C%22its%22%3A%22210%22%2C%22promotion_price%22%3A%2223.90%22%2C%22anonid%22%3A%22dOwiiS7GOqgFfaD53agAB3tHHaCY9nmg%22%2C%22ppw%22%3A%220.0%22%2C%22isc%22%3A%2240%22%2C%22iss2%22%3A%220.5338241656079694%22%2C%22iss1%22%3A%220.03816793893129771%22%2C%22config%22%3A%22%22%7D&scm=1007.17760.142638.0'
-        // let detailUrl = 'https://www.lazada.com.my/products/akemi-cotton-essentials-jovial-king-comforter-set-i517440839-s997040405.html?spm=a2o6s.10415192.0.0.7d8651ddHFXxXi'
         await page.goto(loginUrl, {
             waitUntil: 'domcontentloaded'
         });
@@ -46,19 +50,19 @@ app.get('/:url/:sku/:info', function (req, res, page) {
         let accountEl = '.mod-input-loginName input';
         let pwdEl = '.mod-input-password input';
         await page.waitForSelector(accountEl);
-        page.type(accountEl, '716810918@qq.com', {delay: 10});
+        page.type(accountEl, account, {delay: 10});
         await page.waitFor(1000);
         await page.waitForSelector(pwdEl);
-        page.type(pwdEl, 'gyj388153@', {delay: 10});
+        page.type(pwdEl, pwd, {delay: 10});
         await page.waitFor(1000);
 
         // await handleSide(page)
 
         let isError = await page.$('.errloading');
         if (!!isError) {
-            console.log('报错了....')
+            console.log('报错了....');
             await page.tap('.errloading a');
-            console.log('已刷新...')
+            console.log('已刷新...');
             await handleSide(page)
         }
 
@@ -70,20 +74,16 @@ app.get('/:url/:sku/:info', function (req, res, page) {
                     waitUntil: 'domcontentloaded'
                 })
                 if (page.url() !== loginUrl) {
-                    console.log('=>登录成功！即将跳转详情页')
+                    console.log('=>登录成功！即将跳转详情页');
                     await page.goto(detailUrl, {
                         waitUntil: 'load'
                     });
-                    console.log('=>已跳转至详情页')
+                    console.log('=>已跳转至详情页');
                     break;
                 }
             }
         }
 
-        return
-
-
-        let skuObj = JSON.parse(skuStr);
         // 选择sku信息
         let classArr = await handleSku(page, skuObj);
         // console.log(classArr)
@@ -140,7 +140,7 @@ app.get('/:url/:sku/:info', function (req, res, page) {
         // await page.$eval('.next-number-picker-handler-up', elem => elem.click());
 
         // 模拟延时1s
-        await page.waitFor(1000);
+        await page.waitFor(2000);
 
         return
 
@@ -227,6 +227,8 @@ app.get('/:url/:sku/:info', function (req, res, page) {
             }
         }
     }
-})
+
+    res.send({status: 200, msg: 'success'});
+});
 
 app.listen(1017, () => console.log('Server listening on port 1017!'));

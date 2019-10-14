@@ -1,20 +1,11 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-
-// 创建服务
+const bodyParser = require('body-parser');
 const app = express();
-
-// 使用 body-parser 中间
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
-// 创建路由
-app.post("/login", function (req, res) {
-    console.log(req.body);
-    res.send(req.body);
-});
-
-// 监听服务
-app.listen(3000, function () {
-    console.log("server start 3000");
-});
+app.post("/order", function (req, res) {
+    console.log(JSON.stringify(req.body));
+    res.send({hello: 'adsfafaf'});
+})
+app.listen(1017, () => console.log('Server listening on port 1017!'));
