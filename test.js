@@ -71,9 +71,6 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
         }
     }
 
-    return
-
-
     let skuObj = JSON.parse(skuStr);
     // 选择sku信息
     let classArr = await handleSku(page, skuObj);
@@ -132,8 +129,6 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 
     // 模拟延时1s
     await page.waitFor(1000);
-
-    return
 
     // 加入购物车
     await page.tap('.pdp-button_theme_orange');
