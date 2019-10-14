@@ -142,8 +142,6 @@ app.post("/lazada/order", function (req, res) {
         // 模拟延时1s
         await page.waitFor(2000);
 
-        return
-
         // 加入购物车
         await page.tap('.pdp-button_theme_orange');
         console.log('=>加入购物车成功')
@@ -228,7 +226,7 @@ app.post("/lazada/order", function (req, res) {
         }
     }
 
-    res.send({status: 200, msg: 'success'});
+    res.send({status: 200, msg: 'post success'});
 });
 
 app.listen(1017, () => console.log('Server listening on port 1017!'));

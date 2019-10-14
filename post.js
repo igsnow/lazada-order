@@ -6,6 +6,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.post("/order", function (req, res) {
     console.log(JSON.stringify(req.body));
-    res.send({hello: 'adsfafaf'});
+    res.send({msg: 'hello'});
 })
 app.listen(1017, () => console.log('Server listening on port 1017!'));
