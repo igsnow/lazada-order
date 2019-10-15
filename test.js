@@ -43,6 +43,12 @@ let infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
     page.type(pwdEl, 'gyj388153@', {delay: 10});
     await page.waitFor(1000);
 
+    // 如果开始是登录按钮，不是滑块，则先点击登录按钮
+    let isLoginBtnWrap = await page.$('.mod-login-btn');
+    if (!!isLoginBtnWrap) {
+        await page.tap('.mod-login-btn button');
+    }
+
     // await handleSide(page)
 
     let isError = await page.$('.errloading');
