@@ -159,6 +159,9 @@ app.post("/lazada/order", function (req, res) {
             await page.tap(buyBtnElClass);
         }
 
+        // 进入到订单页面点击下单按钮 TODO
+
+
         // await browser.close();
 
     })();
