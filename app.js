@@ -50,11 +50,17 @@ app.post("/lazada/order", function (req, res) {
         let accountEl = '.mod-input-loginName input';
         let pwdEl = '.mod-input-password input';
         await page.waitForSelector(accountEl);
-        page.type(accountEl, account, {delay: 10});
+        page.type(accountEl, account, {delay: 8});
         await page.waitFor(1000);
         await page.waitForSelector(pwdEl);
-        page.type(pwdEl, pwd, {delay: 10});
-        await page.waitFor(1000);
+        page.type(pwdEl, pwd, {delay: 8});
+        // await page.waitFor(1000);
+
+        // 如果开始是登录按钮，不是滑块，则先点击登录按钮
+        let isLoginBtnWrap = await page.$('.mod-login-btn');
+        if (!!isLoginBtnWrap) {
+            await page.tap('.mod-login-btn button');
+        }
 
         // await handleSide(page)
 
@@ -68,11 +74,11 @@ app.post("/lazada/order", function (req, res) {
 
         // 监听到导航栏url变化时，当登录成功时跳转到详情页
         if (page.url() === loginUrl) {
-            console.log('=>准备登录')
+            console.log('=>准备登录');
             while (true) {
                 await page.waitForNavigation({
                     waitUntil: 'domcontentloaded'
-                })
+                });
                 if (page.url() !== loginUrl) {
                     console.log('=>登录成功！即将跳转详情页');
                     await page.goto(detailUrl, {
@@ -140,7 +146,7 @@ app.post("/lazada/order", function (req, res) {
         // await page.$eval('.next-number-picker-handler-up', elem => elem.click());
 
         // 模拟延时1s
-        await page.waitFor(2000);
+        await page.waitFor(1000);
 
         // 加入购物车
         await page.tap('.pdp-button_theme_orange');
@@ -165,7 +171,7 @@ app.post("/lazada/order", function (req, res) {
         for (let i = 0; i < endInfo.width; i = i + 5) {
             await page.mouse.move(startInfo.x + i, endInfo.y);
         }
-        await page.waitFor(1000);
+        // await page.waitFor(1000);
         await page.mouse.up();
     }
 
