@@ -54,7 +54,7 @@ app.post("/lazada/order", function (req, res) {
         await page.waitFor(1000);
         await page.waitForSelector(pwdEl);
         page.type(pwdEl, pwd, {delay: 8});
-        // await page.waitFor(1000);
+        await page.waitFor(1000);
 
         // 如果开始是登录按钮，不是滑块，则先点击登录按钮
         let isLoginBtnWrap = await page.$('.mod-login-btn');
