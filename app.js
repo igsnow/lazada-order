@@ -149,8 +149,15 @@ app.post("/lazada/order", function (req, res) {
         await page.waitFor(1000);
 
         // 加入购物车
-        await page.tap('.pdp-button_theme_orange');
-        console.log('=>加入购物车成功')
+        // await page.tap('.pdp-button_theme_orange');
+        // console.log('=>加入购物车成功')
+
+        // 若购买按钮存在则点击购买
+        let buyBtnElClass = '.pdp-button_theme_yellow';
+        let isBuyBtn = await page.$(buyBtnElClass);
+        if (!!isBuyBtn) {
+            await page.tap(buyBtnElClass);
+        }
 
         // await browser.close();
 
