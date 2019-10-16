@@ -42,25 +42,31 @@ app.post("/lazada/order", function (req, res) {
             height: 900
         });
 
-        await page.goto(loginUrl, {
-            waitUntil: 'domcontentloaded'
+        // 先跳转至详情页，再弹出登录框test
+        await page.goto(detailUrl, {
+            waitUntil: 'load'
         });
 
-        // 自动填入账号密码
-        let accountEl = '.mod-input-loginName input';
-        let pwdEl = '.mod-input-password input';
-        await page.waitForSelector(accountEl);
-        page.type(accountEl, account, {delay: 8});
-        await page.waitFor(1000);
-        await page.waitForSelector(pwdEl);
-        page.type(pwdEl, pwd, {delay: 8});
-        await page.waitFor(1000);
 
-        // 如果开始是登录按钮，不是滑块，则先点击登录按钮
-        let isLoginBtnWrap = await page.$('.mod-login-btn');
-        if (!!isLoginBtnWrap) {
-            await page.tap('.mod-login-btn button');
-        }
+        // await page.goto(loginUrl, {
+        //     waitUntil: 'domcontentloaded'
+        // });
+        //
+        // // 自动填入账号密码
+        // let accountEl = '.mod-input-loginName input';
+        // let pwdEl = '.mod-input-password input';
+        // await page.waitForSelector(accountEl);
+        // page.type(accountEl, account, {delay: 8});
+        // await page.waitFor(1000);
+        // await page.waitForSelector(pwdEl);
+        // page.type(pwdEl, pwd, {delay: 8});
+        // await page.waitFor(1000);
+        //
+        // // 如果开始是登录按钮，不是滑块，则先点击登录按钮
+        // let isLoginBtnWrap = await page.$('.mod-login-btn');
+        // if (!!isLoginBtnWrap) {
+        //     await page.tap('.mod-login-btn button');
+        // }
 
         // 自动拖动滑块验证
         // await handleSide(page)
@@ -152,6 +158,22 @@ app.post("/lazada/order", function (req, res) {
             console.log('=>已跳转至结算页')
         }
 
+
+        const frame = page.frames();
+        console.log(frame.length);
+
+        // 自动填入账号密码
+        let accountEl = '.mod-input-loginName input';
+        let pwdEl = '.mod-input-password input';
+        await frame.waitForSelector(accountEl);
+        frame.type(accountEl, account, {delay: 8});
+        await frame.waitFor(1000);
+        await frame.waitForSelector(pwdEl);
+        frame.type(pwdEl, pwd, {delay: 8});
+        await frame.waitFor(1000);
+
+
+        return
         // 进入到订单页面点击下单按钮
         let OrderElClass = '.automation-checkout-order-total-button-button';
         let isOrderBtn = await page.$(OrderElClass);
