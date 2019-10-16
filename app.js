@@ -152,7 +152,15 @@ app.post("/lazada/order", function (req, res) {
             console.log('=>已跳转至结算页')
         }
 
-        // 进入到订单页面点击下单按钮 TODO
+        // 进入到订单页面点击下单按钮
+        let OrderElClass = '.automation-checkout-order-total-button-button';
+        let isOrderBtn = await page.$(OrderElClass);
+        if (!!isOrderBtn) {
+            await page.tap(OrderElClass);
+            console.log('=>已跳转至支付页面')
+        }
+
+        // 选择货到付款方式
 
 
         // 关闭浏览器
