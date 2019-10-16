@@ -62,13 +62,14 @@ app.post("/lazada/order", function (req, res) {
             await page.tap('.mod-login-btn button');
         }
 
+        // 自动拖动滑块验证
         // await handleSide(page)
 
         let isError = await page.$('.errloading');
         if (!!isError) {
-            console.log('报错了....');
+            console.log('=>滑块报错了');
             await page.tap('.errloading a');
-            console.log('已刷新...');
+            console.log('=>已刷新');
             await handleSide(page)
         }
 
@@ -142,26 +143,19 @@ app.post("/lazada/order", function (req, res) {
 
         // 填充商品数量
         await page.$eval('.next-number-picker-input input', (input, num) => input.value = num, skuObj.Quantity);
-        // 点击"+"号，可能网站会有坑，直接修改input输入框的值，加入购物车时不生效，可以采取先增一个再减少一个即可
-        // await page.$eval('.next-number-picker-handler-up', elem => elem.click());
-
-        // 模拟延时1s
-        await page.waitFor(1000);
-
-        // 加入购物车
-        // await page.tap('.pdp-button_theme_orange');
-        // console.log('=>加入购物车成功')
 
         // 若购买按钮存在则点击购买
         let buyBtnElClass = '.pdp-button_theme_yellow';
         let isBuyBtn = await page.$(buyBtnElClass);
         if (!!isBuyBtn) {
             await page.tap(buyBtnElClass);
+            console.log('=>已跳转至结算页')
         }
 
         // 进入到订单页面点击下单按钮 TODO
 
 
+        // 关闭浏览器
         // await browser.close();
 
     })();
@@ -181,7 +175,6 @@ app.post("/lazada/order", function (req, res) {
         for (let i = 0; i < endInfo.width; i = i + 5) {
             await page.mouse.move(startInfo.x + i, endInfo.y);
         }
-        // await page.waitFor(1000);
         await page.mouse.up();
     }
 
