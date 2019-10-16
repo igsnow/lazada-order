@@ -158,6 +158,8 @@ app.post("/lazada/order", function (req, res) {
             console.log('=>已跳转至结算页')
         }
 
+        // 等iframe的wrap出现
+        await page.$('.mod-login-dialog-warp');
 
         // 获取元素内部的登录iframe
         const url = await page.$eval('.login-iframe', el => el.getAttribute('src'));
@@ -168,20 +170,21 @@ app.post("/lazada/order", function (req, res) {
             }
         }
 
-        // 等待下单页面加载完成
-        await frame.waitForNavigation({
-            waitUntil: 'domcontentloaded'
-        });
-
-        // 自动填入账号密码
+        // 自动填充账号密码
         let accountEl = '.mod-input-loginName input';
         let pwdEl = '.mod-input-password input';
+
+
         await frame.waitForSelector(accountEl);
-        frame.type(accountEl, account, {delay: 0});
-        await frame.waitFor(1000);
+        frame.type(accountEl, account, {delay: 5});
+        // await frame.waitFor(3000);
         await frame.waitForSelector(pwdEl);
-        frame.type(pwdEl, pwd, {delay: 10});
-        await frame.waitFor(1000);
+        frame.type(pwdEl, pwd, {delay: 5});
+        await frame.waitFor(2000);
+
+
+        // await handleSide(page)
+
 
         // 等待下单页面加载
         await page.waitForNavigation({
@@ -197,7 +200,7 @@ app.post("/lazada/order", function (req, res) {
             console.log('=>已跳转至支付页面')
         }
 
-        // 等待下单页面加载
+        // 等待付款页面加载
         await page.waitForNavigation({
             waitUntil: 'domcontentloaded'
         });
@@ -206,6 +209,8 @@ app.post("/lazada/order", function (req, res) {
         let payMethodElId = '#automation-payment-method-item-130'
         let payMethodBtn = await page.$(payMethodElId);
         console.log(payMethodBtn.className);
+        await page.tap(payMethodElId);
+        console.log('点击货到付款按钮')
 
 
         // 关闭浏览器
