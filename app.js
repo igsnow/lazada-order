@@ -42,7 +42,7 @@ app.post("/lazada/order", function (req, res) {
             height: 900
         });
 
-        // 先跳转至详情页，再弹出登录框test
+        // 先跳转至详情页，再弹出登录框
         await page.goto(detailUrl, {
             waitUntil: 'load'
         });
@@ -159,7 +159,7 @@ app.post("/lazada/order", function (req, res) {
         }
 
 
-        // 获取元素内部iframe
+        // 获取元素内部的登录iframe
         const url = await page.$eval('.login-iframe', el => el.getAttribute('src'));
         const frames = await page.frames();
         for (let i of frames) {
@@ -168,25 +168,39 @@ app.post("/lazada/order", function (req, res) {
             }
         }
 
+        // 等待下单页面加载完成
+        await frame.waitForNavigation({
+            waitUntil: 'domcontentloaded'
+        });
+
         // 自动填入账号密码
         let accountEl = '.mod-input-loginName input';
         let pwdEl = '.mod-input-password input';
         await frame.waitForSelector(accountEl);
-        frame.type(accountEl, account, {delay: 8});
+        frame.type(accountEl, account, {delay: 0});
         await frame.waitFor(1000);
         await frame.waitForSelector(pwdEl);
-        frame.type(pwdEl, pwd, {delay: 8});
+        frame.type(pwdEl, pwd, {delay: 10});
         await frame.waitFor(1000);
 
+        // 等待下单页面加载
+        await page.waitForNavigation({
+            waitUntil: 'domcontentloaded'
+        });
 
-        return
         // 进入到订单页面点击下单按钮
         let OrderElClass = '.automation-checkout-order-total-button-button';
         let isOrderBtn = await page.$(OrderElClass);
+        console.log('=>等待下单按钮出现')
         if (!!isOrderBtn) {
             await page.tap(OrderElClass);
             console.log('=>已跳转至支付页面')
         }
+
+        // 等待下单页面加载
+        await page.waitForNavigation({
+            waitUntil: 'domcontentloaded'
+        });
 
         // 选择货到付款方式
         let payMethodElId = '#automation-payment-method-item-130'
