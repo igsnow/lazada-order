@@ -161,6 +161,9 @@ app.post("/lazada/order", function (req, res) {
         }
 
         // 选择货到付款方式
+        let payMethodElId = '#automation-payment-method-item-130'
+        let payMethodBtn = await page.$(payMethodElId);
+        console.log(payMethodBtn.className);
 
 
         // 关闭浏览器
