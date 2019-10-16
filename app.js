@@ -159,8 +159,14 @@ app.post("/lazada/order", function (req, res) {
         }
 
 
-        const frame = page.frames();
-        console.log(frame.length);
+        // 获取元素内部iframe
+        const url = await page.$eval('.login-iframe', el => el.getAttribute('src'));
+        const frames = await page.frames();
+        for (let i of frames) {
+            if (url.includes(i.url())) {
+                var frame = i;
+            }
+        }
 
         // 自动填入账号密码
         let accountEl = '.mod-input-loginName input';
