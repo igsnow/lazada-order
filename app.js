@@ -18,7 +18,7 @@ app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
     next();
 });
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'public'));
 app.engine('html', ejs.__express);
 app.set('view engine', 'html');
 app.use(cors({
