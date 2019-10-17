@@ -170,28 +170,27 @@ app.post("/lazada/order", function (req, res) {
             }
         }
 
+
         // 自动填充账号密码
         let accountEl = '.mod-input-loginName input';
         let pwdEl = '.mod-input-password input';
 
-        // await frame.waitForSelector(accountEl);
-        // frame.type(accountEl, account, {delay: 5});
-        // await frame.waitFor(1000);
-
         await frame.waitForSelector(accountEl);
         await frame.focus(accountEl);
-        page.keyboard.type(account);
+        await page.keyboard.type(account);
 
-        await frame.waitFor(1000);
+        // await frame.waitFor(1000);
 
         await frame.waitForSelector(pwdEl);
         await frame.focus(pwdEl);
-        page.keyboard.type(pwd);
+        await page.keyboard.type(pwd);
 
+        // await frame.waitForSelector(accountEl);
+        // frame.type(accountEl, account, {delay: 5});
+        // await frame.waitFor(1000);
         // await frame.waitForSelector(pwdEl);
         // frame.type(pwdEl, pwd, {delay: 5});
-        // await frame.waitFor(2000);
-
+        // await frame.waitFor(1000);
 
         return
 
