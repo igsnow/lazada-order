@@ -29,7 +29,6 @@ router.post("/lazada/order", function (req, res) {
             height: 900
         });
 
-        return
 
         // 先跳转至详情页，再弹出登录框
         await page.goto(detailUrl, {
@@ -90,7 +89,6 @@ router.post("/lazada/order", function (req, res) {
         let classArr = await handleSku(page, skuObj);
         console.log(classArr)
 
-        return
 
         // 先处理除图片sku属性
         let idx = 0;
@@ -183,8 +181,6 @@ router.post("/lazada/order", function (req, res) {
         // await frame.waitFor(1000);
 
 
-        return
-
         // await handleSide(page)
 
 
@@ -218,6 +214,7 @@ router.post("/lazada/order", function (req, res) {
         // await browser.close();
 
     })();
+
 
     // 滑块处理函数
     async function handleSide(page) {
