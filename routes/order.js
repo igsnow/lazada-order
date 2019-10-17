@@ -2,18 +2,6 @@ const puppeteer = require('puppeteer');
 const express = require('express');
 const router = express.Router();
 
-//根据id查询数据
-router.get("/get_item_data", function (req, res, next) {
-    let params = {};
-    if (req.query.from) {
-        params.from = req.query.from;
-    }
-    if (req.query.id && req.query.id != 'null' && req.query.id != 'undefined') {
-        params._id = req.query.id;
-    }
-})
-
-
 const loginUrl = 'https://member.lazada.com.my/user/login?spm=a2o4k.home.header.d5.1f062e7e5nKtIB&redirect=https%3A%2F%2Fwww.lazada.com.my%2F%3Fspm%3Da2o4k.login_signup.header.dhome.4d3f49fb8YhnCt';
 // const infoStr = '{"account": "716810918@qq.com", "pwd": "gyj388153@"}';
 

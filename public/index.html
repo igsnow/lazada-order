@@ -4,8 +4,41 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="lib/jquery-3.3.1.min.js"></script>
+    <style>
+
+    </style>
 </head>
 <body>
-isgnow
+<div class="container">
+    <button id="btn">click</button>
+</div>
 </body>
+<script>
+    $(function () {
+
+        $('#btn').click(function () {
+            console.log('hi')
+            $.ajax({
+                url: '/order/lazada/order',
+                type: 'POST',
+                data: {
+                    "infoStr": {
+                        "account": "716810918@qq.com",
+                        "pwd": "gyj388153@"
+                    },
+                    "detailUrl": "https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?",
+                    "skuStr": {
+                        "Color Family": "White",
+                        "Size": "5XL",
+                        "Quantity": 3
+                    }
+                },
+                success: function (res) {
+                    console.log(res);
+                }
+            })
+        })
+
+    })
+</script>
 </html>

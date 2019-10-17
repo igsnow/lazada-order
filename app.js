@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const ejs = require('ejs');
 
-const usersRouter = require('./routes/users');
+const orderRouter = require('./routes/order');
 
 const app = express();
 
@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 // app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/users', usersRouter);
+app.use('/order', orderRouter);
 app.use(function (req, res, next) {
     next(createError(404));
 });
