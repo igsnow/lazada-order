@@ -18,10 +18,9 @@ const loginUrl = 'https://member.lazada.com.my/user/login?spm=a2o4k.home.header.
 
 router.post("/lazada/order", function (req, res) {
     const detailUrl = req.body.detailUrl;
-    const skuObj = req.body.skuStr;
-    const info = req.body.infoStr;
-    const account = info && info.account;
-    const pwd = info && info.pwd;
+    const account = req.body.account;
+    const pwd = req.body.pwd;
+    const skuObj = req.body.sku && JSON.parse(req.body.sku);
 
     (async () => {
         const browser = await puppeteer.launch({
@@ -167,7 +166,6 @@ router.post("/lazada/order", function (req, res) {
             }
         }
 
-
         // 自动填充账号密码
         let accountEl = '.mod-input-loginName input';
         let pwdEl = '.mod-input-password input';
@@ -220,7 +218,6 @@ router.post("/lazada/order", function (req, res) {
         console.log(payMethodBtn.className);
         await page.tap(payMethodElId);
         console.log('点击货到付款按钮')
-
 
         // 关闭浏览器
         // await browser.close();
