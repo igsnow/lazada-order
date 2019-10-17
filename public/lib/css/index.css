@@ -1,0 +1,12 @@
+
+.layui-container {
+    margin-top: 50px;
+    padding: 10px;
+    background: #eee;
+}
+
+.header {
+    margin-left: 50px;
+    height: 50px;
+    line-height: 50px;
+}

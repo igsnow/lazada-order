@@ -20,9 +20,10 @@ router.post("/lazada/order", function (req, res) {
     const detailUrl = req.body.detailUrl;
     const account = req.body.account;
     const pwd = req.body.pwd;
-    const skuObj = req.body.sku && JSON.parse(req.body.sku);
+    const skuObj = req.body.sku;
 
     console.log('=>已接收到参数')
+    console.log(req.body);
     return
 
     (async () => {
