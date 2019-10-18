@@ -117,15 +117,23 @@ router.post("/lazada/order", function (req, res) {
 
             logger.info('是否有图片sku信息 ' + hasImgSku + ' ' + idx);
 
-            // 处理图片sku，由于图片元素没有title属性，比较复杂单独分析
-            let imgSkuArr = classArr[idx];
-            logger.info('图片sku信息 ' + JSON.stringify(imgSkuArr));
-            logger.info('开始点击图片sku');
-            await handleImgTap(page, imgSkuArr, skuObj, idx);
-            let newClassArr = JSON.parse(JSON.stringify(classArr));
-            newClassArr.splice(idx, 1);
-            logger.info('sku除图片信息sku ' + JSON.stringify(newClassArr));
+            let newClassArr;
+            // 如果有图片sku
+            if (hasImgSku) {
+                // 处理图片sku，由于图片元素没有title属性，比较复杂单独分析
+                let imgSkuArr = classArr[idx];
+                logger.info('图片sku信息 ' + JSON.stringify(imgSkuArr));
+                logger.info('开始点击图片sku');
+                await handleImgTap(page, imgSkuArr, skuObj, idx);
+                newClassArr = JSON.parse(JSON.stringify(classArr));
+                newClassArr.splice(idx, 1);
+                logger.info('sku除图片信息sku ' + JSON.stringify(newClassArr));
+            } else {
+                newClassArr = classArr;
+                logger.info('sku信息(无图) ' + JSON.stringify(newClassArr));
+            }
 
+            logger.info('开始点击无图sku');
             for (let i = 0; i < newClassArr.length; i++) {
                 for (let j = 0; j < newClassArr[i].length; j++) {
                     if (newClassArr[i][j] && newClassArr[i][j].className) {
