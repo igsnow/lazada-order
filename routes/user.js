@@ -96,10 +96,11 @@ router.post("/lazada/order", function (req, res) {
 
             logger.info('开始整理sku信息');
 
-            // 收集sku信息
+            // 收集sku信息并删除默认的disabled类名后缀
             let classArr = await handleSku(page, skuObj);
 
             logger.info('sku全部信息已经整理完 ' + JSON.stringify(classArr));
+
 
             // 判断是否有图片sku且重置默认点击
             let idx = 0;
@@ -134,13 +135,14 @@ router.post("/lazada/order", function (req, res) {
                 logger.info('sku信息(无图) ' + JSON.stringify(newClassArr));
             }
 
+
             logger.info('开始点击无图sku');
             for (let i = 0; i < newClassArr.length; i++) {
                 for (let j = 0; j < newClassArr[i].length; j++) {
                     if (newClassArr[i][j] && newClassArr[i][j].className) {
                         // 若sku属性禁用，则不再操作
                         if (newClassArr[i][j].className.indexOf('disabled') > -1) {
-                            logger.info('sku disabled ' + i + ' ' + j)
+                            logger.info('sku disabled ' + i + ' ' + j);
                             continue
                         }
                         // 若已经默认选中，但值不是想要的值，则跳过
@@ -167,12 +169,13 @@ router.post("/lazada/order", function (req, res) {
             await page.$eval('.next-number-picker-input input', (input, num) => input.value = num, skuObj.Quantity);
             logger.info('商品数量已经填写');
 
+
             // 若购买按钮存在则点击购买
             let buyBtnElClass = '.pdp-button_theme_yellow';
             let isBuyBtn = await page.$(buyBtnElClass);
             if (!!isBuyBtn) {
                 await page.tap(buyBtnElClass);
-                logger.info('已跳转至结算页')
+                logger.info('已点击购买按钮')
             }
 
 
@@ -298,8 +301,9 @@ router.post("/lazada/order", function (req, res) {
                 let itemArr = [];
                 for (let j = 0; j < optionArr.length; j++) {
                     // 根据sku的key值获取sku的属性，绑定到sku的每个options上，方便后续判断点击操作
+                    let str = optionArr[j].className.replace("-disabled", "");
                     itemArr.push({
-                        className: optionArr[j].className,
+                        className: str,
                         title: optionArr[j].title || '',
                         skuName: skuName || '',
                         value: skuObj[title] || skuObj['Color'] || ''
@@ -341,13 +345,11 @@ router.post("/lazada/order", function (req, res) {
             await page.$eval('.sku-prop .sku-variable-img-wrap' + ':nth-child(' + (i + 1) + ')', el => el.click());
 
             // 点击之后，重新获取当前元素的skuName，判断是否与期望一致
-            let classArr = await handleSku(page, skuObj);
-            let imgSkuArr2 = classArr[idx];
-
-            logger.level = "INFO";
+            let classArr2 = await handleSku(page, skuObj);
+            let imgSkuArr2 = classArr2[idx];
             logger.info('imgSkuArr2 ' + JSON.stringify(imgSkuArr2));
             if (imgSkuArr2[i].skuName === imgSkuArr2[i].value) {
-                logger.info('img selected success ' + i)
+                logger.info('img selected success ' + i);
                 break
             }
         }
