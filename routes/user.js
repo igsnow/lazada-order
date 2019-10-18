@@ -39,10 +39,15 @@ router.post("/lazada/order", function (req, res) {
 
             logger.info('准备跳转到详情页');
 
-            // 先跳转至详情页，再弹出登录框
-            await page.goto(detailUrl, {
-                waitUntil: 'load'
-            });
+            try {
+                // 先跳转至详情页，再弹出登录框
+                await page.goto(detailUrl, {
+                    waitUntil: 'load'
+                });
+            } catch (e) {
+                logger.level = "ERROR";
+                logger.error('跳转详情页超时')
+            }
 
             logger.info('已经跳转到详情页');
 
@@ -106,7 +111,8 @@ router.post("/lazada/order", function (req, res) {
                 }
             }
 
-            logger.info('hasSKu ' + hasImgSku)
+            logger.level = 'WARN';
+            logger.warn('是否有图片sku ' + hasImgSku);
 
             // 如果有图片sku
             let newClassArr;

@@ -77,3 +77,6 @@
 [2019-10-18T13:03:38.633] [INFO] cheese - 准备跳转到详情页
 [2019-10-18T13:04:19.632] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"5XL\",\"Quantity\":3}"}
 [2019-10-18T13:04:20.544] [INFO] cheese - 准备跳转到详情页
+[2019-10-18T13:08:12.482] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"5XL\",\"Quantity\":3}"}
+[2019-10-18T13:08:13.468] [INFO] cheese - 准备跳转到详情页
+[2019-10-18T13:08:43.472] [ERROR] cheese - 跳船详情页超时
