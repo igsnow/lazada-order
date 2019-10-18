@@ -18,7 +18,7 @@ router.post("/lazada/order", function (req, res) {
     const pwd = req.body.pwd;
     const skuObj = req.body.sku && JSON.parse(req.body.sku);
 
-    logger.info('sku参数已经收到 ' + JSON.stringify(req.body))
+    logger.info('sku参数已经收到 ' + JSON.stringify(req.body));
 
     try {
         (async () => {
@@ -36,6 +36,8 @@ router.post("/lazada/order", function (req, res) {
                 width: 1500,
                 height: 900
             });
+
+            logger.info('准备跳转到详情页');
 
             // 先跳转至详情页，再弹出登录框
             await page.goto(detailUrl, {
@@ -68,12 +70,6 @@ router.post("/lazada/order", function (req, res) {
             // 自动拖动滑块验证
             // await handleSide(page)
 
-            // let isError = await page.$('.errloading');
-            // if (!!isError) {
-            //     await page.tap('.errloading a');
-            //     await handleSide(page)
-            // }
-
             // 监听到导航栏url变化时，当登录成功时跳转到详情页
             // if (page.url() === loginUrl) {
             //     console.log('=>准备登录');
@@ -92,11 +88,12 @@ router.post("/lazada/order", function (req, res) {
             //     }
             // }
 
+            logger.info('开始整理sku信息');
+
             // 选择sku信息
             let classArr = await handleSku(page, skuObj);
 
-            logger.info('sku全部信息已经处理完 ' + classArr);
-
+            logger.info('sku全部信息已经整理完 ' + JSON.stringify(classArr));
 
             // 先处理除图片sku属性
             let idx = 0;
@@ -109,14 +106,14 @@ router.post("/lazada/order", function (req, res) {
             // 处理图片sku，由于图片元素没有title属性，比较复杂单独分析
             let imgSkuArr = classArr[idx];
 
-            logger.info('sku图片信息 ' + imgSkuArr);
+            logger.info('sku图片信息 ' + JSON.stringify(imgSkuArr));
 
             await handleImgTap(page, imgSkuArr, skuObj, idx);
 
             let newClassArr = JSON.parse(JSON.stringify(classArr));
             newClassArr.splice(idx, 1);
 
-            logger.info('sku除图片信息sku ' + newClassArr);
+            logger.info('sku除图片信息sku ' + JSON.stringify(newClassArr));
 
             for (let i = 0; i < newClassArr.length; i++) {
                 for (let j = 0; j < newClassArr[i].length; j++) {
@@ -170,7 +167,7 @@ router.post("/lazada/order", function (req, res) {
                 }
             }
 
-            logger.info('登录iframe弹框已捕捉')
+            logger.info('登录iframe弹框已捕捉');
 
             // 自动填充账号密码
             let accountEl = '.mod-input-loginName input';
@@ -204,7 +201,7 @@ router.post("/lazada/order", function (req, res) {
                 await frame.tap('.mod-login-btn button');
             }
 
-            await handleSide(page, frame)
+            // await handleSide(page, frame)
 
 
             // 等待下单页面加载
