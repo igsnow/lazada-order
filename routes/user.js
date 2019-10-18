@@ -135,7 +135,6 @@ router.post("/lazada/order", function (req, res) {
                 logger.info('sku信息(无图) ' + JSON.stringify(newClassArr));
             }
 
-
             logger.info('开始点击无图sku');
             for (let i = 0; i < newClassArr.length; i++) {
                 for (let j = 0; j < newClassArr[i].length; j++) {
@@ -172,11 +171,9 @@ router.post("/lazada/order", function (req, res) {
 
             // 若购买按钮存在则点击购买
             let buyBtnElClass = '.pdp-button_theme_yellow';
-            let isBuyBtn = await page.$(buyBtnElClass);
-            if (!!isBuyBtn) {
-                await page.tap(buyBtnElClass);
-                logger.info('已点击购买按钮')
-            }
+            await page.waitForSelector(buyBtnElClass);
+            await page.tap(buyBtnElClass);
+            logger.info('已点击购买按钮');
 
             try {
                 logger.info('开始捕捉登录iframe弹框');
@@ -206,7 +203,7 @@ router.post("/lazada/order", function (req, res) {
 
             logger.info('账号已经填写');
 
-            await frame.waitFor(1000);
+            await frame.waitFor(1500);
 
             await frame.waitForSelector(pwdEl);
             await frame.focus(pwdEl);
@@ -230,7 +227,7 @@ router.post("/lazada/order", function (req, res) {
                 logger.info('点击登录按钮，显示拖动滑块')
             }
 
-            // await handleSide(page, frame)
+            await handleSide(page, frame);
 
 
             // 等待下单页面加载
@@ -257,10 +254,10 @@ router.post("/lazada/order", function (req, res) {
             let payMethodBtn = await page.$(payMethodElId);
             logger.info('等待货到付款支付按钮');
             await page.tap(payMethodElId);
-            logger.info('货到付款按钮已点击')
+            logger.info('货到付款按钮已点击');
 
-            // 关闭浏览器
-            // await browser.close();
+            await browser.close();
+            logger.info('关闭浏览器')
 
         })();
     } catch (e) {
