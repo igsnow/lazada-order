@@ -178,10 +178,9 @@ router.post("/lazada/order", function (req, res) {
                 logger.info('已点击购买按钮')
             }
 
-
             try {
                 logger.info('开始捕捉登录iframe弹框');
-                await page.$('.mod-login-dialog-warp');
+                await page.waitForSelector('.next-overlay-inner');
                 // 获取元素内部的登录iframe
                 const url = await page.$eval('.login-iframe', el => el.getAttribute('src'));
                 const frames = await page.frames();
