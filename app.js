@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require('body-parser');
 const createError = require('http-errors');
 const path = require('path');
 const cors = require('cors');
@@ -27,8 +26,6 @@ app.use(cors({
     alloweHeaders: ['Content-Type', 'Authorization']  //指定header
 }));
 app.use(logger('dev'));
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
