@@ -27,10 +27,10 @@ app.use(cors({
     alloweHeaders: ['Content-Type', 'Authorization']  //指定header
 }));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-// app.use(express.json());
-// app.use(express.urlencoded({extended: false}));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/user', userRouter);

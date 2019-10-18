@@ -10,9 +10,6 @@ router.post("/lazada/order", function (req, res) {
     const pwd = req.body.pwd;
     const skuObj = req.body.sku && JSON.parse(req.body.sku);
 
-    console.log('=>已接收到参数')
-
-
     (async () => {
         const browser = await puppeteer.launch({
             headless: false,                     // 是否显示浏览器
@@ -28,7 +25,6 @@ router.post("/lazada/order", function (req, res) {
             width: 1500,
             height: 900
         });
-
 
         // 先跳转至详情页，再弹出登录框
         await page.goto(detailUrl, {
