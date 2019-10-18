@@ -46,7 +46,7 @@ router.post("/lazada/order", function (req, res) {
                 });
             } catch (e) {
                 logger.level = "ERROR";
-                logger.error('跳转详情页超时');
+                logger.error(e);
                 return
             }
 
@@ -189,7 +189,7 @@ router.post("/lazada/order", function (req, res) {
                 logger.info('登录iframe弹框已捕捉');
             } catch (e) {
                 logger.level = "ERROR";
-                logger.error('捕捉iframe登录弹框失败');
+                logger.error(e);
                 return
             }
 
