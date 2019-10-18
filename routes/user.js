@@ -2,6 +2,14 @@ const puppeteer = require('puppeteer');
 const express = require('express');
 const router = express.Router();
 
+const log4js = require('log4js');
+log4js.configure({
+    appenders: {cheese: {type: 'file', filename: 'cheese.log'}},
+    categories: {default: {appenders: ['cheese'], level: 'info'}}
+});
+
+const logger = log4js.getLogger('cheese');
+
 const loginUrl = 'https://member.lazada.com.my/user/login?spm=a2o4k.home.header.d5.1f062e7e5nKtIB&redirect=https%3A%2F%2Fwww.lazada.com.my%2F%3Fspm%3Da2o4k.login_signup.header.dhome.4d3f49fb8YhnCt';
 
 router.post("/lazada/order", function (req, res) {
@@ -9,6 +17,8 @@ router.post("/lazada/order", function (req, res) {
     const account = req.body.account;
     const pwd = req.body.pwd;
     const skuObj = req.body.sku && JSON.parse(req.body.sku);
+
+    logger.info('sku参数已经收到' + JSON.stringify(req.body))
 
     (async () => {
         const browser = await puppeteer.launch({
@@ -30,6 +40,8 @@ router.post("/lazada/order", function (req, res) {
         await page.goto(detailUrl, {
             waitUntil: 'load'
         });
+
+        logger.info('已经跳转到详情页');
 
 
         // await page.goto(loginUrl, {
@@ -55,35 +67,36 @@ router.post("/lazada/order", function (req, res) {
         // 自动拖动滑块验证
         // await handleSide(page)
 
-        let isError = await page.$('.errloading');
-        if (!!isError) {
-            console.log('=>滑块报错了');
-            await page.tap('.errloading a');
-            console.log('=>已刷新');
-            await handleSide(page)
-        }
+        // let isError = await page.$('.errloading');
+        // if (!!isError) {
+        //     console.log('=>滑块报错了');
+        //     await page.tap('.errloading a');
+        //     console.log('=>已刷新');
+        //     await handleSide(page)
+        // }
 
         // 监听到导航栏url变化时，当登录成功时跳转到详情页
-        if (page.url() === loginUrl) {
-            console.log('=>准备登录');
-            while (true) {
-                await page.waitForNavigation({
-                    waitUntil: 'domcontentloaded'
-                });
-                if (page.url() !== loginUrl) {
-                    console.log('=>登录成功！即将跳转详情页');
-                    await page.goto(detailUrl, {
-                        waitUntil: 'load'
-                    });
-                    console.log('=>已跳转至详情页');
-                    break;
-                }
-            }
-        }
+        // if (page.url() === loginUrl) {
+        //     console.log('=>准备登录');
+        //     while (true) {
+        //         await page.waitForNavigation({
+        //             waitUntil: 'domcontentloaded'
+        //         });
+        //         if (page.url() !== loginUrl) {
+        //             console.log('=>登录成功！即将跳转详情页');
+        //             await page.goto(detailUrl, {
+        //                 waitUntil: 'load'
+        //             });
+        //             console.log('=>已跳转至详情页');
+        //             break;
+        //         }
+        //     }
+        // }
 
         // 选择sku信息
         let classArr = await handleSku(page, skuObj);
-        console.log(classArr)
+
+        logger.info('sku全部信息已经处理完 ' + classArr);
 
 
         // 先处理除图片sku属性
@@ -96,35 +109,37 @@ router.post("/lazada/order", function (req, res) {
 
         // 处理图片sku，由于图片元素没有title属性，比较复杂单独分析
         let imgSkuArr = classArr[idx];
-        // console.log(imgSkuArr);
+
+        logger.info('sku图片信息 ' + imgSkuArr);
 
         await handleImgTap(page, imgSkuArr, skuObj, idx);
 
         let newClassArr = JSON.parse(JSON.stringify(classArr));
         newClassArr.splice(idx, 1);
-        // console.log(newClassArr);
+
+        logger.info('sku除图片信息sku ' + newClassArr);
 
         for (let i = 0; i < newClassArr.length; i++) {
             for (let j = 0; j < newClassArr[i].length; j++) {
                 if (newClassArr[i][j] && newClassArr[i][j].className) {
                     // 若sku属性禁用，则不再操作
                     if (newClassArr[i][j].className.indexOf('disabled') > -1) {
-                        console.log('sku disabled ' + i + ' ' + j)
+                        logger.info('sku disabled ' + i + ' ' + j)
                         continue
                     }
                     // 若已经默认选中，但值不是想要的值，则跳过
                     if (newClassArr[i][j].className.indexOf('selected') > -1 && newClassArr[i][j].title !== newClassArr[i][j].value) {
-                        console.log('sku default selected error ' + i + ' ' + j)
+                        logger.info('sku default selected error ' + i + ' ' + j)
                         continue
                     }
                     // 若已经默认选中，则不再操作且值是想要的值，则不再操作
                     if (newClassArr[i][j].className.indexOf('selected') > -1 && newClassArr[i][j].title === newClassArr[i][j].value) {
-                        console.log('sku default selected success ' + i + ' ' + j)
+                        logger.info('sku default selected success ' + i + ' ' + j)
                         break
                     }
                     // 若sku的当前option与预设的sku的value值相同，则点击
                     if (newClassArr[i][j].title === newClassArr[i][j].value) {
-                        console.log('sku selected success ' + i + ' ' + j)
+                        logger.info('sku selected success ' + i + ' ' + j)
                         await page.$eval('.sku-prop .' + newClassArr[i][j].className + ':nth-child(' + (j + 1) + ')', el => el.click());
                         break
                     }
@@ -134,13 +149,14 @@ router.post("/lazada/order", function (req, res) {
 
         // 填充商品数量
         await page.$eval('.next-number-picker-input input', (input, num) => input.value = num, skuObj.Quantity);
+        logger.info('商品数量已经填写');
 
         // 若购买按钮存在则点击购买
         let buyBtnElClass = '.pdp-button_theme_yellow';
         let isBuyBtn = await page.$(buyBtnElClass);
         if (!!isBuyBtn) {
             await page.tap(buyBtnElClass);
-            console.log('=>已跳转至结算页')
+            logger.info('已跳转至结算页')
         }
 
         // 等iframe的wrap出现
@@ -155,6 +171,8 @@ router.post("/lazada/order", function (req, res) {
             }
         }
 
+        logger.info('登录iframe弹框已捕捉')
+
         // 自动填充账号密码
         let accountEl = '.mod-input-loginName input';
         let pwdEl = '.mod-input-password input';
@@ -163,11 +181,15 @@ router.post("/lazada/order", function (req, res) {
         await frame.focus(accountEl);
         await page.keyboard.type(account);
 
+        logger.info('账号已经填写');
+
         await frame.waitFor(1000);
 
         await frame.waitForSelector(pwdEl);
         await frame.focus(pwdEl);
         await page.keyboard.type(pwd);
+
+        logger.info('密码已经填写');
 
         // await frame.waitForSelector(accountEl);
         // frame.type(accountEl, account, {delay: 5});
@@ -188,10 +210,10 @@ router.post("/lazada/order", function (req, res) {
         // 进入到订单页面点击下单按钮
         let OrderElClass = '.automation-checkout-order-total-button-button';
         let isOrderBtn = await page.$(OrderElClass);
-        console.log('=>等待下单按钮出现')
+        logger.info('等待下单按钮出现');
         if (!!isOrderBtn) {
             await page.tap(OrderElClass);
-            console.log('=>已跳转至支付页面')
+            logger.info('下单按钮已点击，等待跳转支付页面')
         }
 
         // 等待付款页面加载
@@ -202,9 +224,9 @@ router.post("/lazada/order", function (req, res) {
         // 选择货到付款方式
         let payMethodElId = '#automation-payment-method-item-130'
         let payMethodBtn = await page.$(payMethodElId);
-        console.log(payMethodBtn.className);
+        logger.info('等待货到付款支付按钮');
         await page.tap(payMethodElId);
-        console.log('点击货到付款按钮')
+        logger.info('货到付款按钮已点击')
 
         // 关闭浏览器
         // await browser.close();
@@ -270,17 +292,17 @@ router.post("/lazada/order", function (req, res) {
         for (let i = 0; i < imgSkuArr.length; i++) {
             // 若sku属性禁用，则跳过
             if (imgSkuArr[i].className.indexOf('disabled') > -1) {
-                console.log('img disabled ' + i)
+                logger.info('img disabled ' + i)
                 continue
             }
             // 若已经默认选中，但值不是想要的值，则跳过
             if (imgSkuArr[i].className.indexOf('selected') > -1 && imgSkuArr[i].skuName !== imgSkuArr[i].value) {
-                console.log('img default selected error ' + i)
+                logger.info('img default selected error ' + i)
                 continue
             }
             // 若已经默认选中，且值是想要的值，则不再操作
             if (imgSkuArr[i].className.indexOf('selected') > -1 && imgSkuArr[i].skuName === imgSkuArr[i].value) {
-                console.log('img default selected success ' + i)
+                logger.info('img default selected success ' + i)
                 break
             }
             await page.$eval('.sku-prop .sku-variable-img-wrap' + ':nth-child(' + (i + 1) + ')', el => el.click());
@@ -288,9 +310,8 @@ router.post("/lazada/order", function (req, res) {
             // 点击之后，重新获取当前元素的skuName，判断是否与期望一致
             let classArr = await handleSku(page, skuObj);
             let imgSkuArr2 = classArr[idx];
-            // console.log(imgSkuArr2);
             if (imgSkuArr2[i].skuName === imgSkuArr2[i].value) {
-                console.log('img selected success ' + i)
+                logger.info('img selected success ' + i)
                 break
             }
         }
