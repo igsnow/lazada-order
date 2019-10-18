@@ -99,12 +99,14 @@ router.post("/lazada/order", function (req, res) {
             let idx = 0;
             let hasImgSku = false;
             for (let i = 0; i < classArr.length; i++) {
-                if (classArr[i] && classArr[i].className && classArr[i].className.includes('sku-variable-img-wrap')) {
+                if (classArr[i] && classArr[i].className && classArr[i].className.indexOf('sku-variable-img-wrap')) {
                     idx = i;
                     hasImgSku = true;
                     break
                 }
             }
+
+            logger.info('hasSKu ' + hasImgSku)
 
             // 如果有图片sku
             let newClassArr;
