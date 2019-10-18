@@ -95,40 +95,36 @@ router.post("/lazada/order", function (req, res) {
 
             logger.info('开始整理sku信息');
 
-            // 选择sku信息
+            // 收集sku信息
             let classArr = await handleSku(page, skuObj);
 
             logger.info('sku全部信息已经整理完 ' + JSON.stringify(classArr));
 
-            // 先处理除图片sku属性
+            // 判断是否有图片sku且重置默认点击
             let idx = 0;
             let hasImgSku = false;
             for (let i = 0; i < classArr.length; i++) {
-                if (classArr[i] && classArr[i].className && classArr[i].className.indexOf('sku-variable-img-wrap')) {
-                    idx = i;
-                    hasImgSku = true;
-                    break
+                for (let j = 0; j < classArr[i].length; j++) {
+                    if (classArr[i] && classArr[i][j] && classArr[i][j].className && classArr[i][j].className.indexOf('sku-variable-img-wrap') > -1) {
+                        idx = i;
+                        hasImgSku = true;
+                    }
+                    if (classArr[i] && classArr[i][j] && classArr[i][j].className && classArr[i][j].className.indexOf('selected') > -1) {
+                        await page.$eval('.sku-prop .' + classArr[i][j].className, el => el.click());
+                    }
                 }
             }
 
-            logger.level = 'WARN';
-            logger.warn('是否有图片sku ' + hasImgSku);
+            logger.info('是否有图片sku信息 ' + hasImgSku + ' ' + idx);
 
-            // 如果有图片sku
-            let newClassArr;
-            if (hasImgSku) {
-                // 处理图片sku，由于图片元素没有title属性，比较复杂单独分析
-                let imgSkuArr = classArr[idx];
-                logger.info('图片sku信息 ' + JSON.stringify(imgSkuArr));
-                logger.info('开始点击图片sku');
-                await handleImgTap(page, imgSkuArr, skuObj, idx);
-                newClassArr = JSON.parse(JSON.stringify(classArr));
-                newClassArr.splice(idx, 1);
-                logger.info('sku除图片信息sku ' + JSON.stringify(newClassArr));
-            } else {
-                newClassArr = classArr;
-                logger.info('sku信息(无图) ' + JSON.stringify(newClassArr));
-            }
+            // 处理图片sku，由于图片元素没有title属性，比较复杂单独分析
+            let imgSkuArr = classArr[idx];
+            logger.info('图片sku信息 ' + JSON.stringify(imgSkuArr));
+            logger.info('开始点击图片sku');
+            await handleImgTap(page, imgSkuArr, skuObj, idx);
+            let newClassArr = JSON.parse(JSON.stringify(classArr));
+            newClassArr.splice(idx, 1);
+            logger.info('sku除图片信息sku ' + JSON.stringify(newClassArr));
 
             for (let i = 0; i < newClassArr.length; i++) {
                 for (let j = 0; j < newClassArr[i].length; j++) {
@@ -290,7 +286,7 @@ router.post("/lazada/order", function (req, res) {
                         className: optionArr[j].className,
                         title: optionArr[j].title || '',
                         skuName: skuName || '',
-                        value: skuObj[title] || skuObj['Color']
+                        value: skuObj[title] || skuObj['Color'] || ''
                     })
                 }
                 classArr.push(itemArr)
@@ -313,17 +309,17 @@ router.post("/lazada/order", function (req, res) {
         for (let i = 0; i < imgSkuArr.length; i++) {
             // 若sku属性禁用，则跳过
             if (imgSkuArr[i].className.indexOf('disabled') > -1) {
-                logger.info('img disabled ' + i)
+                logger.info('img disabled ' + i);
                 continue
             }
             // 若已经默认选中，但值不是想要的值，则跳过
             if (imgSkuArr[i].className.indexOf('selected') > -1 && imgSkuArr[i].skuName !== imgSkuArr[i].value) {
-                logger.info('img default selected error ' + i)
+                logger.info('img default selected error ' + i);
                 continue
             }
             // 若已经默认选中，且值是想要的值，则不再操作
             if (imgSkuArr[i].className.indexOf('selected') > -1 && imgSkuArr[i].skuName === imgSkuArr[i].value) {
-                logger.info('img default selected success ' + i)
+                logger.info('img default selected success ' + i);
                 break
             }
             await page.$eval('.sku-prop .sku-variable-img-wrap' + ':nth-child(' + (i + 1) + ')', el => el.click());
@@ -331,6 +327,9 @@ router.post("/lazada/order", function (req, res) {
             // 点击之后，重新获取当前元素的skuName，判断是否与期望一致
             let classArr = await handleSku(page, skuObj);
             let imgSkuArr2 = classArr[idx];
+
+            logger.level = "INFO";
+            logger.info('imgSkuArr2 ' + JSON.stringify(imgSkuArr2));
             if (imgSkuArr2[i].skuName === imgSkuArr2[i].value) {
                 logger.info('img selected success ' + i)
                 break
