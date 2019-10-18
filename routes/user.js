@@ -46,7 +46,8 @@ router.post("/lazada/order", function (req, res) {
                 });
             } catch (e) {
                 logger.level = "ERROR";
-                logger.error('跳转详情页超时')
+                logger.error('跳转详情页超时');
+                return
             }
 
             logger.info('已经跳转到详情页');
@@ -174,19 +175,24 @@ router.post("/lazada/order", function (req, res) {
                 logger.info('已跳转至结算页')
             }
 
-            // 等iframe的wrap出现
-            await page.$('.mod-login-dialog-warp');
 
-            // 获取元素内部的登录iframe
-            const url = await page.$eval('.login-iframe', el => el.getAttribute('src'));
-            const frames = await page.frames();
-            for (let i of frames) {
-                if (url.includes(i.url())) {
-                    var frame = i;
+            try {
+                logger.info('开始捕捉登录iframe弹框');
+                await page.$('.mod-login-dialog-warp');
+                // 获取元素内部的登录iframe
+                const url = await page.$eval('.login-iframe', el => el.getAttribute('src'));
+                const frames = await page.frames();
+                for (let i of frames) {
+                    if (url.includes(i.url())) {
+                        var frame = i;
+                    }
                 }
+                logger.info('登录iframe弹框已捕捉');
+            } catch (e) {
+                logger.level = "ERROR";
+                logger.error('捕捉iframe登录弹框失败');
+                return
             }
-
-            logger.info('登录iframe弹框已捕捉');
 
             // 自动填充账号密码
             let accountEl = '.mod-input-loginName input';
@@ -218,6 +224,8 @@ router.post("/lazada/order", function (req, res) {
             let isLoginBtnWrap = await frame.$('.mod-login-btn');
             if (!!isLoginBtnWrap) {
                 await frame.tap('.mod-login-btn button');
+                logger.level = "INFO";
+                logger.info('点击登录按钮，显示拖动滑块')
             }
 
             // await handleSide(page, frame)
