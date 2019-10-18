@@ -198,7 +198,13 @@ router.post("/lazada/order", function (req, res) {
             // await frame.waitFor(1000);
 
 
-            // await handleSide(page)
+            // 如果开始是登录按钮，不是滑块，则先点击登录按钮
+            let isLoginBtnWrap = await frame.$('.mod-login-btn');
+            if (!!isLoginBtnWrap) {
+                await frame.tap('.mod-login-btn button');
+            }
+
+            await handleSide(page, frame)
 
 
             // 等待下单页面加载
@@ -238,12 +244,12 @@ router.post("/lazada/order", function (req, res) {
 
 
     // 滑块处理函数
-    async function handleSide(page) {
+    async function handleSide(page, frame) {
         // 拖动验证滑块
-        const start = await page.waitForSelector('.nc_iconfont.btn_slide');
+        const start = await frame.waitForSelector('.nc_iconfont.btn_slide');
         const startInfo = await start.boundingBox();
 
-        const end = await page.waitForSelector('.nc-lang-cnt');
+        const end = await frame.waitForSelector('.nc-lang-cnt');
         const endInfo = await end.boundingBox();
 
         await page.mouse.move(startInfo.x, endInfo.y);
@@ -272,7 +278,7 @@ router.post("/lazada/order", function (req, res) {
                         className: optionArr[j].className,
                         title: optionArr[j].title || '',
                         skuName: skuName || '',
-                        value: parseValue(title, skuObj)
+                        value: skuObj[title] || skuObj['Color']
                     })
                 }
                 classArr.push(itemArr)
