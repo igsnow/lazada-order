@@ -24,7 +24,7 @@ router.post("/lazada/order", function (req, res) {
     try {
         (async () => {
             const browser = await puppeteer.launch({
-                headless: true,                     // 是否显示浏览器
+                headless: false,                     // 是否显示浏览器
                 args: ['--start-maximized', '--no-sandbox', '--disable-setuid-sandbox']          // 是否全屏显示
             });
             const page = await browser.newPage();
@@ -174,7 +174,8 @@ router.post("/lazada/order", function (req, res) {
 
             // 填充商品数量
             await page.$eval('.next-number-picker-input input', (input, num) => input.value = num, skuObj.Quantity);
-            logger.info('商品数量已经填写');
+            let numVal = await page.$eval('.next-number-picker-input input', el => el.value);
+            logger.info('商品数量已经填写 ' + numVal);
 
 
             // 若购买按钮存在则点击购买
