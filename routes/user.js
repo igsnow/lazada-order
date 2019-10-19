@@ -11,6 +11,7 @@ log4js.configure({
 const logger = log4js.getLogger('cheese');
 
 const loginUrl = 'https://member.lazada.com.my/user/login?spm=a2o4k.home.header.d5.1f062e7e5nKtIB&redirect=https%3A%2F%2Fwww.lazada.com.my%2F%3Fspm%3Da2o4k.login_signup.header.dhome.4d3f49fb8YhnCt';
+const errorUrl = 'https://bixi.alicdn.com/punish/10815.html?uuid=b44a49ab29180ddc34fcf36a129cd1ad';
 
 router.post("/lazada/order", function (req, res) {
     const detailUrl = req.body.detailUrl;
@@ -23,8 +24,8 @@ router.post("/lazada/order", function (req, res) {
     try {
         (async () => {
             const browser = await puppeteer.launch({
-                headless: false,                     // 是否显示浏览器
-                args: ['--start-maximized']          // 是否全屏显示
+                headless: true,                     // 是否显示浏览器
+                args: ['--start-maximized', '--no-sandbox', '--disable-setuid-sandbox']          // 是否全屏显示
             });
             const page = await browser.newPage();
             await page.evaluateOnNewDocument(() => {
@@ -44,14 +45,21 @@ router.post("/lazada/order", function (req, res) {
                 await page.goto(detailUrl, {
                     waitUntil: 'load'
                 });
+                if (page.url() === errorUrl) {
+                    // 如果跳转到异常页面，则抛出异常
+                    logger.level = "ERROR";
+                    logger.error('爬虫被检测到，已跳转到异常页面');
+                    let errHtml = await page.$eval('#block-lzd-page-title', el => el.innerHTML);
+                    logger.info(errHtml);
+                    return
+                } else {
+                    logger.info('已经跳转到详情页');
+                }
             } catch (e) {
                 logger.level = "ERROR";
                 logger.error(e);
                 return
             }
-
-            logger.info('已经跳转到详情页');
-
 
             // await page.goto(loginUrl, {
             //     waitUntil: 'domcontentloaded'
