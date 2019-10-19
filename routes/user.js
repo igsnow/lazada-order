@@ -178,11 +178,13 @@ router.post("/lazada/order", function (req, res) {
             logger.info('商品数量已经填写 ' + numVal);
 
 
+            await page.waitFor(1000);
             // 若购买按钮存在则点击购买
             let buyBtnElClass = '.pdp-button_theme_yellow';
             await page.waitForSelector(buyBtnElClass);
             await page.tap(buyBtnElClass);
             logger.info('已点击购买按钮');
+
 
             try {
                 logger.info('开始捕捉登录iframe弹框');
