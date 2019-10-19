@@ -193,7 +193,7 @@ router.post("/lazada/order", function (req, res) {
                 const url = await page.$eval('.login-iframe', el => el.getAttribute('src'));
                 const frames = await page.frames();
                 for (let i of frames) {
-                    if (url.includes(i.url())) {
+                    if (i.url().indexOf(url)) {
                         var frame = i;
                     }
                 }
@@ -252,21 +252,31 @@ router.post("/lazada/order", function (req, res) {
             // await frame.waitFor(1000);
 
 
-            // 如果开始是登录按钮，不是滑块，则先点击登录按钮
-            let isLoginBtnWrap = await frame.$('.mod-login-btn');
-            if (!!isLoginBtnWrap) {
-                await frame.tap('.mod-login-btn button');
-                logger.level = "INFO";
-                logger.info('点击登录按钮，显示拖动滑块')
+            try {
+                // 如果开始是登录按钮，不是滑块，则先点击登录按钮
+                let isLoginBtnWrap = await frame.$('.mod-login-btn');
+                if (!!isLoginBtnWrap) {
+                    await frame.tap('.mod-login-btn button');
+                    logger.level = "INFO";
+                    logger.info('点击登录按钮，显示拖动滑块')
+                }
+            } catch (e) {
+                logger.warn('没有登录按钮，直接拖动')
+            } finally {
+                await handleSide(page, frame);
             }
 
-            await handleSide(page, frame);
 
+            try {
+                // 等待下单页面加载
+                await page.waitForNavigation({
+                    waitUntil: 'domcontentloaded'
+                });
+            } catch (e) {
+                logger.error(e);
+                return
+            }
 
-            // 等待下单页面加载
-            await page.waitForNavigation({
-                waitUntil: 'domcontentloaded'
-            });
 
             // 进入到订单页面点击下单按钮
             let OrderElClass = '.automation-checkout-order-total-button-button';
@@ -311,10 +321,10 @@ router.post("/lazada/order", function (req, res) {
         await page.mouse.move(startInfo.x, endInfo.y);
         await page.mouse.down();
 
-        logger.info('开始拖动滑块');
+        logger.info('开始拖动滑块 ' + endInfo.y);
 
         for (let i = 0; i < endInfo.width; i = i + 5) {
-            await page.mouse.move(startInfo.x + i, endInfo.y);
+            await page.mouse.move(startInfo.x + i, 2000);   // endInfo.y
         }
         await page.mouse.up();
     }
