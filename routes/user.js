@@ -50,7 +50,7 @@ router.post("/lazada/order", function (req, res) {
                     logger.level = "ERROR";
                     logger.error('爬虫被检测到，已跳转到异常页面');
                     let errHtml = await page.$eval('#block-lzd-page-title', el => el.innerHTML);
-                    logger.info(errHtml);
+                    logger.info('异常页面html: ' + errHtml);
                     return
                 } else {
                     logger.info('已经跳转到详情页');
@@ -258,7 +258,7 @@ router.post("/lazada/order", function (req, res) {
             });
 
             // 选择货到付款方式
-            let payMethodElId = '#automation-payment-method-item-130'
+            let payMethodElId = '#automation-payment-method-item-130';
             let payMethodBtn = await page.$(payMethodElId);
             logger.info('等待货到付款支付按钮');
             await page.tap(payMethodElId);
@@ -285,6 +285,8 @@ router.post("/lazada/order", function (req, res) {
 
         await page.mouse.move(startInfo.x, endInfo.y);
         await page.mouse.down();
+
+        logger.info('开始拖动滑块');
 
         for (let i = 0; i < endInfo.width; i = i + 5) {
             await page.mouse.move(startInfo.x + i, endInfo.y);
