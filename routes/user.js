@@ -24,7 +24,7 @@ router.post("/lazada/order", function (req, res) {
     try {
         (async () => {
             const browser = await puppeteer.launch({
-                headless: false,                     // 是否显示浏览器
+                headless: true,                     // 是否显示浏览器
                 args: ['--start-maximized', '--no-sandbox', '--disable-setuid-sandbox']          // 是否全屏显示
             });
             const page = await browser.newPage();
@@ -197,46 +197,52 @@ router.post("/lazada/order", function (req, res) {
                         var frame = i;
                     }
                 }
-                logger.info('登录iframe弹框已捕捉');
+                logger.info('登录iframe弹框已捕捉 ' + frame);
             } catch (e) {
                 logger.level = "ERROR";
                 logger.error(e);
                 return
             }
 
-
             // 自动填充账号密码
             let accountEl = '.mod-input-loginName input';
             let pwdEl = '.mod-input-password input';
 
-            await frame.waitForSelector(accountEl);
-            await frame.focus(accountEl);
-            await page.keyboard.type(account);
 
-
-            let accountVal = await frame.$eval(accountEl, el => el.value);
-            logger.info('账号已经填写 ' + accountVal);
-
-            if (accountVal !== account) {
-                logger.level = 'ERROR';
-                logger.error('账号输入有误');
+            try {
+                await frame.waitForSelector(accountEl);
+                await frame.focus(accountEl);
+                await page.keyboard.type(account);
+                let accountVal = await frame.$eval(accountEl, el => el.value);
+                logger.info('账号已经填写 ' + accountVal);
+                if (accountVal !== account) {
+                    logger.level = 'ERROR';
+                    logger.error('账号输入有误');
+                    return
+                }
+            } catch (e) {
+                logger.error(e);
                 return
             }
 
-            await frame.waitFor(1500);
+            // await frame.waitFor(1500);
 
-            await frame.waitForSelector(pwdEl);
-            await frame.focus(pwdEl);
-            await page.keyboard.type(pwd);
-
-            let pwdVal = await frame.$eval(pwdEl, el => el.value);
-            logger.info('密码已经填写 ' + pwdVal);
-
-            if (pwdVal !== pwd) {
-                logger.level = 'ERROR';
-                logger.error('密码输入有误');
+            try {
+                await frame.waitForSelector(pwdEl);
+                await frame.focus(pwdEl);
+                await page.keyboard.type(pwd);
+                let pwdVal = await frame.$eval(pwdEl, el => el.value);
+                logger.info('密码已经填写 ' + pwdVal);
+                if (pwdVal !== pwd) {
+                    logger.level = 'ERROR';
+                    logger.error('密码输入有误');
+                    return
+                }
+            } catch (e) {
+                logger.error(e);
                 return
             }
+
 
             // await frame.waitForSelector(accountEl);
             // frame.type(accountEl, account, {delay: 5});
