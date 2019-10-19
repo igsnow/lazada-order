@@ -177,12 +177,12 @@ router.post("/lazada/order", function (req, res) {
             let numVal = await page.$eval('.next-number-picker-input input', el => el.value);
             logger.info('商品数量已经填写 ' + numVal);
 
-
-            await page.waitFor(1000);
             // 若购买按钮存在则点击购买
             let buyBtnElClass = '.pdp-button_theme_yellow';
             await page.waitForSelector(buyBtnElClass);
-            await page.tap(buyBtnElClass);
+            await page.$eval(buyBtnElClass, el => el.click());
+
+            // await page.tap(buyBtnElClass);
             logger.info('已点击购买按钮');
 
 
@@ -204,6 +204,7 @@ router.post("/lazada/order", function (req, res) {
                 return
             }
 
+
             // 自动填充账号密码
             let accountEl = '.mod-input-loginName input';
             let pwdEl = '.mod-input-password input';
@@ -212,7 +213,15 @@ router.post("/lazada/order", function (req, res) {
             await frame.focus(accountEl);
             await page.keyboard.type(account);
 
-            logger.info('账号已经填写');
+
+            let accountVal = await frame.$eval(accountEl, el => el.value);
+            logger.info('账号已经填写 ' + accountVal);
+
+            if (accountVal !== account) {
+                logger.level = 'ERROR';
+                logger.error('账号输入有误');
+                return
+            }
 
             await frame.waitFor(1500);
 
@@ -220,7 +229,14 @@ router.post("/lazada/order", function (req, res) {
             await frame.focus(pwdEl);
             await page.keyboard.type(pwd);
 
-            logger.info('密码已经填写');
+            let pwdVal = await frame.$eval(pwdEl, el => el.value);
+            logger.info('密码已经填写 ' + pwdVal);
+
+            if (pwdVal !== pwd) {
+                logger.level = 'ERROR';
+                logger.error('密码输入有误');
+                return
+            }
 
             // await frame.waitForSelector(accountEl);
             // frame.type(accountEl, account, {delay: 5});
