@@ -299,9 +299,9 @@ router.post("/lazada/order", function (req, res) {
                     waitUntil: 'domcontentloaded'
                 });
                 logger.info('等待货到付款支付按钮');
-                let payBtnId = '#automation-payment-method-item-130';
-                await page.waitForSelector(payBtnId);
-                let className = await page.$eval(payBtnId, el => el.className);
+                let payBtnClass = '.right-item';
+                await page.waitForSelector(payBtnClass);
+                let className = await page.$eval(payBtnClass, el => el.className);
                 if (className.indexOf('unavailable') > -1) {
                     logger.error('该订单不支持货到付款方式');
                     await browser.close();

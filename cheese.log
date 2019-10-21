@@ -663,3 +663,14 @@
 [2019-10-21T15:21:53.990] [INFO] cheese - 等待货到付款支付按钮
 [2019-10-21T15:21:54.303] [INFO] cheese - 货到付款按钮已点击
 [2019-10-21T15:21:54.755] [INFO] cheese - 下单完毕，关闭浏览器
+[2019-10-21T16:00:06.671] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-21T16:00:07.403] [INFO] cheese - 准备跳转到详情页
+[2019-10-21T16:00:37.405] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.goto (D:\lazada-order\node_modules\puppeteer\lib\Page.js:674:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:44:28
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-21T16:00:37.738] [INFO] cheese - 关闭浏览器
