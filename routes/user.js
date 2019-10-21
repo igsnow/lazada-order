@@ -23,7 +23,7 @@ router.post("/lazada/order", function (req, res) {
     try {
         (async () => {
             const browser = await puppeteer.launch({
-                headless: true,                     // 是否显示浏览器
+                headless: false,                     // 是否显示浏览器
                 args: ['--start-maximized', '--no-sandbox', '--disable-setuid-sandbox']          // 是否全屏显示
             });
             const page = await browser.newPage();
@@ -141,7 +141,11 @@ router.post("/lazada/order", function (req, res) {
                             // 若sku的当前option与预设的sku的value值相同，则点击
                             if (newClassArr[i][j].title === newClassArr[i][j].value) {
                                 logger.info('sku selected success ' + i + ' ' + j);
-                                await page.$eval('.sku-prop .' + newClassArr[i][j].className + ':nth-child(' + (j + 1) + ')', el => el.click());
+                                let val = await page.$eval('.sku-prop .' + newClassArr[i][j].className + ':nth-child(' + (j + 1) + ')', el => {
+                                    el.click();
+                                    return el.className
+                                });
+                                logger.info('className ' + val);
                                 break
                             }
                         }

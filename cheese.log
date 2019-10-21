@@ -174,3 +174,124 @@
 [2019-10-21T10:56:54.385] [INFO] cheese - sku selected success 0 1
 [2019-10-21T10:56:54.473] [INFO] cheese - 商品数量已经填写 3
 [2019-10-21T10:56:54.473] [ERROR] cheese - 商品填写数量与预期值不一致！关闭浏览器
+[2019-10-21T11:04:17.211] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-21T11:04:17.649] [INFO] cheese - 准备跳转到详情页
+[2019-10-21T11:04:47.651] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.goto (D:\lazada-order\node_modules\puppeteer\lib\Page.js:674:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:44:28
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-21T11:04:47.904] [INFO] cheese - 关闭浏览器
+[2019-10-21T11:05:32.372] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-21T11:05:32.714] [INFO] cheese - 准备跳转到详情页
+[2019-10-21T11:06:02.715] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.goto (D:\lazada-order\node_modules\puppeteer\lib\Page.js:674:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:44:28
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-21T11:06:03.137] [INFO] cheese - 关闭浏览器
+[2019-10-21T11:06:18.400] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-21T11:06:18.735] [INFO] cheese - 准备跳转到详情页
+[2019-10-21T11:06:48.742] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.goto (D:\lazada-order\node_modules\puppeteer\lib\Page.js:674:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:44:28
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-21T11:06:49.029] [INFO] cheese - 关闭浏览器
+[2019-10-21T11:07:15.334] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-21T11:07:15.655] [INFO] cheese - 准备跳转到详情页
+[2019-10-21T11:07:45.656] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.goto (D:\lazada-order\node_modules\puppeteer\lib\Page.js:674:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:44:28
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-21T11:07:45.943] [INFO] cheese - 关闭浏览器
+[2019-10-21T11:09:00.962] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-21T11:09:01.316] [INFO] cheese - 准备跳转到详情页
+[2019-10-21T11:09:31.319] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.goto (D:\lazada-order\node_modules\puppeteer\lib\Page.js:674:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:44:28
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-21T11:09:31.643] [INFO] cheese - 关闭浏览器
+[2019-10-21T11:10:12.285] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-21T11:10:12.604] [INFO] cheese - 准备跳转到详情页
+[2019-10-21T11:10:42.606] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.goto (D:\lazada-order\node_modules\puppeteer\lib\Page.js:674:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:44:28
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-21T11:10:42.921] [INFO] cheese - 关闭浏览器
+[2019-10-21T11:14:56.194] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-21T11:14:56.549] [INFO] cheese - 准备跳转到详情页
+[2019-10-21T11:15:26.552] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.goto (D:\lazada-order\node_modules\puppeteer\lib\Page.js:674:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:44:28
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-21T11:15:26.909] [INFO] cheese - 关闭浏览器
+[2019-10-21T11:16:04.399] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-21T11:16:04.760] [INFO] cheese - 准备跳转到详情页
+[2019-10-21T11:16:34.763] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.goto (D:\lazada-order\node_modules\puppeteer\lib\Page.js:674:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:44:28
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-21T11:16:35.107] [INFO] cheese - 关闭浏览器
+[2019-10-21T11:17:02.038] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-21T11:17:02.400] [INFO] cheese - 准备跳转到详情页
+[2019-10-21T11:17:32.403] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.goto (D:\lazada-order\node_modules\puppeteer\lib\Page.js:674:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:44:28
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-21T11:17:32.690] [INFO] cheese - 关闭浏览器
+[2019-10-21T11:18:05.608] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-21T11:18:05.937] [INFO] cheese - 准备跳转到详情页
+[2019-10-21T11:18:35.938] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.goto (D:\lazada-order\node_modules\puppeteer\lib\Page.js:674:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:44:28
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-21T11:18:36.317] [INFO] cheese - 关闭浏览器
+[2019-10-21T11:19:41.669] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-21T11:19:42.344] [INFO] cheese - 准备跳转到详情页
+[2019-10-21T11:20:12.347] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.goto (D:\lazada-order\node_modules\puppeteer\lib\Page.js:674:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:44:28
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-21T11:20:12.801] [INFO] cheese - 关闭浏览器
