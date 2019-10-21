@@ -23,7 +23,7 @@ router.post("/lazada/order", function (req, res) {
     try {
         (async () => {
             const browser = await puppeteer.launch({
-                headless: false,                     // 是否显示浏览器
+                headless: true,                     // 是否显示浏览器
                 args: ['--start-maximized', '--no-sandbox', '--disable-setuid-sandbox']          // 是否全屏显示
             });
             const page = await browser.newPage();
