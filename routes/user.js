@@ -81,7 +81,7 @@ router.post("/lazada/order", function (req, res) {
                         }
                         if (classArr[i] && classArr[i][j] && classArr[i][j].className && classArr[i][j].className.indexOf('selected') > -1) {
                             await page.$eval('.sku-prop .' + classArr[i][j].className, el => el.click());
-                            logger.info('已重置sku默认点击');
+                            logger.info('第' + i + 1 + '个sku已重置sku默认点击');
                         }
                     }
                 }
