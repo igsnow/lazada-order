@@ -69,20 +69,27 @@ router.post("/lazada/order", function (req, res) {
 
             logger.info('sku全部信息已经整理完 ' + JSON.stringify(classArr));
 
-
             // 判断是否有图片sku且重置默认点击
             let idx = 0;
             let hasImgSku = false;
-            for (let i = 0; i < classArr.length; i++) {
-                for (let j = 0; j < classArr[i].length; j++) {
-                    if (classArr[i] && classArr[i][j] && classArr[i][j].className && classArr[i][j].className.indexOf('sku-variable-img-wrap') > -1) {
-                        idx = i;
-                        hasImgSku = true;
-                    }
-                    if (classArr[i] && classArr[i][j] && classArr[i][j].className && classArr[i][j].className.indexOf('selected') > -1) {
-                        await page.$eval('.sku-prop .' + classArr[i][j].className, el => el.click());
+            try {
+                for (let i = 0; i < classArr.length; i++) {
+                    for (let j = 0; j < classArr[i].length; j++) {
+                        if (classArr[i] && classArr[i][j] && classArr[i][j].className && classArr[i][j].className.indexOf('sku-variable-img-wrap') > -1) {
+                            idx = i;
+                            hasImgSku = true;
+                        }
+                        if (classArr[i] && classArr[i][j] && classArr[i][j].className && classArr[i][j].className.indexOf('selected') > -1) {
+                            await page.$eval('.sku-prop .' + classArr[i][j].className, el => el.click());
+                            logger.info('已重置sku默认点击');
+                        }
                     }
                 }
+            } catch (e) {
+                logger.error(e);
+                await browser.close();
+                logger.info('关闭浏览器');
+                return
             }
 
             logger.info('是否有图片sku信息 ' + hasImgSku + ' ' + idx);
@@ -94,7 +101,15 @@ router.post("/lazada/order", function (req, res) {
                 let imgSkuArr = classArr[idx];
                 logger.info('图片sku信息 ' + JSON.stringify(imgSkuArr));
                 logger.info('开始点击图片sku');
-                await handleImgTap(page, imgSkuArr, skuObj, idx);
+                try {
+                    // 点击图片sku
+                    await handleImgTap(page, imgSkuArr, skuObj, idx);
+                } catch (e) {
+                    logger.error(e);
+                    await browser.close();
+                    logger.info('关闭浏览器');
+                    return
+                }
                 newClassArr = JSON.parse(JSON.stringify(classArr));
                 newClassArr.splice(idx, 1);
                 logger.info('sku除图片信息sku ' + JSON.stringify(newClassArr));
@@ -103,33 +118,40 @@ router.post("/lazada/order", function (req, res) {
                 logger.info('sku信息(无图) ' + JSON.stringify(newClassArr));
             }
 
-            logger.info('开始点击无图sku');
-            for (let i = 0; i < newClassArr.length; i++) {
-                for (let j = 0; j < newClassArr[i].length; j++) {
-                    if (newClassArr[i][j] && newClassArr[i][j].className) {
-                        // 若sku属性禁用，则不再操作
-                        if (newClassArr[i][j].className.indexOf('disabled') > -1) {
-                            logger.info('sku disabled ' + i + ' ' + j);
-                            continue
-                        }
-                        // 若已经默认选中，但值不是想要的值，则跳过
-                        if (newClassArr[i][j].className.indexOf('selected') > -1 && newClassArr[i][j].title !== newClassArr[i][j].value) {
-                            logger.info('sku default selected error ' + i + ' ' + j);
-                            continue
-                        }
-                        // 若已经默认选中，则不再操作且值是想要的值，则不再操作
-                        if (newClassArr[i][j].className.indexOf('selected') > -1 && newClassArr[i][j].title === newClassArr[i][j].value) {
-                            logger.info('sku default selected success ' + i + ' ' + j);
-                            break
-                        }
-                        // 若sku的当前option与预设的sku的value值相同，则点击
-                        if (newClassArr[i][j].title === newClassArr[i][j].value) {
-                            logger.info('sku selected success ' + i + ' ' + j);
-                            await page.$eval('.sku-prop .' + newClassArr[i][j].className + ':nth-child(' + (j + 1) + ')', el => el.click());
-                            break
+            try {
+                logger.info('开始点击无图sku');
+                for (let i = 0; i < newClassArr.length; i++) {
+                    for (let j = 0; j < newClassArr[i].length; j++) {
+                        if (newClassArr[i][j] && newClassArr[i][j].className) {
+                            // 若sku属性禁用，则不再操作
+                            if (newClassArr[i][j].className.indexOf('disabled') > -1) {
+                                logger.info('sku disabled ' + i + ' ' + j);
+                                continue
+                            }
+                            // 若已经默认选中，但值不是想要的值，则跳过
+                            if (newClassArr[i][j].className.indexOf('selected') > -1 && newClassArr[i][j].title !== newClassArr[i][j].value) {
+                                logger.info('sku default selected error ' + i + ' ' + j);
+                                continue
+                            }
+                            // 若已经默认选中，则不再操作且值是想要的值，则不再操作
+                            if (newClassArr[i][j].className.indexOf('selected') > -1 && newClassArr[i][j].title === newClassArr[i][j].value) {
+                                logger.info('sku default selected success ' + i + ' ' + j);
+                                break
+                            }
+                            // 若sku的当前option与预设的sku的value值相同，则点击
+                            if (newClassArr[i][j].title === newClassArr[i][j].value) {
+                                logger.info('sku selected success ' + i + ' ' + j);
+                                await page.$eval('.sku-prop .' + newClassArr[i][j].className + ':nth-child(' + (j + 1) + ')', el => el.click());
+                                break
+                            }
                         }
                     }
                 }
+            } catch (e) {
+                logger.error(e);
+                await browser.close();
+                logger.info('关闭浏览器');
+                return
             }
 
             try {
