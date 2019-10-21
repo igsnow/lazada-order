@@ -51,56 +51,17 @@ router.post("/lazada/order", function (req, res) {
                     logger.error('爬虫被检测到，已跳转到异常页面');
                     let errHtml = await page.$eval('#block-lzd-page-title', el => el.innerHTML);
                     logger.info('异常页面html: ' + errHtml);
-                    return
+                    await browser.close();
+                    logger.info('关闭浏览器')
                 } else {
                     logger.info('已经跳转到详情页');
                 }
             } catch (e) {
                 logger.level = "ERROR";
                 logger.error(e);
-                return
+                await browser.close();
+                logger.info('关闭浏览器')
             }
-
-            // await page.goto(loginUrl, {
-            //     waitUntil: 'domcontentloaded'
-            // });
-            //
-            // // 自动填入账号密码
-            // let accountEl = '.mod-input-loginName input';
-            // let pwdEl = '.mod-input-password input';
-            // await page.waitForSelector(accountEl);
-            // page.type(accountEl, account, {delay: 8});
-            // await page.waitFor(1000);
-            // await page.waitForSelector(pwdEl);
-            // page.type(pwdEl, pwd, {delay: 8});
-            // await page.waitFor(1000);
-            //
-            // // 如果开始是登录按钮，不是滑块，则先点击登录按钮
-            // let isLoginBtnWrap = await page.$('.mod-login-btn');
-            // if (!!isLoginBtnWrap) {
-            //     await page.tap('.mod-login-btn button');
-            // }
-
-            // 自动拖动滑块验证
-            // await handleSide(page)
-
-            // 监听到导航栏url变化时，当登录成功时跳转到详情页
-            // if (page.url() === loginUrl) {
-            //     console.log('=>准备登录');
-            //     while (true) {
-            //         await page.waitForNavigation({
-            //             waitUntil: 'domcontentloaded'
-            //         });
-            //         if (page.url() !== loginUrl) {
-            //             console.log('=>登录成功！即将跳转详情页');
-            //             await page.goto(detailUrl, {
-            //                 waitUntil: 'load'
-            //             });
-            //             console.log('=>已跳转至详情页');
-            //             break;
-            //         }
-            //     }
-            // }
 
             logger.info('开始整理sku信息');
 
@@ -154,17 +115,17 @@ router.post("/lazada/order", function (req, res) {
                         }
                         // 若已经默认选中，但值不是想要的值，则跳过
                         if (newClassArr[i][j].className.indexOf('selected') > -1 && newClassArr[i][j].title !== newClassArr[i][j].value) {
-                            logger.info('sku default selected error ' + i + ' ' + j)
+                            logger.info('sku default selected error ' + i + ' ' + j);
                             continue
                         }
                         // 若已经默认选中，则不再操作且值是想要的值，则不再操作
                         if (newClassArr[i][j].className.indexOf('selected') > -1 && newClassArr[i][j].title === newClassArr[i][j].value) {
-                            logger.info('sku default selected success ' + i + ' ' + j)
+                            logger.info('sku default selected success ' + i + ' ' + j);
                             break
                         }
                         // 若sku的当前option与预设的sku的value值相同，则点击
                         if (newClassArr[i][j].title === newClassArr[i][j].value) {
-                            logger.info('sku selected success ' + i + ' ' + j)
+                            logger.info('sku selected success ' + i + ' ' + j);
                             await page.$eval('.sku-prop .' + newClassArr[i][j].className + ':nth-child(' + (j + 1) + ')', el => el.click());
                             break
                         }
@@ -181,10 +142,7 @@ router.post("/lazada/order", function (req, res) {
             let buyBtnElClass = '.pdp-button_theme_yellow';
             await page.waitForSelector(buyBtnElClass);
             await page.$eval(buyBtnElClass, el => el.click());
-
-            // await page.tap(buyBtnElClass);
             logger.info('已点击购买按钮');
-
 
             try {
                 logger.info('开始捕捉登录iframe弹框');
@@ -201,13 +159,13 @@ router.post("/lazada/order", function (req, res) {
             } catch (e) {
                 logger.level = "ERROR";
                 logger.error(e);
-                return
+                await browser.close();
+                logger.info('关闭浏览器')
             }
 
             // 自动填充账号密码
             let accountEl = '.mod-input-loginName input';
             let pwdEl = '.mod-input-password input';
-
 
             try {
                 await frame.waitForSelector(accountEl);
@@ -218,14 +176,14 @@ router.post("/lazada/order", function (req, res) {
                 if (accountVal !== account) {
                     logger.level = 'ERROR';
                     logger.error('账号输入有误');
-                    return
+                    await browser.close();
+                    logger.info('关闭浏览器')
                 }
             } catch (e) {
                 logger.error(e);
-                return
+                await browser.close();
+                logger.info('关闭浏览器')
             }
-
-            // await frame.waitFor(1500);
 
             try {
                 await frame.waitForSelector(pwdEl);
@@ -236,21 +194,14 @@ router.post("/lazada/order", function (req, res) {
                 if (pwdVal !== pwd) {
                     logger.level = 'ERROR';
                     logger.error('密码输入有误');
-                    return
+                    await browser.close();
+                    logger.info('关闭浏览器')
                 }
             } catch (e) {
                 logger.error(e);
-                return
+                await browser.close();
+                logger.info('关闭浏览器')
             }
-
-
-            // await frame.waitForSelector(accountEl);
-            // frame.type(accountEl, account, {delay: 5});
-            // await frame.waitFor(1000);
-            // await frame.waitForSelector(pwdEl);
-            // frame.type(pwdEl, pwd, {delay: 5});
-            // await frame.waitFor(1000);
-
 
             try {
                 // 如果开始是登录按钮，不是滑块，则先点击登录按钮
@@ -274,9 +225,9 @@ router.post("/lazada/order", function (req, res) {
                 });
             } catch (e) {
                 logger.error(e);
-                return
+                await browser.close();
+                logger.info('关闭浏览器')
             }
-
 
             // 进入到订单页面点击下单按钮
             let OrderElClass = '.automation-checkout-order-total-button-button';
@@ -321,7 +272,7 @@ router.post("/lazada/order", function (req, res) {
         await page.mouse.move(startInfo.x, endInfo.y);
         await page.mouse.down();
 
-        logger.info('开始拖动滑块 ' + endInfo.y);
+        logger.info('开始拖动滑块，预期拖动值： ' + endInfo.y);
 
         for (let i = 0; i < endInfo.width; i = i + 5) {
             await page.mouse.move(startInfo.x + i, 2000);   // endInfo.y
