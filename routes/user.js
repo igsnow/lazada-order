@@ -319,6 +319,19 @@ router.post("/lazada/order", function (req, res) {
                 return
             }
 
+            try {
+                logger.info('等待确认订单按钮');
+                let confirmBtnClass = '.btn-place-order-wrap button';
+                await page.waitForSelector(confirmBtnClass);
+                await page.$eval(confirmBtnClass, el => el.click());
+                logger.info('确认订单按钮已点击');
+            } catch (e) {
+                logger.error(e);
+                await browser.close();
+                logger.info('关闭浏览器');
+                return
+            }
+
             await browser.close();
             logger.info('下单完毕，关闭浏览器');
             successMsg();
