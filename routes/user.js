@@ -181,10 +181,10 @@ router.post("/lazada/order", function (req, res) {
                 return
             }
 
+            // 自动填充账号密码
+            let accountEl = '.mod-input-loginName input';
+            let pwdEl = '.mod-input-password input';
             try {
-                // 自动填充账号密码
-                let accountEl = '.mod-input-loginName input';
-                let pwdEl = '.mod-input-password input';
                 await frame.waitForSelector(accountEl);
                 await frame.focus(accountEl);
                 await page.keyboard.type(account);
