@@ -308,7 +308,7 @@ router.post("/lazada/order", function (req, res) {
                     logger.info('关闭浏览器');
                     return
                 } else {
-                    await page.$eval(payBtnId, el => el.click());
+                    await page.$eval(payBtnClass, el => el.click());
                     logger.info('货到付款按钮已点击');
                 }
             } catch (e) {
