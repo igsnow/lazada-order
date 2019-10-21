@@ -10,7 +10,6 @@ log4js.configure({
 
 const logger = log4js.getLogger('cheese');
 
-const loginUrl = 'https://member.lazada.com.my/user/login?spm=a2o4k.home.header.d5.1f062e7e5nKtIB&redirect=https%3A%2F%2Fwww.lazada.com.my%2F%3Fspm%3Da2o4k.login_signup.header.dhome.4d3f49fb8YhnCt';
 const errorUrl = 'https://bixi.alicdn.com/punish/10815.html?uuid=b44a49ab29180ddc34fcf36a129cd1ad';
 
 router.post("/lazada/order", function (req, res) {
@@ -47,7 +46,6 @@ router.post("/lazada/order", function (req, res) {
                 });
                 if (page.url() === errorUrl) {
                     // 如果跳转到异常页面，则抛出异常
-                    logger.level = "ERROR";
                     logger.error('爬虫被检测到，已跳转到异常页面');
                     let errHtml = await page.$eval('#block-lzd-page-title', el => el.innerHTML);
                     logger.info('异常页面html: ' + errHtml);
@@ -57,7 +55,6 @@ router.post("/lazada/order", function (req, res) {
                     logger.info('已经跳转到详情页');
                 }
             } catch (e) {
-                logger.level = "ERROR";
                 logger.error(e);
                 await browser.close();
                 logger.info('关闭浏览器')
@@ -133,16 +130,32 @@ router.post("/lazada/order", function (req, res) {
                 }
             }
 
-            // 填充商品数量
-            await page.$eval('.next-number-picker-input input', (input, num) => input.value = num, skuObj.Quantity);
-            let numVal = await page.$eval('.next-number-picker-input input', el => el.value);
-            logger.info('商品数量已经填写 ' + numVal);
+            try {
+                // 填充商品数量
+                await page.$eval('.next-number-picker-input input', (input, num) => input.value = num, skuObj.Quantity);
+                let numVal = await page.$eval('.next-number-picker-input input', el => el.value);
+                logger.info('商品数量已经填写 ' + numVal);
+                if (numVal !== skuObj.Quantity) {
+                    logger.error('商品填写数量与预期值不一致！关闭浏览器');
+                    await browser.close();
+                }
+            } catch (e) {
+                logger.error(e);
+                await browser.close();
+                logger.info('关闭浏览器')
+            }
 
-            // 若购买按钮存在则点击购买
-            let buyBtnElClass = '.pdp-button_theme_yellow';
-            await page.waitForSelector(buyBtnElClass);
-            await page.$eval(buyBtnElClass, el => el.click());
-            logger.info('已点击购买按钮');
+            try {
+                // 若购买按钮存在则点击购买
+                let buyBtnElClass = '.pdp-button_theme_yellow';
+                await page.waitForSelector(buyBtnElClass);
+                await page.$eval(buyBtnElClass, el => el.click());
+                logger.info('已点击购买按钮');
+            } catch (e) {
+                logger.error(e);
+                await browser.close();
+                logger.info('关闭浏览器')
+            }
 
             try {
                 logger.info('开始捕捉登录iframe弹框');
@@ -157,24 +170,21 @@ router.post("/lazada/order", function (req, res) {
                 }
                 logger.info('登录iframe弹框已捕捉 ' + frame);
             } catch (e) {
-                logger.level = "ERROR";
                 logger.error(e);
                 await browser.close();
                 logger.info('关闭浏览器')
             }
 
-            // 自动填充账号密码
-            let accountEl = '.mod-input-loginName input';
-            let pwdEl = '.mod-input-password input';
-
             try {
+                // 自动填充账号密码
+                let accountEl = '.mod-input-loginName input';
+                let pwdEl = '.mod-input-password input';
                 await frame.waitForSelector(accountEl);
                 await frame.focus(accountEl);
                 await page.keyboard.type(account);
                 let accountVal = await frame.$eval(accountEl, el => el.value);
                 logger.info('账号已经填写 ' + accountVal);
                 if (accountVal !== account) {
-                    logger.level = 'ERROR';
                     logger.error('账号输入有误');
                     await browser.close();
                     logger.info('关闭浏览器')
@@ -192,7 +202,6 @@ router.post("/lazada/order", function (req, res) {
                 let pwdVal = await frame.$eval(pwdEl, el => el.value);
                 logger.info('密码已经填写 ' + pwdVal);
                 if (pwdVal !== pwd) {
-                    logger.level = 'ERROR';
                     logger.error('密码输入有误');
                     await browser.close();
                     logger.info('关闭浏览器')
@@ -208,7 +217,6 @@ router.post("/lazada/order", function (req, res) {
                 let isLoginBtnWrap = await frame.$('.mod-login-btn');
                 if (!!isLoginBtnWrap) {
                     await frame.tap('.mod-login-btn button');
-                    logger.level = "INFO";
                     logger.info('点击登录按钮，显示拖动滑块')
                 }
             } catch (e) {
@@ -217,45 +225,47 @@ router.post("/lazada/order", function (req, res) {
                 await handleSide(page, frame);
             }
 
-
             try {
                 // 等待下单页面加载
                 await page.waitForNavigation({
                     waitUntil: 'domcontentloaded'
                 });
+                // 进入到订单页面点击下单按钮
+                let OrderElClass = '.automation-checkout-order-total-button-button';
+                let isOrderBtn = await page.$(OrderElClass);
+                logger.info('等待下单按钮出现');
+                if (!!isOrderBtn) {
+                    await page.tap(OrderElClass);
+                    logger.info('下单按钮已点击，等待跳转支付页面')
+                }
             } catch (e) {
                 logger.error(e);
                 await browser.close();
                 logger.info('关闭浏览器')
             }
 
-            // 进入到订单页面点击下单按钮
-            let OrderElClass = '.automation-checkout-order-total-button-button';
-            let isOrderBtn = await page.$(OrderElClass);
-            logger.info('等待下单按钮出现');
-            if (!!isOrderBtn) {
-                await page.tap(OrderElClass);
-                logger.info('下单按钮已点击，等待跳转支付页面')
+            try {
+                // 等待付款页面加载
+                await page.waitForNavigation({
+                    waitUntil: 'domcontentloaded'
+                });
+                // 选择货到付款方式
+                let payMethodElId = '#automation-payment-method-item-130';
+                let payMethodBtn = await page.$(payMethodElId);
+                logger.info('等待货到付款支付按钮');
+                await page.tap(payMethodElId);
+                logger.info('货到付款按钮已点击');
+            } catch (e) {
+                logger.error(e);
+                await browser.close();
+                logger.info('关闭浏览器')
             }
 
-            // 等待付款页面加载
-            await page.waitForNavigation({
-                waitUntil: 'domcontentloaded'
-            });
-
-            // 选择货到付款方式
-            let payMethodElId = '#automation-payment-method-item-130';
-            let payMethodBtn = await page.$(payMethodElId);
-            logger.info('等待货到付款支付按钮');
-            await page.tap(payMethodElId);
-            logger.info('货到付款按钮已点击');
-
             await browser.close();
-            logger.info('关闭浏览器')
+            logger.info('下单完毕，关闭浏览器')
 
         })();
     } catch (e) {
-        logger.level = 'ERROR';
         logger.error(e)
     }
 
