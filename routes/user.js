@@ -147,7 +147,7 @@ router.post("/lazada/order", function (req, res) {
                                     let afterClassName = el.className;
                                     return {preClassName, afterClassName}
                                 });
-                                logger.info('selected sku className：' + JSON.stringify(val));
+                                logger.info('selected sku className: ' + JSON.stringify(val));
                                 let cname = val.afterClassName;
                                 if (cname.indexOf('selected') > -1) {
                                     logger.info('预期的无图sku有货');
@@ -173,8 +173,8 @@ router.post("/lazada/order", function (req, res) {
                 // 填充商品数量
                 await page.$eval('.next-number-picker-input input', (input, num) => input.value = num, skuObj.Quantity);
                 let numVal = await page.$eval('.next-number-picker-input input', el => el.value);
-                logger.info('商品数量已经填写 ' + numVal);
-                if (numVal !== skuObj.Quantity) {
+                logger.info('商品数量已经填写: ' + Number(numVal) + ',预期数量: ' + skuObj.Quantity);
+                if (Number(numVal) !== skuObj.Quantity) {
                     logger.error('商品填写数量与预期值不一致！关闭浏览器');
                     await browser.close();
                     return
@@ -210,7 +210,7 @@ router.post("/lazada/order", function (req, res) {
                         var frame = i;
                     }
                 }
-                logger.info('登录iframe弹框已捕捉 ' + frame);
+                logger.info('登录iframe弹框已捕捉，url: ' + url);
             } catch (e) {
                 logger.error(e);
                 await browser.close();
