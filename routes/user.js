@@ -103,7 +103,7 @@ router.post("/lazada/order", function (req, res) {
                 logger.info('开始点击图片sku');
                 try {
                     // 点击图片sku
-                    await handleImgTap(page, imgSkuArr, skuObj, idx);
+                    await handleImgTap(page, imgSkuArr, skuObj, idx, browser);
                 } catch (e) {
                     logger.error(e);
                     await browser.close();
@@ -226,7 +226,7 @@ router.post("/lazada/order", function (req, res) {
                 await frame.focus(accountEl);
                 await page.keyboard.type(account);
                 let accountVal = await frame.$eval(accountEl, el => el.value);
-                logger.info('账号已经填写 ' + accountVal);
+                logger.info('账号已经填写: ' + accountVal);
                 if (accountVal !== account) {
                     logger.error('账号输入有误');
                     await browser.close();
@@ -245,7 +245,7 @@ router.post("/lazada/order", function (req, res) {
                 await frame.focus(pwdEl);
                 await page.keyboard.type(pwd);
                 let pwdVal = await frame.$eval(pwdEl, el => el.value);
-                logger.info('密码已经填写 ' + pwdVal);
+                logger.info('密码已经填写: ' + pwdVal);
                 if (pwdVal !== pwd) {
                     logger.error('密码输入有误');
                     await browser.close();
@@ -377,7 +377,7 @@ router.post("/lazada/order", function (req, res) {
     }
 
     // 图片sku点击
-    async function handleImgTap(page, imgSkuArr, skuObj, idx) {
+    async function handleImgTap(page, imgSkuArr, skuObj, idx, browser) {
         for (let i = 0; i < imgSkuArr.length; i++) {
             // 若sku属性禁用，则跳过
             if (imgSkuArr[i].className.indexOf('disabled') > -1) {
@@ -402,6 +402,15 @@ router.post("/lazada/order", function (req, res) {
             logger.info('imgSkuArr2 ' + JSON.stringify(imgSkuArr2));
             if (imgSkuArr2[i].skuName === imgSkuArr2[i].value) {
                 logger.info('img selected success ' + i);
+                logger.info('选中图片sku的className: ' + imgSkuArr2[i].className);
+                if (imgSkuArr2[i].className && imgSkuArr2[i].className.indexOf('selected') > -1) {
+                    logger.info('预期的图片sku有货');
+                } else {
+                    logger.error('预期的图片sku无货');
+                    await browser.close();
+                    logger.info('关闭浏览器');
+                    return
+                }
                 break
             }
         }
