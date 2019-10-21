@@ -411,11 +411,12 @@ router.post("/lazada/order", function (req, res) {
         logger.error(e);
         await browser.close();
         logger.info('关闭浏览器');
+        errorMsg()
     }
 
     // 下单异常
-    function errorMsg(e) {
-        res.send({status: 500, msg: e})
+    function errorMsg() {
+        res.send({status: 500, msg: '下单异常'})
     }
 
     // 下单成功

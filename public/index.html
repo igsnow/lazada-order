@@ -101,10 +101,14 @@
                         sku: data.field.sku
                     },
                     success: function (res) {
-                        console.log(res);
+                        if (res.msg === '下单成功') {
+                            layer.msg('下单成功！继续下一单');
+                        }
                     },
                     error: function (res) {
-                        console.log(res);
+                        if (res.msg === '下单异常') {
+                            layer.msg('下单异常！继续下一单');
+                        }
                     }
                 })
             });
