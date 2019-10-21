@@ -48,18 +48,12 @@ router.post("/lazada/order", function (req, res) {
                     // 如果跳转到异常页面，则抛出异常
                     logger.error('爬虫被检测到，已跳转到异常页面');
                     let errHtml = await page.$eval('#block-lzd-page-title', el => el.innerHTML);
-                    logger.info('异常页面html: ' + errHtml);
-                    await browser.close();
-                    logger.info('关闭浏览器');
-                    return
+                    await handleBrowserClose('异常页面html: ' + errHtml, browser);
                 } else {
                     logger.info('已经跳转到详情页');
                 }
             } catch (e) {
-                logger.error(e);
-                await browser.close();
-                logger.info('关闭浏览器');
-                return
+                await handleBrowserClose(e, browser);
             }
 
             logger.info('开始整理sku信息');
@@ -86,10 +80,7 @@ router.post("/lazada/order", function (req, res) {
                     }
                 }
             } catch (e) {
-                logger.error(e);
-                await browser.close();
-                logger.info('关闭浏览器');
-                return
+                await handleBrowserClose(e, browser);
             }
 
             logger.info('是否有图片sku信息 ' + hasImgSku + ' ' + idx);
@@ -105,10 +96,7 @@ router.post("/lazada/order", function (req, res) {
                     // 点击图片sku
                     await handleImgTap(page, imgSkuArr, skuObj, idx, browser);
                 } catch (e) {
-                    logger.error(e);
-                    await browser.close();
-                    logger.info('关闭浏览器');
-                    return
+                    await handleBrowserClose(e, browser);
                 }
                 newClassArr = JSON.parse(JSON.stringify(classArr));
                 newClassArr.splice(idx, 1);
@@ -163,10 +151,7 @@ router.post("/lazada/order", function (req, res) {
                     }
                 }
             } catch (e) {
-                logger.error(e);
-                await browser.close();
-                logger.info('关闭浏览器');
-                return
+                await handleBrowserClose(e, browser);
             }
 
             try {
@@ -183,10 +168,7 @@ router.post("/lazada/order", function (req, res) {
                     return
                 }
             } catch (e) {
-                logger.error(e);
-                await browser.close();
-                logger.info('关闭浏览器');
-                return
+                await handleBrowserClose(e, browser);
             }
 
             try {
@@ -197,10 +179,7 @@ router.post("/lazada/order", function (req, res) {
                 await page.$eval(buyBtnClass, el => el.click());
                 logger.info('已点击购买按钮');
             } catch (e) {
-                logger.error(e);
-                await browser.close();
-                logger.info('关闭浏览器');
-                return
+                await handleBrowserClose(e, browser);
             }
 
             try {
@@ -216,10 +195,7 @@ router.post("/lazada/order", function (req, res) {
                 }
                 logger.info('登录iframe弹框已捕捉，url: ' + url);
             } catch (e) {
-                logger.error(e);
-                await browser.close();
-                logger.info('关闭浏览器');
-                return
+                await handleBrowserClose(e, browser);
             }
 
             // 自动填充账号密码
@@ -232,16 +208,10 @@ router.post("/lazada/order", function (req, res) {
                 let accountVal = await frame.$eval(accountEl, el => el.value);
                 logger.info('账号已经填写: ' + accountVal);
                 if (accountVal !== account) {
-                    logger.error('账号输入有误');
-                    await browser.close();
-                    logger.info('关闭浏览器');
-                    return
+                    await handleBrowserClose('账号输入有误', browser);
                 }
             } catch (e) {
-                logger.error(e);
-                await browser.close();
-                logger.info('关闭浏览器');
-                return
+                await handleBrowserClose(e, browser);
             }
 
             try {
@@ -251,16 +221,10 @@ router.post("/lazada/order", function (req, res) {
                 let pwdVal = await frame.$eval(pwdEl, el => el.value);
                 logger.info('密码已经填写: ' + pwdVal);
                 if (pwdVal !== pwd) {
-                    logger.error('密码输入有误');
-                    await browser.close();
-                    logger.info('关闭浏览器');
-                    return
+                    await handleBrowserClose('密码输入有误', browser);
                 }
             } catch (e) {
-                logger.error(e);
-                await browser.close();
-                logger.info('关闭浏览器');
-                return
+                await handleBrowserClose(e, browser);
             }
 
             try {
@@ -287,10 +251,7 @@ router.post("/lazada/order", function (req, res) {
                 await page.$eval(orderBtnClass, el => el.click());
                 logger.info('下单按钮已点击，等待跳转支付页面');
             } catch (e) {
-                logger.error(e);
-                await browser.close();
-                logger.info('关闭浏览器');
-                return
+                await handleBrowserClose(e, browser);
             }
 
             try {
@@ -302,21 +263,15 @@ router.post("/lazada/order", function (req, res) {
                 let payBtnClass = '.right-item';
                 await page.waitForSelector(payBtnClass);
                 let className = await page.$eval(payBtnClass, el => el.className);
-                logger.info('货到付款btn的className: ' + className);
+                logger.info('货到付款按钮的className: ' + className);
                 if (className.indexOf('unavailable') > -1) {
-                    logger.error('该订单不支持货到付款方式');
-                    await browser.close();
-                    logger.info('关闭浏览器');
-                    return
+                    await handleBrowserClose('该订单不支持货到付款方式', browser);
                 } else {
                     await page.$eval(payBtnClass, el => el.click());
                     logger.info('货到付款按钮已点击');
                 }
             } catch (e) {
-                logger.error(e);
-                await browser.close();
-                logger.info('关闭浏览器');
-                return
+                await handleBrowserClose(e, browser);
             }
 
             try {
@@ -326,10 +281,7 @@ router.post("/lazada/order", function (req, res) {
                 await page.$eval(confirmBtnClass, el => el.click());
                 logger.info('确认订单按钮已点击');
             } catch (e) {
-                logger.error(e);
-                await browser.close();
-                logger.info('关闭浏览器');
-                return
+                await handleBrowserClose(e, browser);
             }
 
             await browser.close();
@@ -340,7 +292,6 @@ router.post("/lazada/order", function (req, res) {
     } catch (e) {
         logger.error(e)
     }
-
 
     // 滑块处理函数
     async function handleSide(page, frame) {
@@ -436,6 +387,14 @@ router.post("/lazada/order", function (req, res) {
                 break
             }
         }
+    }
+
+    // 异常后退出浏览器
+    async function handleBrowserClose(e, browser) {
+        logger.error(e);
+        await browser.close();
+        logger.info('关闭浏览器');
+        return
     }
 
     // 下单异常
