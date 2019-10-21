@@ -416,12 +416,12 @@ router.post("/lazada/order", function (req, res) {
 
     // 下单异常
     function errorMsg() {
-        res.send({status: 500, msg: '下单异常'})
+        res.json({status: 500, msg: 'fail', title: '下单异常！'})
     }
 
     // 下单成功
     function successMsg() {
-        res.send({status: 200, msg: '下单成功'});
+        res.json({status: 200, msg: 'success', title: '下单成功！'});
     }
 
 });
