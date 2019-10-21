@@ -302,6 +302,7 @@ router.post("/lazada/order", function (req, res) {
                 let payBtnClass = '.right-item';
                 await page.waitForSelector(payBtnClass);
                 let className = await page.$eval(payBtnClass, el => el.className);
+                logger.info('货到付款btn的className: ' + className);
                 if (className.indexOf('unavailable') > -1) {
                     logger.error('该订单不支持货到付款方式');
                     await browser.close();
