@@ -50,14 +50,16 @@ router.post("/lazada/order", function (req, res) {
                     let errHtml = await page.$eval('#block-lzd-page-title', el => el.innerHTML);
                     logger.info('异常页面html: ' + errHtml);
                     await browser.close();
-                    logger.info('关闭浏览器')
+                    logger.info('关闭浏览器');
+                    return
                 } else {
                     logger.info('已经跳转到详情页');
                 }
             } catch (e) {
                 logger.error(e);
                 await browser.close();
-                logger.info('关闭浏览器')
+                logger.info('关闭浏览器');
+                return
             }
 
             logger.info('开始整理sku信息');
@@ -138,11 +140,13 @@ router.post("/lazada/order", function (req, res) {
                 if (numVal !== skuObj.Quantity) {
                     logger.error('商品填写数量与预期值不一致！关闭浏览器');
                     await browser.close();
+                    return
                 }
             } catch (e) {
                 logger.error(e);
                 await browser.close();
-                logger.info('关闭浏览器')
+                logger.info('关闭浏览器');
+                return
             }
 
             try {
@@ -154,7 +158,8 @@ router.post("/lazada/order", function (req, res) {
             } catch (e) {
                 logger.error(e);
                 await browser.close();
-                logger.info('关闭浏览器')
+                logger.info('关闭浏览器');
+                return
             }
 
             try {
@@ -172,7 +177,8 @@ router.post("/lazada/order", function (req, res) {
             } catch (e) {
                 logger.error(e);
                 await browser.close();
-                logger.info('关闭浏览器')
+                logger.info('关闭浏览器');
+                return
             }
 
             try {
@@ -187,12 +193,14 @@ router.post("/lazada/order", function (req, res) {
                 if (accountVal !== account) {
                     logger.error('账号输入有误');
                     await browser.close();
-                    logger.info('关闭浏览器')
+                    logger.info('关闭浏览器');
+                    return
                 }
             } catch (e) {
                 logger.error(e);
                 await browser.close();
-                logger.info('关闭浏览器')
+                logger.info('关闭浏览器');
+                return
             }
 
             try {
@@ -204,12 +212,14 @@ router.post("/lazada/order", function (req, res) {
                 if (pwdVal !== pwd) {
                     logger.error('密码输入有误');
                     await browser.close();
-                    logger.info('关闭浏览器')
+                    logger.info('关闭浏览器');
+                    return
                 }
             } catch (e) {
                 logger.error(e);
                 await browser.close();
-                logger.info('关闭浏览器')
+                logger.info('关闭浏览器');
+                return
             }
 
             try {
@@ -241,7 +251,8 @@ router.post("/lazada/order", function (req, res) {
             } catch (e) {
                 logger.error(e);
                 await browser.close();
-                logger.info('关闭浏览器')
+                logger.info('关闭浏览器');
+                return
             }
 
             try {
@@ -258,11 +269,12 @@ router.post("/lazada/order", function (req, res) {
             } catch (e) {
                 logger.error(e);
                 await browser.close();
-                logger.info('关闭浏览器')
+                logger.info('关闭浏览器');
+                return
             }
 
             await browser.close();
-            logger.info('下单完毕，关闭浏览器')
+            logger.info('下单完毕，关闭浏览器');
 
         })();
     } catch (e) {
