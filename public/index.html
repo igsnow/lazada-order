@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="lib/css/index.css">
     <script src="lib/layui/layui.js"></script>
     <script src="lib/js/jquery-3.3.1.min.js"></script>
+    <!--    <script src="lib/js/whiteList.js"></script>-->
 </head>
 <body>
 <div class="layui-container">
@@ -58,7 +59,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
+                <button class="layui-btn" lay-submit lay-filter="confirm">提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
@@ -67,6 +68,7 @@
 </body>
 <script>
     $(function () {
+
         // 账号、密码、链接默认值
         $('#accountIpt').val('716810918@qq.com');
         $('#pwdIpt').val('gyj388153@');
@@ -81,8 +83,8 @@
             let form = layui.form;
 
             //监听提交
-            form.on('submit(formDemo)', function (data) {
-                layer.msg(JSON.stringify(data.field));
+            form.on('submit(confirm)', function (data) {
+                layer.msg('请求已发送~');
                 $.ajax({
                     url: '/user/lazada/order',
                     type: 'POST',

@@ -627,3 +627,5 @@
     at D:\lazada-order\routes\user.js:44:28
     at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
 [2019-10-21T14:57:08.892] [INFO] cheese - 关闭浏览器
+[2019-10-21T14:59:24.284] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-21T14:59:24.720] [INFO] cheese - 准备跳转到详情页
