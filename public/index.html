@@ -14,6 +14,11 @@
     <h2 class="header">商品信息</h2>
     <form class="layui-form" action="">
         <div class="layui-form-item">
+            <div class="layui-input-block">
+                <a class="layui-btn" id="nameBtn">获取账号</a>
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">账号</label>
             <div class="layui-input-block">
                 <input id="accountIpt"
@@ -63,6 +68,7 @@
             </div>
         </div>
     </form>
+
 </div>
 </body>
 <script>
@@ -103,6 +109,24 @@
                 })
             });
         });
+
+        // 白名单随机获取账号
+        $('#nameBtn').click(function () {
+            $.ajax({
+                url: '/user/lazada/users',
+                type: 'GET',
+                dataType: 'json',
+                success: function (res) {
+                    if (res.msg === 'success') {
+                        $('#accountIpt').val(res.data.account);
+                        $('#pwdIpt').val(res.data.pwd);
+                    }
+                },
+                error: function (res) {
+                    console.log(res);
+                }
+            })
+        })
     })
 </script>
 </html>

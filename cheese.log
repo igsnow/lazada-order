@@ -884,3 +884,9 @@
 [2019-10-21T17:07:49.773] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
 [2019-10-21T17:07:56.173] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
 [2019-10-21T17:08:18.754] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-21T17:42:02.121] [INFO] cheese - 随机获取的账号: {"account":"10086@qq.com","pwd":"123456"}
+[2019-10-21T17:45:31.829] [INFO] cheese - 随机获取的账号: {"account":"10086@qq.com","pwd":"123456"}
+[2019-10-21T17:45:32.451] [INFO] cheese - 随机获取的账号: {"account":"10086@qq.com","pwd":"123456"}
+[2019-10-21T17:45:32.919] [INFO] cheese - 随机获取的账号: {"account":"716810918@qq.com","pwd":"gyj388153@"}
+[2019-10-21T17:47:33.569] [INFO] cheese - 随机获取的账号: {"account":"vcanbuy@qq.com","pwd":"vcb123"}
+[2019-10-21T17:48:08.678] [INFO] cheese - 随机获取的账号: {"account":"vcanbuy@qq.com","pwd":"vcb123"}

@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const express = require('express');
 const router = express.Router();
+const whiteList = require('../db/whiteList');
 
 const log4js = require('log4js');
 log4js.configure({
@@ -424,5 +425,15 @@ router.post("/lazada/order", function (req, res) {
 
 });
 
+router.get("/lazada/users", function (req, res) {
+    // 随机返回一个账号
+    let index = Math.floor((Math.random() * whiteList.length));
+    logger.info('随机获取的账号: ' + JSON.stringify(whiteList[index]));
+    res.json({
+        status: 200,
+        msg: 'success',
+        data: whiteList[index]
+    })
+});
 
 module.exports = router;
