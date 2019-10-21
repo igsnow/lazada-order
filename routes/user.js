@@ -81,7 +81,7 @@ router.post("/lazada/order", function (req, res) {
                         }
                         if (classArr[i] && classArr[i][j] && classArr[i][j].className && classArr[i][j].className.indexOf('selected') > -1) {
                             await page.$eval('.sku-prop .' + classArr[i][j].className, el => el.click());
-                            logger.info('第' + i + 1 + '个sku已重置sku默认点击');
+                            logger.info('第' + (i + 1) + '个sku已重置sku默认点击');
                         }
                     }
                 }
@@ -142,10 +142,21 @@ router.post("/lazada/order", function (req, res) {
                             if (newClassArr[i][j].title === newClassArr[i][j].value) {
                                 logger.info('sku selected success ' + i + ' ' + j);
                                 let val = await page.$eval('.sku-prop .' + newClassArr[i][j].className + ':nth-child(' + (j + 1) + ')', el => {
+                                    let preClassName = el.className;
                                     el.click();
-                                    return el.className
+                                    let afterClassName = el.className;
+                                    return {preClassName, afterClassName}
                                 });
-                                logger.info('className ' + val);
+                                logger.info('selected sku className：' + JSON.stringify(val));
+                                let cname = val.afterClassName;
+                                if (cname.indexOf('selected') > -1) {
+                                    logger.info('预期的无图sku有货');
+                                } else {
+                                    logger.error('预期的无图sku无货');
+                                    await browser.close();
+                                    logger.info('关闭浏览器');
+                                    return
+                                }
                                 break
                             }
                         }
@@ -301,6 +312,7 @@ router.post("/lazada/order", function (req, res) {
 
             await browser.close();
             logger.info('下单完毕，关闭浏览器');
+            successMsg();
 
         })();
     } catch (e) {
@@ -395,7 +407,16 @@ router.post("/lazada/order", function (req, res) {
         }
     }
 
-    res.send({status: 200, msg: 'post success'});
+    // 下单异常
+    function errorMsg(e) {
+        res.send({status: 500, msg: e})
+    }
+
+    // 下单成功
+    function successMsg() {
+        res.send({status: 200, msg: '下单成功'});
+    }
+
 });
 
 
