@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="layui-container">
-    <h1 class="header">sku</h1>
+    <h2 class="header">商品信息</h2>
     <form class="layui-form" action="">
         <div class="layui-form-item">
             <label class="layui-form-label">账号</label>
@@ -46,6 +46,17 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">SKU</label>
+            <div class="layui-input-block">
+                <input id="skuIpt"
+                       type="text"
+                       name="sku" required lay-verify="required"
+                       placeholder="请输入SKU"
+                       autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
@@ -53,7 +64,6 @@
         </div>
     </form>
 </div>
-<button style="margin:35px" class="layui-btn" id="btn">click</button>
 </body>
 <script>
     $(function () {
@@ -61,40 +71,36 @@
         $('#accountIpt').val('716810918@qq.com');
         $('#pwdIpt').val('gyj388153@');
         $('#detailUrlIpt').val('https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?');
-
+        $('#skuIpt').val(JSON.stringify({
+            Color: "White",
+            Size: "3XL",
+            Quantity: 3
+        }));
 
         layui.use('form', function () {
-            var form = layui.form;
+            let form = layui.form;
 
             //监听提交
             form.on('submit(formDemo)', function (data) {
                 layer.msg(JSON.stringify(data.field));
-                return false;
+                $.ajax({
+                    url: '/user/lazada/order',
+                    type: 'POST',
+                    data: {
+                        account: data.field.account,
+                        pwd: data.field.pwd,
+                        detailUrl: data.field.detailUrl,
+                        sku: data.field.sku
+                    },
+                    success: function (res) {
+                        console.log(res);
+                    },
+                    error: function (res) {
+                        console.log(res);
+                    }
+                })
             });
         });
-
-        $('#btn').click(function () {
-            $.ajax({
-                url: '/user/lazada/order',
-                type: 'POST',
-                data: {
-                    account: $('#accountIpt').val(),
-                    pwd: $('#pwdIpt').val(),
-                    detailUrl: $('#detailUrlIpt').val(),
-                    sku: JSON.stringify({
-                        Color: "White",
-                        Size: "3XL",
-                        Quantity: 3
-                    })
-                },
-                success: function (res) {
-                    console.log(res);
-                },
-                error: function (res) {
-                    console.log(res);
-                }
-            })
-        })
     })
 </script>
 </html>
