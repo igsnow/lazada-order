@@ -171,7 +171,10 @@ router.post("/lazada/order", function (req, res) {
 
             try {
                 // 填充商品数量
-                await page.$eval('.next-number-picker-input input', (input, num) => input.value = num, skuObj.Quantity);
+                logger.info('等待sku数量输入框');
+                let inputClass = '.next-number-picker-input input';
+                await page.waitForSelector(inputClass);
+                await page.$eval(inputClass, (input, num) => input.value = num, skuObj.Quantity);
                 let numVal = await page.$eval('.next-number-picker-input input', el => el.value);
                 logger.info('商品数量已经填写: ' + Number(numVal) + ',预期数量: ' + skuObj.Quantity);
                 if (Number(numVal) !== skuObj.Quantity) {
@@ -188,9 +191,10 @@ router.post("/lazada/order", function (req, res) {
 
             try {
                 // 若购买按钮存在则点击购买
-                let buyBtnElClass = '.pdp-button_theme_yellow';
-                await page.waitForSelector(buyBtnElClass);
-                await page.$eval(buyBtnElClass, el => el.click());
+                logger.info('等待购买按钮');
+                let buyBtnClass = '.pdp-button_theme_yellow';
+                await page.waitForSelector(buyBtnClass);
+                await page.$eval(buyBtnClass, el => el.click());
                 logger.info('已点击购买按钮');
             } catch (e) {
                 logger.error(e);
@@ -277,14 +281,11 @@ router.post("/lazada/order", function (req, res) {
                 await page.waitForNavigation({
                     waitUntil: 'domcontentloaded'
                 });
-                // 进入到订单页面点击下单按钮
-                let OrderElClass = '.automation-checkout-order-total-button-button';
-                let isOrderBtn = await page.$(OrderElClass);
-                logger.info('等待下单按钮出现');
-                if (!!isOrderBtn) {
-                    await page.tap(OrderElClass);
-                    logger.info('下单按钮已点击，等待跳转支付页面')
-                }
+                logger.info('等待下单按钮');
+                let orderBtnClass = '.automation-checkout-order-total-button-button';
+                await page.waitForSelector(orderBtnClass);
+                await page.$eval(orderBtnClass, el => el.click());
+                logger.info('下单按钮已点击，等待跳转支付页面');
             } catch (e) {
                 logger.error(e);
                 await browser.close();
@@ -297,12 +298,19 @@ router.post("/lazada/order", function (req, res) {
                 await page.waitForNavigation({
                     waitUntil: 'domcontentloaded'
                 });
-                // 选择货到付款方式
-                let payMethodElId = '#automation-payment-method-item-130';
-                let payMethodBtn = await page.$(payMethodElId);
                 logger.info('等待货到付款支付按钮');
-                await page.tap(payMethodElId);
-                logger.info('货到付款按钮已点击');
+                let payBtnId = '#automation-payment-method-item-130';
+                await page.waitForSelector(payBtnId);
+                let className = await page.$eval(payBtnId, el => el.className);
+                if (className.indexOf('unavailable') > -1) {
+                    logger.error('该订单不支持货到付款方式');
+                    await browser.close();
+                    logger.info('关闭浏览器');
+                    return
+                } else {
+                    await page.$eval(payBtnId, el => el.click());
+                    logger.info('货到付款按钮已点击');
+                }
             } catch (e) {
                 logger.error(e);
                 await browser.close();
