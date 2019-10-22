@@ -2,14 +2,13 @@ const puppeteer = require('puppeteer');
 const express = require('express');
 const router = express.Router();
 const whiteList = require('../db/whiteList');
-
 const log4js = require('log4js');
 log4js.configure({
     appenders: {cheese: {type: 'file', filename: 'cheese.log'}},
     categories: {default: {appenders: ['cheese'], level: 'info'}}
 });
-
 const logger = log4js.getLogger('cheese');
+
 
 const errorUrl = 'https://bixi.alicdn.com/punish/10815.html?uuid=b44a49ab29180ddc34fcf36a129cd1ad';
 
@@ -437,4 +436,15 @@ router.get("/lazada/users", function (req, res) {
     })
 });
 
-module.exports = router;
+module.exports = {
+    router, handleSocket: function (io) {
+        io.on('connection', function (socket) {
+            socket.emit('postMsg', 'igsnow');
+            // socket.on('postMsg', function (message) {
+            //     logger.log('info', message.value);
+            //     socket.emit('ditConsumer', message.value);
+            //     console.log('from console', message.value);
+            // });
+        });
+    }
+};

@@ -5,10 +5,21 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const ejs = require('ejs');
-
-const userRouter = require('./routes/user');
-
+const {router, handleSocket} = require('./routes/user');
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+handleSocket(io);
+
+io.on('connection', function (socket) {
+    console.log('a user connected');
+    socket.on('chat message', function (data) {
+        io.emit('chat message', data);
+    });
+    socket.on('disconnect', function () {
+        console.log('a user left');
+    })
+});
 
 app.all('*', function (req, res, next) {
     res.header("Access-Control-Allow-Credentials", "true");
@@ -30,7 +41,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/user', userRouter);
+app.use('/user', router);
 app.use(function (req, res, next) {
     next(createError(404));
 });
@@ -40,7 +51,7 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('index');
 });
-app.listen('1017', function (err) {
+server.listen('1017', function (err) {
     if (err) {
         console.log(err);
         throw err;
