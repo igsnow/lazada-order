@@ -1,9 +1,7 @@
 #!/usr/bin/env node
-
-const app = require('../app');
+const {app} = require('../app');
 const debug = require('debug')('server:server');
 const http = require('http');
-
 const port = normalizePort(process.env.PORT || '8012');
 app.set('port', port);
 

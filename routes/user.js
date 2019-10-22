@@ -8,8 +8,6 @@ log4js.configure({
     categories: {default: {appenders: ['cheese'], level: 'info'}}
 });
 const logger = log4js.getLogger('cheese');
-
-
 const errorUrl = 'https://bixi.alicdn.com/punish/10815.html?uuid=b44a49ab29180ddc34fcf36a129cd1ad';
 
 router.post("/lazada/order", function (req, res) {
@@ -19,6 +17,7 @@ router.post("/lazada/order", function (req, res) {
     const skuObj = req.body.sku && JSON.parse(req.body.sku);
 
     logger.info('sku参数已经收到 ' + JSON.stringify(req.body));
+
 
     try {
         (async () => {
@@ -436,15 +435,15 @@ router.get("/lazada/users", function (req, res) {
     })
 });
 
+// 导出到app.js的socket
+function handleSocket(io) {
+    io.on('connection', function (io) {
+        io.emit('postMsg', 'zzy');
+    });
+}
+
 module.exports = {
-    router, handleSocket: function (io) {
-        io.on('connection', function (socket) {
-            socket.emit('postMsg', 'igsnow');
-            // socket.on('postMsg', function (message) {
-            //     logger.log('info', message.value);
-            //     socket.emit('ditConsumer', message.value);
-            //     console.log('from console', message.value);
-            // });
-        });
-    }
+    router, handleSocket
 };
+
+

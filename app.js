@@ -9,6 +9,8 @@ const {router, handleSocket} = require('./routes/user');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+
+// user模块导出的socket
 handleSocket(io);
 
 io.on('connection', function (socket) {
@@ -17,7 +19,7 @@ io.on('connection', function (socket) {
         io.emit('chat message', data);
     });
     socket.on('disconnect', function () {
-        console.log('a user left');
+        io.emit('chat message', '走了一个');
     })
 });
 
@@ -59,4 +61,4 @@ server.listen('1017', function (err) {
     console.log('Server listening on port 1017!')
 });
 
-module.exports = app;
+module.exports = {app, io};
