@@ -8,8 +8,16 @@ let list = [
         pwd: '123456'
     },
     {
+        account: '10010@qq.com',
+        pwd: 'test@1'
+    },
+    {
+        account: '95590@qq.com',
+        pwd: 'test@2'
+    },
+    {
         account: 'vcanbuy@qq.com',
-        pwd: 'vcb123'
+        pwd: 'test@3'
     }
 ];
 

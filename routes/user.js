@@ -16,9 +16,13 @@ module.exports = function (router, io) {
         const pwd = req.body.pwd;
         const skuObj = req.body.sku && JSON.parse(req.body.sku);
 
-        let msg = 'sku参数已经收到 ';
-        logger.info(msg + JSON.stringify(req.body));
+        let msg = '当前刷单账号: ' + account;
+        logger.info(msg);
         io.emit('successMsg', msg);
+
+        let msg2 = 'sku参数已经收到 ';
+        logger.info(msg2 + JSON.stringify(req.body));
+        io.emit('successMsg', msg2);
 
         try {
             (async () => {
@@ -455,19 +459,36 @@ module.exports = function (router, io) {
         function successMsg() {
             res.json({status: 200, msg: 'success', title: '下单成功！'});
         }
-
     });
     // 白名单随机获取账号
     router.get("/lazada/users", function (req, res) {
-        // 随机返回一个账号
-        let index = Math.floor((Math.random() * whiteList.length));
-        logger.info('随机获取的账号: ' + JSON.stringify(whiteList[index]));
+        // 随机返回n个账号
+        let num = req.query.num;
+        let data = shuffle(whiteList, num);
+        logger.info('随机获取的账号: ' + JSON.stringify(data));
         res.json({
             status: 200,
             msg: 'success',
-            data: whiteList[index]
+            data: data
         })
     });
 };
+
+// 随机从白名单获取数据
+function shuffle(arrList, num) {
+    if (num > arrList.length) {
+        return;
+    }
+    let tempArr = arrList.slice(0);
+    let newArrList = [];
+    for (let i = 0; i < num; i++) {
+        let random = Math.floor(Math.random() * (tempArr.length - 1));
+        let arr = tempArr[random];
+        tempArr.splice(random, 1);
+        newArrList.push(arr);
+    }
+    return newArrList;
+}
+
 
 

@@ -12,6 +12,11 @@
     font-weight: bold;
 }
 
+.title {
+    display: flex;
+    justify-content: space-between;
+}
+
 #msg li {
     height: 40px;
     line-height: 40px;
