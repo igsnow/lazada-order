@@ -146,13 +146,14 @@
             })
         });
 
-
         // 日志区域高度自适应
-        console.log($(document).height() - $('.headerWrapper').height());
-        let maxH = $(document).height() - $('.headerWrapper').height();
+        let maxHeight = $(window).height() - $('.headerWrapper').height() - 290;
         let ulWrapper = document.getElementById('msg');
-        ulWrapper.style.maxHeight = 200 + 'px';
+        ulWrapper.style.maxHeight = maxHeight + 'px';
         ulWrapper.style.overflow = 'auto';
+
+        // init滚动条滚动至底部
+        scrollToBottom();
 
         const socket = io();
         $('#btn').click(function () {
@@ -170,12 +171,14 @@
             // 如接收到消息，则隐藏"暂无日志"
             $('#tip').hide();
             $('#msg').append($('<li class="chatMsg">').text(data));
+            scrollToBottom()
         });
 
         // 监听success操作日志
         socket.on('successMsg', function (data) {
             $('#tip').hide();
             $('#msg').append($('<li class="successMsg">').text(data));
+            scrollToBottom()
         });
 
         // 监听error操作日志
@@ -183,8 +186,13 @@
             // 如接收到消息，则隐藏"暂无日志"
             $('#tip').hide();
             $('#msg').append($('<li class="errorMsg">').text(data));
+            scrollToBottom()
         });
 
+        // 日志框新增数据后自动滚动到底部
+        function scrollToBottom() {
+            ulWrapper.scrollTop = ulWrapper.scrollHeight;
+        }
     })
 </script>
 </html>
