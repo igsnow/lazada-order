@@ -11,7 +11,7 @@
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-<div class="layui-container">
+<div class="layui-container headerWrapper">
     <h2 class="header">商品信息</h2>
     <form class="layui-form" action="">
         <div class="layui-form-item">
@@ -75,7 +75,7 @@
     <ul id="msg">
         <li id="tip">暂无日志</li>
     </ul>
-    <div class="chat">
+    <div id="chat">
         <input
                 id="ipt"
                 type="text"
@@ -146,7 +146,14 @@
             })
         });
 
-        // client socket
+
+        // 日志区域高度自适应
+        console.log($(document).height() - $('.headerWrapper').height());
+        let maxH = $(document).height() - $('.headerWrapper').height();
+        let ulWrapper = document.getElementById('msg');
+        ulWrapper.style.maxHeight = 200 + 'px';
+        ulWrapper.style.overflow = 'auto';
+
         const socket = io();
         $('#btn').click(function () {
             let el = $('#ipt');
@@ -162,20 +169,20 @@
         socket.on('chatMsg', function (data) {
             // 如接收到消息，则隐藏"暂无日志"
             $('#tip').hide();
-            $('#msg').append($('<li>').text(data));
+            $('#msg').append($('<li class="chatMsg">').text(data));
         });
 
         // 监听success操作日志
         socket.on('successMsg', function (data) {
             $('#tip').hide();
-            $('#msg').append($('<li>').text(data));
+            $('#msg').append($('<li class="successMsg">').text(data));
         });
 
         // 监听error操作日志
         socket.on('errorMsg', function (data) {
             // 如接收到消息，则隐藏"暂无日志"
             $('#tip').hide();
-            $('#msg').append($('<li>').text(data));
+            $('#msg').append($('<li class="errorMsg">').text(data));
         });
 
     })

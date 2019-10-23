@@ -19,7 +19,19 @@
     border-bottom: 1px dashed #009688;
 }
 
-.chat {
+#msg .chatMsg {
+    color: black;
+}
+
+#msg .successMsg {
+    color: green;
+}
+
+#msg .errorMsg {
+    color: red;
+}
+
+#chat {
     margin-top: 10px;
 }
 
