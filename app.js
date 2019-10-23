@@ -1,25 +1,26 @@
 const express = require("express");
+const router = express.Router();
 const createError = require('http-errors');
 const path = require('path');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const ejs = require('ejs');
-const {router, handleSocket} = require('./routes/user');
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-
-// user模块导出的socket
-handleSocket(io);
+// 接收user模块导出的socket，方便使用io
+const routes = require('./routes/user');
+routes(router, io);
 
 io.on('connection', function (socket) {
-    console.log('a user connected');
-    socket.on('chat message', function (data) {
-        io.emit('chat message', data);
+    console.log('a user is connected...');
+    socket.on('chatMsg', function (data) {
+        io.emit('chatMsg', data);
     });
+    // 监听链接是否断开
     socket.on('disconnect', function () {
-        io.emit('chat message', '走了一个');
+        io.emit('chatMsg', 'a user disconnected...');
     })
 });
 
@@ -61,4 +62,4 @@ server.listen('1017', function (err) {
     console.log('Server listening on port 1017!')
 });
 
-module.exports = {app, io};
+module.exports = app;

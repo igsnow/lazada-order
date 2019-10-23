@@ -142,12 +142,12 @@
         const socket = io();
         $('#btn').click(function () {
             let el = $('#ipt');
-            socket.emit('chat message', el.val());
+            socket.emit('chatMsg', el.val());
             el.val('');
             return false;
         });
 
-        socket.on('chat message', function (data) {
+        socket.on('chatMsg', function (data) {
             $('#msg').append($('<li>').text(data));
         });
 
