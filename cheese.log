@@ -357,3 +357,4 @@
     at D:\lazada-order\routes\user.js:283:32
     at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
 [2019-10-23T17:35:10.304] [INFO] cheese - 关闭浏览器
+[2019-10-23T17:36:38.744] [INFO] cheese - 随机获取的账号: [{"account":"10010@qq.com","pwd":"test@1"},{"account":"716810918@qq.com","pwd":"gyj388153@"},{"account":"10086@qq.com","pwd":"123456"},{"account":"95590@qq.com","pwd":"test@2"},{"account":"vcanbuy@qq.com","pwd":"test@3"}]
