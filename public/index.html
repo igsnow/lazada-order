@@ -15,11 +15,6 @@
     <h2 class="header">商品信息</h2>
     <form class="layui-form" action="">
         <div class="layui-form-item">
-            <div class="layui-input-block">
-                <a class="layui-btn" id="nameBtn">随机获取账号</a>
-            </div>
-        </div>
-        <div class="layui-form-item">
             <label class="layui-form-label">刷单次数</label>
             <div class="layui-input-block">
                 <input id="numIpt"
@@ -28,6 +23,11 @@
                        required lay-verify="required" placeholder="请输入次数"
                        autocomplete="off"
                        class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <a class="layui-btn" id="nameBtn">随机获取账号</a>
             </div>
         </div>
         <div class="layui-form-item layui-form-text">
@@ -79,13 +79,14 @@
         <li id="tip">暂无日志</li>
     </ul>
     <div id="chat">
-        <input
-                id="ipt"
-                type="text"
-                placeholder="请输入"
-                autocomplete="off"
-                class="layui-input"/>
-        <button class="layui-btn" id="btn">send</button>
+        <!--        <input-->
+        <!--                id="ipt"-->
+        <!--                type="text"-->
+        <!--                placeholder="请输入"-->
+        <!--                autocomplete="off"-->
+        <!--                class="layui-input"/>-->
+        <!--        <button class="layui-btn" id="btn">send</button>-->
+        <button class="layui-btn" id="clearBtn">Clear</button>
     </div>
 </div>
 </body>
@@ -167,7 +168,7 @@
         });
 
         // 日志区域高度自适应
-        let maxHeight = $(window).height() - $('.headerWrapper').height() - 290;
+        let maxHeight = $(window).height() - $('.headerWrapper').height() - 265;
         let ulWrapper = document.getElementById('msg');
         ulWrapper.style.maxHeight = maxHeight + 'px';
         ulWrapper.style.overflowY = 'auto';
@@ -207,6 +208,11 @@
             $('#tip').hide();
             $('#msg').append($('<li class="errorMsg">').text(data));
             scrollToBottom()
+        });
+
+        // 清空日志
+        $('#clearBtn').click(function () {
+            $('#msg li:not("#tip")').remove();
         });
 
         // 日志框新增数据后自动滚动到底部
