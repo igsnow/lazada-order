@@ -17,7 +17,7 @@ module.exports = function (router, io) {
         const skuObj = req.body.sku && JSON.parse(req.body.sku);
 
         logger.info('sku参数已经收到 ' + JSON.stringify(req.body));
-        io.emit('postMsg', 'sku参数已经收到');
+        io.emit('successMsg', 'sku参数已经收到');
 
         try {
             (async () => {
@@ -37,7 +37,7 @@ module.exports = function (router, io) {
                 });
 
                 logger.info('准备跳转到详情页');
-                io.emit('postMsg', '准备跳转到详情页');
+                io.emit('successMsg', '准备跳转到详情页');
 
                 try {
                     // 先跳转至详情页，再弹出登录框
@@ -47,13 +47,13 @@ module.exports = function (router, io) {
                     if (page.url() === errorUrl) {
                         // 如果跳转到异常页面，则抛出异常
                         logger.error('爬虫被检测到，已跳转到异常页面');
-                        io.emit('postMsg', '爬虫被检测到，已跳转到异常页面');
+                        io.emit('errorMsg', '爬虫被检测到，已跳转到异常页面');
                         let errHtml = await page.$eval('#block-lzd-page-title', el => el.innerHTML);
                         await handleBrowserClose('异常页面html: ' + errHtml, browser);
                         return
                     } else {
                         logger.info('已经跳转到详情页');
-                        io.emit('postMsg', '已经跳转到详情页');
+                        io.emit('successMsg', '已经跳转到详情页');
                     }
                 } catch (e) {
                     await handleBrowserClose(e, browser);
@@ -89,7 +89,7 @@ module.exports = function (router, io) {
                 }
 
                 logger.info('是否有图片sku信息 ' + hasImgSku + ' ' + idx);
-                io.emit('postMsg', '是否有图片sku信息: ' + hasImgSku);
+                io.emit('successMsg', '是否有图片sku信息: ' + hasImgSku);
 
                 let newClassArr;
                 // 如果有图片sku
@@ -98,7 +98,7 @@ module.exports = function (router, io) {
                     let imgSkuArr = classArr[idx];
                     logger.info('图片sku信息 ' + JSON.stringify(imgSkuArr));
                     logger.info('开始点击图片sku');
-                    io.emit('postMsg', '开始点击图片sku');
+                    io.emit('successMsg', '开始点击图片sku');
                     try {
                         // 点击图片sku
                         await handleImgTap(page, imgSkuArr, skuObj, idx, browser);
@@ -116,7 +116,7 @@ module.exports = function (router, io) {
 
                 try {
                     logger.info('开始点击无图sku');
-                    io.emit('postMsg', '开始点击无图sku');
+                    io.emit('successMsg', '开始点击无图sku');
                     for (let i = 0; i < newClassArr.length; i++) {
                         for (let j = 0; j < newClassArr[i].length; j++) {
                             if (newClassArr[i][j] && newClassArr[i][j].className) {
@@ -148,7 +148,7 @@ module.exports = function (router, io) {
                                     let cname = val.afterClassName;
                                     if (cname.indexOf('selected') > -1) {
                                         logger.info('预期的无图sku有货');
-                                        io.emit('postMsg', '预期的无图sku有货');
+                                        io.emit('successMsg', '预期的无图sku有货');
                                     } else {
                                         await handleBrowserClose('预期的无图sku无货', browser);
                                         return
@@ -171,7 +171,7 @@ module.exports = function (router, io) {
                     await page.$eval(inputClass, (input, num) => input.value = num, skuObj.Quantity);
                     let numVal = await page.$eval('.next-number-picker-input input', el => el.value);
                     logger.info('商品数量已经填写: ' + Number(numVal) + ',预期数量: ' + skuObj.Quantity);
-                    io.emit('postMsg', '商品数量已经填写: ' + Number(numVal) + ',预期数量: ' + skuObj.Quantity);
+                    io.emit('successMsg', '商品数量已经填写: ' + Number(numVal) + ',预期数量: ' + skuObj.Quantity);
                     if (Number(numVal) !== skuObj.Quantity) {
                         await handleBrowserClose('商品填写数量与预期值不一致！关闭浏览器', browser);
                         return
@@ -188,7 +188,7 @@ module.exports = function (router, io) {
                     await page.waitForSelector(buyBtnClass);
                     await page.$eval(buyBtnClass, el => el.click());
                     logger.info('已点击购买按钮');
-                    io.emit('postMsg', '已点击购买按钮');
+                    io.emit('successMsg', '已点击购买按钮');
                 } catch (e) {
                     await handleBrowserClose(e, browser);
                     return
@@ -196,7 +196,7 @@ module.exports = function (router, io) {
 
                 try {
                     logger.info('开始捕捉登录iframe弹框');
-                    io.emit('postMsg', '开始捕捉登录iframe弹框');
+                    io.emit('successMsg', '开始捕捉登录iframe弹框');
                     await page.waitForSelector('.next-dialog-wrapper');
                     // 获取元素内部的登录iframe
                     const url = await page.$eval('.login-iframe', el => el.getAttribute('src'));
@@ -207,7 +207,7 @@ module.exports = function (router, io) {
                         }
                     }
                     logger.info('登录iframe弹框已捕捉，url: ' + url);
-                    io.emit('postMsg', '登录iframe弹框已捕捉，url: ' + url);
+                    io.emit('successMsg', '登录iframe弹框已捕捉，url: ' + url);
                 } catch (e) {
                     await handleBrowserClose(e, browser);
                     return
@@ -222,7 +222,7 @@ module.exports = function (router, io) {
                     await page.keyboard.type(account);
                     let accountVal = await frame.$eval(accountEl, el => el.value);
                     logger.info('账号已经填写: ' + accountVal);
-                    io.emit('postMsg', '账号已经填写: ' + accountVal);
+                    io.emit('successMsg', '账号已经填写: ' + accountVal);
                     if (accountVal !== account) {
                         await handleBrowserClose('账号输入有误', browser);
                         return
@@ -238,7 +238,7 @@ module.exports = function (router, io) {
                     await page.keyboard.type(pwd);
                     let pwdVal = await frame.$eval(pwdEl, el => el.value);
                     logger.info('密码已经填写: ' + pwdVal);
-                    io.emit('postMsg', '密码已经填写: ' + pwdVal);
+                    io.emit('successMsg', '密码已经填写: ' + pwdVal);
                     if (pwdVal !== pwd) {
                         await handleBrowserClose('密码输入有误', browser);
                         return
@@ -271,7 +271,7 @@ module.exports = function (router, io) {
                     await page.waitForSelector(orderBtnClass);
                     await page.$eval(orderBtnClass, el => el.click());
                     logger.info('下单按钮已点击，等待跳转支付页面');
-                    io.emit('postMsg', '下单按钮已点击，等待跳转支付页面');
+                    io.emit('successMsg', '下单按钮已点击，等待跳转支付页面');
                 } catch (e) {
                     await handleBrowserClose(e, browser);
                     return
@@ -293,7 +293,7 @@ module.exports = function (router, io) {
                     } else {
                         await page.$eval(payBtnClass, el => el.click());
                         logger.info('货到付款按钮已点击');
-                        io.emit('postMsg', '货到付款按钮已点击');
+                        io.emit('successMsg', '货到付款按钮已点击');
                     }
                 } catch (e) {
                     await handleBrowserClose(e, browser);
@@ -306,7 +306,7 @@ module.exports = function (router, io) {
                     await page.waitForSelector(confirmBtnClass);
                     await page.$eval(confirmBtnClass, el => el.click());
                     logger.info('确认订单按钮已点击');
-                    io.emit('postMsg', '确认订单按钮已点击');
+                    io.emit('successMsg', '确认订单按钮已点击');
                 } catch (e) {
                     await handleBrowserClose(e, browser);
                     return
@@ -314,7 +314,7 @@ module.exports = function (router, io) {
 
                 await browser.close();
                 logger.info('下单完毕，关闭浏览器');
-                io.emit('postMsg', '下单完毕，关闭浏览器');
+                io.emit('successMsg', '下单完毕，关闭浏览器');
                 successMsg();
 
             })();
@@ -335,7 +335,7 @@ module.exports = function (router, io) {
             await page.mouse.down();
 
             logger.info('开始拖动滑块，预期拖动值： ' + endInfo.y);
-            io.emit('postMsg', '开始拖动滑块，预期拖动值： ' + endInfo.y);
+            io.emit('successMsg', '开始拖动滑块，预期拖动值： ' + endInfo.y);
 
             for (let i = 0; i < endInfo.width; i = i + 5) {
                 await page.mouse.move(startInfo.x + i, 2000);   // endInfo.y
@@ -408,7 +408,7 @@ module.exports = function (router, io) {
                     logger.info('选中图片sku的className: ' + imgSkuArr2[i].className);
                     if (imgSkuArr2[i].className && imgSkuArr2[i].className.indexOf('selected') > -1) {
                         logger.info('预期的图片sku有货');
-                        io.emit('postMsg', '预期的图片sku有货');
+                        io.emit('successMsg', '预期的图片sku有货');
                     } else {
                         await handleBrowserClose('预期的图片sku无货', browser);
                         return
@@ -423,7 +423,7 @@ module.exports = function (router, io) {
             logger.error(e);
             await browser.close();
             logger.info('关闭浏览器');
-            io.emit('postMsg', '下单异常，浏览器已关闭！' + e);
+            io.emit('errorMsg', '下单异常，浏览器已关闭！' + e);
             errorMsg()
         }
 

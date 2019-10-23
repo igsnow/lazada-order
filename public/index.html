@@ -69,13 +69,21 @@
             </div>
         </div>
     </form>
-    <ul id="msg"></ul>
-    <input id="ipt"
-           type="text"
-           placeholder="请输入"
-           autocomplete="off"
-           class="layui-input">
-    <button class="layui-btn" id="btn">click</button>
+</div>
+<div class="layui-container">
+    <h2 class="header">操作日志</h2>
+    <ul id="msg">
+        <li id="tip">暂无日志</li>
+    </ul>
+    <div class="chat">
+        <input
+                id="ipt"
+                type="text"
+                placeholder="请输入"
+                autocomplete="off"
+                class="layui-input"/>
+        <button class="layui-btn" id="btn">send</button>
+    </div>
 </div>
 </body>
 <script>
@@ -138,20 +146,35 @@
             })
         });
 
-        // socket
+        // client socket
         const socket = io();
         $('#btn').click(function () {
             let el = $('#ipt');
+            if (!el.val()) {
+                layer.msg('请输入消息！');
+                return
+            }
             socket.emit('chatMsg', el.val());
             el.val('');
             return false;
         });
 
         socket.on('chatMsg', function (data) {
+            // 如接收到消息，则隐藏"暂无日志"
+            $('#tip').hide();
             $('#msg').append($('<li>').text(data));
         });
 
-        socket.on('postMsg', function (data) {
+        // 监听success操作日志
+        socket.on('successMsg', function (data) {
+            $('#tip').hide();
+            $('#msg').append($('<li>').text(data));
+        });
+
+        // 监听error操作日志
+        socket.on('errorMsg', function (data) {
+            // 如接收到消息，则隐藏"暂无日志"
+            $('#tip').hide();
             $('#msg').append($('<li>').text(data));
         });
 

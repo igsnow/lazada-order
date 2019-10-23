@@ -1,12 +1,28 @@
 
 .layui-container {
-    margin-top: 50px;
+    margin-top: 30px;
     padding: 10px;
     background: #eee;
 }
 
 .header {
-    margin-left: 60px;
     height: 50px;
     line-height: 50px;
+    margin-left: 60px;
+    font-weight: bold;
+}
+
+#msg li {
+    height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+    border-bottom: 1px dashed #009688;
+}
+
+.chat {
+    margin-top: 10px;
+}
+
+#btn {
+    margin-top: 20px;
 }
