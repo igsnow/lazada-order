@@ -33,7 +33,10 @@
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">账号列表</label>
             <div class="layui-input-block">
-                <textarea id="accountList" name="accountList" placeholder="请点击随机获取账号按钮"
+                <textarea id="accountList"
+                          name="accountList"
+                          required lay-verify="required"
+                          placeholder="请点击随机获取账号按钮"
                           class="layui-textarea"></textarea>
             </div>
         </div>
@@ -61,7 +64,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <a class="layui-btn" lay-submit lay-filter="confirm">开始</a>
+                <a class="layui-btn" lay-submit lay-filter="confirm" id="startBtn">开始</a>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
@@ -87,14 +90,10 @@
 </div>
 </body>
 <script>
-    // 账户列表
+    // 账户列表全局变量
     var accountList = [];
     $(function () {
-
-
-        // 账号、密码、链接默认值
-        // $('#accountIpt').val('716810918@qq.com');
-        // $('#pwdIpt').val('gyj388153@');
+        // 链接、SKU默认值
         $('#detailUrlIpt').val('https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?');
         $('#skuIpt').val(JSON.stringify({
             Color: "White",
@@ -122,8 +121,16 @@
                     success: function (res) {
                         if (res.msg === 'success') {
                             layer.msg(res.title);
+                            // 若刷单成功一次，则右上角角标自增
+                            let el = $('.successNum');
+                            let num = Number(el.text());
+                            num++;
+                            el.text(num)
                         } else {
                             layer.msg(res.title);
+                            if (accountList.length) {
+                                $('#startBtn').click()
+                            }
                         }
                     },
                     error: function (res) {
