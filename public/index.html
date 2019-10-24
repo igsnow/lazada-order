@@ -121,14 +121,14 @@
                     },
                     success: function (res) {
                         if (res.status === 'success') {
-                            layer.msg(res.title);
+                            layer.msg(res.msg);
                             // 若刷单成功一次，则右上角角标自增
                             let el = $('.successNum');
                             let num = Number(el.text());
                             num++;
                             el.text(num)
                         } else {
-                            layer.msg(res.title);
+                            layer.msg(res.msg);
                             if (accountList.length) {
                                 $('#startBtn').click()
                             }
