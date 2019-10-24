@@ -458,7 +458,7 @@ module.exports = function (router, io) {
         // 下单异常
         function errorMsg() {
             res.json({
-                code: 500,
+                code: 200,
                 status: 'fail',
                 msg: '下单异常！',
                 account: account
