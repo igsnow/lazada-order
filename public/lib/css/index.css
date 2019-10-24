@@ -16,8 +16,10 @@
 }
 
 .curAccount {
-    color: red;
+    color: #FF5722;
     font-weight: bold;
+    font-size: 18px;
+    vertical-align: middle;
 }
 
 .bodyWrapper {
