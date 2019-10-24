@@ -87,23 +87,36 @@
         </div>
     </form>
 </div>
-<div class="layui-container">
-    <div class="title">
-        <h2 class="header">操作日志</h2>
-        <button class="layui-btn">成功数次<span class="layui-badge layui-bg-gray successNum">0</span></button>
+<div class="layui-container bodyWrapper">
+    <div class="layui-container left">
+        <div class="title">
+            <h2 class="header">操作日志</h2>
+        </div>
+        <ul id="msg" class="ulWrap">
+            <li id="tip">暂无日志</li>
+        </ul>
+        <div class="chat">
+            <!--        <input-->
+            <!--                id="ipt"-->
+            <!--                type="text"-->
+            <!--                placeholder="请输入"-->
+            <!--                autocomplete="off"-->
+            <!--                class="layui-input"/>-->
+            <!--        <button class="layui-btn" id="btn">send</button>-->
+            <button class="layui-btn clearBtn" id="clearBtn">清空日志</button>
+        </div>
     </div>
-    <ul id="msg">
-        <li id="tip">暂无日志</li>
-    </ul>
-    <div id="chat">
-        <!--        <input-->
-        <!--                id="ipt"-->
-        <!--                type="text"-->
-        <!--                placeholder="请输入"-->
-        <!--                autocomplete="off"-->
-        <!--                class="layui-input"/>-->
-        <!--        <button class="layui-btn" id="btn">send</button>-->
-        <button class="layui-btn" id="clearBtn">Clear</button>
+    <div class="layui-container right">
+        <div class="title">
+            <h2 class="header">刷单统计</h2>
+            <button class="layui-btn">成功数次<span class="layui-badge layui-bg-gray successNum">0</span></button>
+        </div>
+        <ul id="msg2" class="ulWrap">
+            <li id="tip2">暂无统计</li>
+        </ul>
+        <div class="chat">
+            <button class="layui-btn clearBtn" id="clearBtn2">清空统计</button>
+        </div>
     </div>
 </div>
 </body>
