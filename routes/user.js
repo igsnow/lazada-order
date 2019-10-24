@@ -495,6 +495,15 @@ module.exports = function (router, io) {
             })
         }
     });
+
+    // 获取白名单所有账号
+    router.get("/lazada/allUsers", function (req, res) {
+        res.json({
+            code: 0,
+            status: 'success',
+            data: whiteList
+        })
+    })
 };
 
 // 随机从白名单获取n条数据

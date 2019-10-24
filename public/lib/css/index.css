@@ -70,3 +70,8 @@
 .clearBtn {
     margin: 20px;
 }
+
+body .btn-class .layui-layer-btn0 {
+    border: 1px solid #009688;
+    background: #009688;
+}
