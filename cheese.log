@@ -4,3 +4,168 @@
 [2019-10-24T14:27:54.199] [INFO] cheese - 随机获取的账号: [{"account":"10086@qq.com","pwd":"123456"}]
 [2019-10-24T14:28:16.778] [INFO] cheese - 随机获取的账号: [{"account":"10086@qq.com","pwd":"123456"}]
 [2019-10-24T14:28:46.153] [INFO] cheese - 随机获取的账号: [{"account":"10010@qq.com","pwd":"test@1"}]
+[2019-10-24T14:33:45.675] [INFO] cheese - 随机获取的账号: [{"account":"95590@qq.com","pwd":"test@2"},{"account":"716810918@qq.com","pwd":"gyj388153@"},{"account":"10086@qq.com","pwd":"123456"},{"account":"10010@qq.com","pwd":"test@1"},{"account":"vcanbuy@qq.com","pwd":"test@3"}]
+[2019-10-24T14:33:49.790] [INFO] cheese - 当前刷单账号: 716810918@qq.com
+[2019-10-24T14:33:49.791] [INFO] cheese - sku参数已经收到 {"account":"716810918@qq.com","pwd":"gyj388153@","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-24T14:33:50.394] [INFO] cheese - 准备跳转到详情页
+[2019-10-24T14:34:04.475] [INFO] cheese - 已经跳转到详情页
+[2019-10-24T14:34:04.476] [INFO] cheese - 开始整理sku信息
+[2019-10-24T14:34:04.519] [INFO] cheese - sku全部信息已经整理完 [[{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap-selected","title":"","skuName":"Blue","value":"White"}],[{"className":"sku-variable-size-selected","title":"L","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"3XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"4XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"5XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"}]]
+[2019-10-24T14:34:04.623] [INFO] cheese - 第1个sku已重置sku默认点击
+[2019-10-24T14:34:04.748] [INFO] cheese - 第2个sku已重置sku默认点击
+[2019-10-24T14:34:04.749] [INFO] cheese - 是否有图片sku信息: true 0
+[2019-10-24T14:34:04.749] [INFO] cheese - 图片sku信息 [{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap-selected","title":"","skuName":"Blue","value":"White"}]
+[2019-10-24T14:34:04.750] [INFO] cheese - 开始点击图片sku
+[2019-10-24T14:34:04.795] [INFO] cheese - imgSkuArr2 [{"className":"sku-variable-img-wrap-selected","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"}]
+[2019-10-24T14:34:04.838] [INFO] cheese - imgSkuArr2 [{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap-selected","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"}]
+[2019-10-24T14:34:04.883] [INFO] cheese - imgSkuArr2 [{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap-selected","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"}]
+[2019-10-24T14:34:04.883] [INFO] cheese - img selected success 2
+[2019-10-24T14:34:04.883] [INFO] cheese - 选中图片sku的className: sku-variable-img-wrap-selected
+[2019-10-24T14:34:04.883] [INFO] cheese - 预期的图片sku有货
+[2019-10-24T14:34:04.884] [INFO] cheese - sku除图片信息sku [[{"className":"sku-variable-size-selected","title":"L","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"3XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"4XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"5XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"}]]
+[2019-10-24T14:34:04.884] [INFO] cheese - 开始点击无图sku
+[2019-10-24T14:34:04.884] [INFO] cheese - sku default selected error 0 0
+[2019-10-24T14:34:04.884] [INFO] cheese - sku selected success 0 1
+[2019-10-24T14:34:04.973] [INFO] cheese - selected sku className: {"preClassName":"sku-variable-size","afterClassName":"sku-variable-size-selected"}
+[2019-10-24T14:34:04.973] [INFO] cheese - 预期的无图sku有货
+[2019-10-24T14:34:04.974] [INFO] cheese - 等待sku数量输入框
+[2019-10-24T14:34:05.017] [INFO] cheese - 商品数量已经填写: 3,预期数量: 3
+[2019-10-24T14:34:05.017] [INFO] cheese - 等待购买按钮
+[2019-10-24T14:34:05.132] [INFO] cheese - 已点击购买按钮
+[2019-10-24T14:34:05.132] [INFO] cheese - 开始捕捉登录iframe弹框
+[2019-10-24T14:34:05.163] [INFO] cheese - 登录iframe弹框已捕捉，url: //member.lazada.com.my/user/pure-login
+[2019-10-24T14:34:09.173] [INFO] cheese - 账号已经填写: 716810918@qq.com
+[2019-10-24T14:34:09.702] [INFO] cheese - 密码已经填写: gyj388153@
+[2019-10-24T14:34:10.433] [INFO] cheese - 点击登录按钮，显示拖动滑块
+[2019-10-24T14:34:10.818] [INFO] cheese - 开始拖动滑块，预期拖动值： 384
+[2019-10-24T14:34:42.678] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.waitForNavigation (D:\lazada-order\node_modules\puppeteer\lib\Page.js:694:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:283:32
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-24T14:34:44.400] [INFO] cheese - 关闭浏览器
+[2019-10-24T14:34:44.442] [INFO] cheese - 当前刷单账号: 10010@qq.com
+[2019-10-24T14:34:44.442] [INFO] cheese - sku参数已经收到 {"account":"10010@qq.com","pwd":"test@1","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-24T14:34:45.083] [INFO] cheese - 准备跳转到详情页
+[2019-10-24T14:36:46.937] [INFO] cheese - 随机获取的账号: [{"account":"10010@qq.com","pwd":"test@1"}]
+[2019-10-24T14:38:42.856] [INFO] cheese - 随机获取的账号: [{"account":"10010@qq.com","pwd":"test@1"}]
+[2019-10-24T14:57:46.737] [INFO] cheese - 随机获取的账号: [{"account":"716810918@qq.com","pwd":"gyj388153@"}]
+[2019-10-24T14:59:37.065] [INFO] cheese - 随机获取的账号: [{"account":"95590@qq.com","pwd":"test@2"},{"account":"716810918@qq.com","pwd":"gyj388153@"},{"account":"10010@qq.com","pwd":"test@1"},{"account":"10086@qq.com","pwd":"123456"},{"account":"vcanbuy@qq.com","pwd":"test@3"}]
+[2019-10-24T14:59:40.620] [INFO] cheese - 当前刷单账号: 10086@qq.com
+[2019-10-24T14:59:40.621] [INFO] cheese - sku参数已经收到 {"account":"10086@qq.com","pwd":"123456","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-24T14:59:41.137] [INFO] cheese - 准备跳转到详情页
+[2019-10-24T14:59:49.796] [INFO] cheese - 已经跳转到详情页
+[2019-10-24T14:59:49.796] [INFO] cheese - 开始整理sku信息
+[2019-10-24T14:59:49.842] [INFO] cheese - sku全部信息已经整理完 [[{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap-selected","title":"","skuName":"Blue","value":"White"}],[{"className":"sku-variable-size-selected","title":"L","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"3XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"4XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"5XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"}]]
+[2019-10-24T14:59:50.001] [INFO] cheese - 第1个sku已重置sku默认点击
+[2019-10-24T14:59:50.374] [INFO] cheese - 第2个sku已重置sku默认点击
+[2019-10-24T14:59:50.375] [INFO] cheese - 是否有图片sku信息: true 0
+[2019-10-24T14:59:50.375] [INFO] cheese - 图片sku信息 [{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap-selected","title":"","skuName":"Blue","value":"White"}]
+[2019-10-24T14:59:50.375] [INFO] cheese - 开始点击图片sku
+[2019-10-24T14:59:51.138] [INFO] cheese - imgSkuArr2 [{"className":"sku-variable-img-wrap-selected","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"}]
+[2019-10-24T14:59:51.234] [INFO] cheese - imgSkuArr2 [{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap-selected","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"}]
+[2019-10-24T14:59:51.282] [INFO] cheese - imgSkuArr2 [{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap-selected","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"}]
+[2019-10-24T14:59:51.282] [INFO] cheese - img selected success 2
+[2019-10-24T14:59:51.282] [INFO] cheese - 选中图片sku的className: sku-variable-img-wrap-selected
+[2019-10-24T14:59:51.282] [INFO] cheese - 预期的图片sku有货
+[2019-10-24T14:59:51.282] [INFO] cheese - sku除图片信息sku [[{"className":"sku-variable-size-selected","title":"L","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"3XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"4XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"5XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"}]]
+[2019-10-24T14:59:51.283] [INFO] cheese - 开始点击无图sku
+[2019-10-24T14:59:51.283] [INFO] cheese - sku default selected error 0 0
+[2019-10-24T14:59:51.283] [INFO] cheese - sku selected success 0 1
+[2019-10-24T14:59:51.455] [INFO] cheese - selected sku className: {"preClassName":"sku-variable-size","afterClassName":"sku-variable-size-selected"}
+[2019-10-24T14:59:51.455] [INFO] cheese - 预期的无图sku有货
+[2019-10-24T14:59:51.455] [INFO] cheese - 等待sku数量输入框
+[2019-10-24T14:59:51.491] [INFO] cheese - 商品数量已经填写: 3,预期数量: 3
+[2019-10-24T14:59:51.491] [INFO] cheese - 等待购买按钮
+[2019-10-24T14:59:51.612] [INFO] cheese - 已点击购买按钮
+[2019-10-24T14:59:51.612] [INFO] cheese - 开始捕捉登录iframe弹框
+[2019-10-24T14:59:51.711] [INFO] cheese - 登录iframe弹框已捕捉，url: //member.lazada.com.my/user/pure-login
+[2019-10-24T14:59:53.858] [INFO] cheese - 账号已经填写: 10086@qq.com
+[2019-10-24T14:59:54.739] [INFO] cheese - 密码已经填写: 123456
+[2019-10-24T14:59:54.907] [INFO] cheese - 开始拖动滑块，预期拖动值： 384
+[2019-10-24T15:00:29.504] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.waitForNavigation (D:\lazada-order\node_modules\puppeteer\lib\Page.js:694:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:283:32
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-24T15:00:29.950] [INFO] cheese - 关闭浏览器
+[2019-10-24T15:21:51.671] [INFO] cheese - 随机获取的账号: [{"account":"95590@qq.com","pwd":"test@2"}]
+[2019-10-24T15:22:01.504] [INFO] cheese - 随机获取的账号: [{"account":"10010@qq.com","pwd":"test@1"}]
+[2019-10-24T15:22:17.617] [INFO] cheese - 随机获取的账号: [{"account":"716810918@qq.com","pwd":"gyj388153@"}]
+[2019-10-24T15:24:03.480] [INFO] cheese - 随机获取的账号: [{"account":"716810918@qq.com","pwd":"gyj388153@"}]
+[2019-10-24T15:28:01.272] [INFO] cheese - 随机获取的账号: [{"account":"10010@qq.com","pwd":"test@1"},{"account":"10086@qq.com","pwd":"123456"},{"account":"716810918@qq.com","pwd":"gyj388153@"},{"account":"95590@qq.com","pwd":"test@2"},{"account":"vcanbuy@qq.com","pwd":"test@3"}]
+[2019-10-24T15:28:04.172] [INFO] cheese - 当前刷单账号: 95590@qq.com
+[2019-10-24T15:28:04.172] [INFO] cheese - sku参数已经收到 {"account":"95590@qq.com","pwd":"test@2","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-24T15:28:04.723] [INFO] cheese - 准备跳转到详情页
+[2019-10-24T15:28:34.726] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.goto (D:\lazada-order\node_modules\puppeteer\lib\Page.js:674:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:50:32
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-24T15:28:35.062] [INFO] cheese - 关闭浏览器
+[2019-10-24T15:29:09.666] [INFO] cheese - 随机获取的账号: [{"account":"10086@qq.com","pwd":"123456"},{"account":"716810918@qq.com","pwd":"gyj388153@"},{"account":"95590@qq.com","pwd":"test@2"},{"account":"10010@qq.com","pwd":"test@1"},{"account":"vcanbuy@qq.com","pwd":"test@3"}]
+[2019-10-24T15:29:12.027] [INFO] cheese - 当前刷单账号: 10010@qq.com
+[2019-10-24T15:29:12.027] [INFO] cheese - sku参数已经收到 {"account":"10010@qq.com","pwd":"test@1","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-24T15:29:12.443] [INFO] cheese - 准备跳转到详情页
+[2019-10-24T15:29:35.146] [INFO] cheese - 已经跳转到详情页
+[2019-10-24T15:29:35.147] [INFO] cheese - 开始整理sku信息
+[2019-10-24T15:29:35.186] [INFO] cheese - sku全部信息已经整理完 [[{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap-selected","title":"","skuName":"Blue","value":"White"}],[{"className":"sku-variable-size-selected","title":"L","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"3XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"4XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"5XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"}]]
+[2019-10-24T15:29:35.285] [INFO] cheese - 第1个sku已重置sku默认点击
+[2019-10-24T15:29:35.332] [INFO] cheese - 第2个sku已重置sku默认点击
+[2019-10-24T15:29:35.332] [INFO] cheese - 是否有图片sku信息: true 0
+[2019-10-24T15:29:35.332] [INFO] cheese - 图片sku信息 [{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap-selected","title":"","skuName":"Blue","value":"White"}]
+[2019-10-24T15:29:35.332] [INFO] cheese - 开始点击图片sku
+[2019-10-24T15:29:35.385] [INFO] cheese - imgSkuArr2 [{"className":"sku-variable-img-wrap-selected","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"}]
+[2019-10-24T15:29:35.438] [INFO] cheese - imgSkuArr2 [{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap-selected","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"}]
+[2019-10-24T15:29:35.578] [INFO] cheese - imgSkuArr2 [{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap-selected","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"}]
+[2019-10-24T15:29:35.578] [INFO] cheese - img selected success 2
+[2019-10-24T15:29:35.578] [INFO] cheese - 选中图片sku的className: sku-variable-img-wrap-selected
+[2019-10-24T15:29:35.578] [INFO] cheese - 预期的图片sku有货
+[2019-10-24T15:29:35.579] [INFO] cheese - sku除图片信息sku [[{"className":"sku-variable-size-selected","title":"L","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"3XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"4XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"5XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"}]]
+[2019-10-24T15:29:35.579] [INFO] cheese - 开始点击无图sku
+[2019-10-24T15:29:35.579] [INFO] cheese - sku default selected error 0 0
+[2019-10-24T15:29:35.580] [INFO] cheese - sku selected success 0 1
+[2019-10-24T15:29:35.841] [INFO] cheese - selected sku className: {"preClassName":"sku-variable-size","afterClassName":"sku-variable-size-selected"}
+[2019-10-24T15:29:35.842] [INFO] cheese - 预期的无图sku有货
+[2019-10-24T15:29:35.842] [INFO] cheese - 等待sku数量输入框
+[2019-10-24T15:29:36.132] [INFO] cheese - 商品数量已经填写: 3,预期数量: 3
+[2019-10-24T15:29:36.132] [INFO] cheese - 等待购买按钮
+[2019-10-24T15:29:36.271] [INFO] cheese - 已点击购买按钮
+[2019-10-24T15:29:36.271] [INFO] cheese - 开始捕捉登录iframe弹框
+[2019-10-24T15:29:36.330] [INFO] cheese - 登录iframe弹框已捕捉，url: //member.lazada.com.my/user/pure-login
+[2019-10-24T15:29:38.364] [INFO] cheese - 账号已经填写: 10010@qq.com
+[2019-10-24T15:29:39.095] [INFO] cheese - 密码已经填写: test@1
+[2019-10-24T15:29:39.202] [INFO] cheese - 开始拖动滑块，预期拖动值： 384
+[2019-10-24T15:30:12.156] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.waitForNavigation (D:\lazada-order\node_modules\puppeteer\lib\Page.js:694:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:283:32
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-24T15:30:12.603] [INFO] cheese - 关闭浏览器
+[2019-10-24T15:31:08.750] [INFO] cheese - 随机获取的账号: [{"account":"10086@qq.com","pwd":"123456"}]
+[2019-10-24T15:31:26.084] [INFO] cheese - 随机获取的账号: [{"account":"10010@qq.com","pwd":"test@1"}]
+[2019-10-24T15:31:44.982] [INFO] cheese - 随机获取的账号: [{"account":"95590@qq.com","pwd":"test@2"}]
+[2019-10-24T15:33:27.592] [INFO] cheese - 随机获取的账号: [{"account":"95590@qq.com","pwd":"test@2"}]
+[2019-10-24T15:34:47.687] [INFO] cheese - 随机获取的账号: [{"account":"95590@qq.com","pwd":"test@2"}]
+[2019-10-24T15:36:39.111] [INFO] cheese - 随机获取的账号: [{"account":"716810918@qq.com","pwd":"gyj388153@"}]
+[2019-10-24T15:42:23.883] [INFO] cheese - 随机获取的账号: [{"account":"716810918@qq.com","pwd":"gyj388153@"},{"account":"95590@qq.com","pwd":"test@2"},{"account":"10086@qq.com","pwd":"123456"},{"account":"10010@qq.com","pwd":"test@1"},{"account":"vcanbuy@qq.com","pwd":"test@3"}]
+[2019-10-24T15:47:11.155] [INFO] cheese - 随机获取的账号: [{"account":"ithangzhou@qq.com","pwd":"test7"},{"account":"vcanbuy@qq.com","pwd":"test5"},{"account":"igsnow@qq.com","pwd":"test4"},{"account":"10086@163.com","pwd":"test1"},{"account":"feier@126.com","pwd":"test6"},{"account":"716810918@qq.com","pwd":"gyj388153@"},{"account":"xiaowu@qq.com","pwd":"test8"},{"account":"zhoujielun@qq.com","pwd":"test3"},{"account":"95559@gmail.com","pwd":"test2"},{"account":"wangdachui@qq.com","pwd":"test9"}]
+[2019-10-24T15:47:21.663] [INFO] cheese - 随机获取的账号: [{"account":"ithangzhou@qq.com","pwd":"test7"}]
+[2019-10-24T15:47:22.879] [INFO] cheese - 随机获取的账号: [{"account":"vcanbuy@qq.com","pwd":"test5"}]
+[2019-10-24T15:47:23.503] [INFO] cheese - 随机获取的账号: [{"account":"igsnow@qq.com","pwd":"test4"}]
+[2019-10-24T15:47:24.088] [INFO] cheese - 随机获取的账号: [{"account":"95559@gmail.com","pwd":"test2"}]
+[2019-10-24T15:47:24.688] [INFO] cheese - 随机获取的账号: [{"account":"zhoujielun@qq.com","pwd":"test3"}]
+[2019-10-24T15:47:25.335] [INFO] cheese - 随机获取的账号: [{"account":"716810918@qq.com","pwd":"gyj388153@"}]
+[2019-10-24T15:47:25.990] [INFO] cheese - 随机获取的账号: [{"account":"vcanbuy@qq.com","pwd":"test5"}]

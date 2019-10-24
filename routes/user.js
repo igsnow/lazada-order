@@ -479,13 +479,21 @@ module.exports = function (router, io) {
     router.get("/lazada/users", function (req, res) {
         // 随机返回n个账号
         let num = req.query.num;
-        let data = shuffle(whiteList, num);
-        logger.info('随机获取的账号: ' + JSON.stringify(data));
-        res.json({
-            code: 200,
-            status: 'success',
-            data: data
-        })
+        if (num > whiteList.length) {
+            res.json({
+                code: 200,
+                status: 'fail',
+                msg: '随机获取的账号数不能超过10个！'
+            })
+        } else {
+            let data = shuffle(whiteList, num);
+            logger.info('随机获取的账号: ' + JSON.stringify(data));
+            res.json({
+                code: 200,
+                status: 'success',
+                data: data
+            })
+        }
     });
 };
 

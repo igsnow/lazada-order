@@ -4,20 +4,40 @@ let list = [
         pwd: 'gyj388153@'
     },
     {
-        account: '10086@qq.com',
-        pwd: '123456'
+        account: '10086@163.com',
+        pwd: 'test1'
     },
     {
-        account: '10010@qq.com',
-        pwd: 'test@1'
+        account: '95559@gmail.com',
+        pwd: 'test2'
     },
     {
-        account: '95590@qq.com',
-        pwd: 'test@2'
+        account: 'zhoujielun@qq.com',
+        pwd: 'test3'
+    },
+    {
+        account: 'igsnow@qq.com',
+        pwd: 'test4'
     },
     {
         account: 'vcanbuy@qq.com',
-        pwd: 'test@3'
+        pwd: 'test5'
+    },
+    {
+        account: 'feier@126.com',
+        pwd: 'test6'
+    },
+    {
+        account: 'ithangzhou@qq.com',
+        pwd: 'test7'
+    },
+    {
+        account: 'xiaowu@qq.com',
+        pwd: 'test8'
+    },
+    {
+        account: 'wangdachui@qq.com',
+        pwd: 'test9'
     }
 ];
 

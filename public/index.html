@@ -190,6 +190,8 @@
                     if (res.status === 'success') {
                         accountList = res.data;
                         parseAccountList(accountList)
+                    } else {
+                        layer.msg(res.msg);
                     }
                 },
                 error: function (res) {
