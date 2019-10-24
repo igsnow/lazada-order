@@ -12,6 +12,11 @@
     font-weight: bold;
 }
 
+.curAccount {
+    color: red;
+    font-weight: bold;
+}
+
 .title {
     display: flex;
     justify-content: space-between;

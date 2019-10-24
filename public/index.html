@@ -17,10 +17,21 @@
         <div class="layui-form-item">
             <label class="layui-form-label">刷单次数</label>
             <div class="layui-input-block">
+                <input id="timesIpt"
+                       type="text"
+                       name="times"
+                       required lay-verify="required" placeholder="请输入刷单次数"
+                       autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号个数</label>
+            <div class="layui-input-block">
                 <input id="numIpt"
                        type="text"
                        name="num"
-                       required lay-verify="required" placeholder="请输入次数"
+                       required lay-verify="required" placeholder="请输入账号个数"
                        autocomplete="off"
                        class="layui-input">
             </div>
@@ -38,6 +49,12 @@
                           required lay-verify="required"
                           placeholder="请点击随机获取账号按钮"
                           class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <a class="layui-btn">当前刷单账号：</a>
+                <span class="curAccount"></span>
             </div>
         </div>
         <div class="layui-form-item">
@@ -107,9 +124,11 @@
             //监听提交
             form.on('submit(confirm)', function (data) {
                 layer.msg('请求已发送~');
-                let curParamObj = accountList.shift();
-                parseAccountList(accountList);
-
+                // 刷一次单刷单次数自减
+                timesDecrease();
+                let curParamObj = shuffle(accountList) && shuffle(accountList)[0];
+                // 显示当前刷单账号
+                $('.curAccount').text(curParamObj.account);
                 $.ajax({
                     url: '/user/lazada/order',
                     type: 'POST',
@@ -123,15 +142,11 @@
                         if (res.status === 'success') {
                             layer.msg(res.msg);
                             // 若刷单成功一次，则右上角角标自增
-                            let el = $('.successNum');
-                            let num = Number(el.text());
-                            num++;
-                            el.text(num)
+                            successNumAdd()
                         } else {
                             layer.msg(res.msg);
-                            if (accountList.length) {
-                                $('#startBtn').click()
-                            }
+                            // 刷完一单继续
+                            goNext()
                         }
                     },
                     error: function (res) {
@@ -145,7 +160,7 @@
         $('#nameBtn').click(function () {
             let el = $('#numIpt');
             if (!el.val()) {
-                layer.msg('请输入刷单次数！');
+                layer.msg('请输入随机获取的账号个数！');
                 return
             }
             $.ajax({
@@ -235,6 +250,52 @@
             let accounts = getAccounts(data);
             let str = accounts.join(';');
             $('#accountList').val(str)
+        }
+
+        // 刷单一次后刷单次数显示自减
+        function timesDecrease() {
+            let el = $('#timesIpt');
+            let num = Number(el.val());
+            num--;
+            if (num <= 0) {
+                // 如果显示0次，则清空值
+                el.val('')
+            } else {
+                el.val(num)
+            }
+        }
+
+        // 刷单一单后继续下一单
+        function goNext() {
+            let el = $('#timesIpt');
+            let num = Number(el.val());
+            if (num > 0) {
+                $('#startBtn').click()
+            }
+        }
+
+        // 刷单成功一次后右上角角标自增
+        function successNumAdd() {
+            let el = $('.successNum');
+            let num = Number(el.text());
+            num++;
+            el.text(num)
+        }
+
+        // 随机从账号列表中抽一个账号刷单
+        function shuffle(arrList, num = 1) {
+            if (num > arrList.length) {
+                return;
+            }
+            let tempArr = arrList.slice(0);
+            let newArrList = [];
+            for (let i = 0; i < num; i++) {
+                let random = Math.floor(Math.random() * (tempArr.length - 1));
+                let arr = tempArr[random];
+                tempArr.splice(random, 1);
+                newArrList.push(arr);
+            }
+            return newArrList;
         }
     })
 </script>

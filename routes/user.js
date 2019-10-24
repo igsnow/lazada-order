@@ -484,7 +484,7 @@ module.exports = function (router, io) {
     });
 };
 
-// 随机从白名单获取数据
+// 随机从白名单获取n条数据
 function shuffle(arrList, num) {
     if (num > arrList.length) {
         return;
