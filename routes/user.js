@@ -1,5 +1,7 @@
 const puppeteer = require('puppeteer');
 const whiteList = require('../db/whiteList');
+const fs = require('fs');
+const path = require('path');
 const log4js = require('log4js');
 log4js.configure({
     appenders: {cheese: {type: 'file', filename: 'cheese.log'}},
@@ -507,8 +509,9 @@ module.exports = function (router, io) {
 
     // 编辑账号数据
     router.post("/lazada/edit_user", function (req, res) {
-        let body = req.body;
-        console.log(body);
+        let account = req.body.account;
+        let pwd = req.body.pwd;
+        handleFile(fs, account, pwd);
         res.json({
             code: 200,
             status: 'success',
@@ -531,6 +534,16 @@ function shuffle(arrList, num) {
         newArrList.push(arr);
     }
     return newArrList;
+}
+
+// 读取文件，修改对应的内容
+function handleFile(fs, account, pwd) {
+    fs.readFile(path.join(__dirname, '../db/whiteList.js'), 'utf8', function (err, data) {
+        if (err) {
+            console.log(err);
+        }
+        console.log(data);
+    })
 }
 
 

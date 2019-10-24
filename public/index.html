@@ -335,10 +335,10 @@
                         // 打开内敛表单
                         handleInnerForm(data);
                         //同步更新缓存对应的值
-                        obj.update({
-                            account: 'zhangzhiyong',
-                            pwd: 'xxx'
-                        });
+                        // obj.update({
+                        //     account: 'zhangzhiyong',
+                        //     pwd: 'xxx'
+                        // });
                     }
                 });
 
@@ -429,7 +429,6 @@
 
         // 编辑或者新增弹出内部form表单
         function handleInnerForm(data) {
-            console.log(data)
             layer.open({
                 type: 1,
                 title: '编辑账号',
