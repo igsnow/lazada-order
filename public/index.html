@@ -120,7 +120,7 @@
                         sku: data.field.sku
                     },
                     success: function (res) {
-                        if (res.msg === 'success') {
+                        if (res.status === 'success') {
                             layer.msg(res.title);
                             // 若刷单成功一次，则右上角角标自增
                             let el = $('.successNum');
@@ -156,7 +156,7 @@
                 },
                 dataType: 'json',
                 success: function (res) {
-                    if (res.msg === 'success') {
+                    if (res.status === 'success') {
                         accountList = res.data;
                         parseAccountList(accountList)
                     }

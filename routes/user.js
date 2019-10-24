@@ -452,12 +452,22 @@ module.exports = function (router, io) {
 
         // 下单异常
         function errorMsg() {
-            res.json({status: 500, msg: 'fail', title: '下单异常！'})
+            res.json({
+                code: 500,
+                status: 'fail',
+                msg: '下单异常！',
+                account: account
+            })
         }
 
         // 下单成功
         function successMsg() {
-            res.json({status: 200, msg: 'success', title: '下单成功！'});
+            res.json({
+                code: 200,
+                status: 'success',
+                msg: '下单成功！',
+                account: account
+            });
         }
     });
     // 白名单随机获取账号
@@ -467,8 +477,8 @@ module.exports = function (router, io) {
         let data = shuffle(whiteList, num);
         logger.info('随机获取的账号: ' + JSON.stringify(data));
         res.json({
-            status: 200,
-            msg: 'success',
+            code: 200,
+            status: 'success',
             data: data
         })
     });
