@@ -155,11 +155,15 @@
                         if (res.status === 'success') {
                             layer.msg(res.msg);
                             // 若刷单成功一次，则右上角角标自增
-                            successNumAdd()
+                            successNumAdd();
+                            // 成功推动到刷单统计中
+                            showSuccessRecord(res.account);
                         } else {
                             layer.msg(res.msg);
+                            // 失败推动到刷单统计中
+                            showErrorRecord(res.account);
                             // 刷完一单继续
-                            goNext()
+                            goNext();
                         }
                     },
                     error: function (res) {
@@ -200,6 +204,9 @@
         let ulWrapper = document.getElementById('msg');
         ulWrapper.style.maxHeight = maxHeight + 'px';
         ulWrapper.style.overflowY = 'auto';
+        let ulWrapper2 = document.getElementById('msg2');
+        ulWrapper2.style.maxHeight = maxHeight + 'px';
+        ulWrapper2.style.overflowY = 'auto';
 
         // init滚动条滚动至底部
         scrollToBottom();
@@ -238,15 +245,22 @@
             scrollToBottom()
         });
 
-        // 清空日志
+        // 清空操作日志
         $('#clearBtn').click(function () {
             $('#msg li:not("#tip")').remove();
             $('#tip').show();
         });
 
+        // 清空刷单统计
+        $('#clearBtn2').click(function () {
+            $('#msg2 li:not("#tip2")').remove();
+            $('#tip2').show();
+        });
+
         // 日志框新增数据后自动滚动到底部
         function scrollToBottom() {
             ulWrapper.scrollTop = ulWrapper.scrollHeight;
+            ulWrapper2.scrollTop = ulWrapper2.scrollHeight;
         }
 
         // 获取随机账号列表的account值
@@ -293,6 +307,19 @@
             let num = Number(el.text());
             num++;
             el.text(num)
+        }
+
+        // 刷单成功一次或者错误后刷单统计显示
+        function showSuccessRecord(data) {
+            $('#tip2').hide();
+            $('#msg2').append($('<li class="successMsg">').text('账号: ' + data + ' 刷单成功！'));
+            scrollToBottom()
+        }
+
+        function showErrorRecord(data) {
+            $('#tip2').hide();
+            $('#msg2').append($('<li class="errorMsg">').text('账号: ' + data + ' 刷单失败！'));
+            scrollToBottom()
         }
 
         // 随机从账号列表中抽一个账号刷单
