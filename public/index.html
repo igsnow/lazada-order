@@ -268,8 +268,8 @@
                 layer.open({
                     type: 1,
                     title: '账号列表',
-                    area: ['700px', '465px'],
-                    content: '<table id="tab" lay-filter="test"></table>',
+                    area: ['800px', '470px'],
+                    content: '<table id="tab" lay-filter="tab"></table>',
                     btn: ['新增', '取消'],
                     btnAlign: 'l',
                     skin: 'btn-class',
@@ -288,8 +288,31 @@
                         {field: 'id', title: 'ID', sort: true, fixed: 'left'}
                         , {field: 'account', title: '用户名'}
                         , {field: 'pwd', title: '密码'}
+                        , {fixed: 'right', width: 150, align: 'center', toolbar: '#bar'}
                     ]]
                 });
+                table.on('tool(tab)', function (obj) {
+                    let data = obj.data;
+                    let layEvent = obj.event;
+                    let tr = obj.tr;
+
+                    if (layEvent === 'del') {
+                        layer.confirm('真的删除行么', function (index) {
+                            obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                            layer.close(index);
+                            //向服务端发送删除指令
+                        });
+                    } else if (layEvent === 'edit') { //编辑
+                        //do something
+                        //同步更新缓存对应的值
+                        obj.update({
+                            account: 'zhangzhiyong',
+                            pwd: 'xxx'
+                        });
+                    }
+                });
+
+
             });
         });
 
@@ -374,5 +397,9 @@
             return newArrList;
         }
     })
+</script>
+<script type="text/html" id="bar">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 </html>
