@@ -503,6 +503,17 @@ module.exports = function (router, io) {
             status: 'success',
             data: whiteList
         })
+    });
+
+    // 编辑账号数据
+    router.post("/lazada/edit_user", function (req, res) {
+        let body = req.body;
+        console.log(body);
+        res.json({
+            code: 200,
+            status: 'success',
+            msg: '编辑成功！'
+        })
     })
 };
 

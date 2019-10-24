@@ -14,7 +14,7 @@
 <div class="layui-container headerWrapper">
     <div class="title">
         <h2 class="header">商品信息</h2>
-        <button class="layui-btn" id="manageBtn">账号管理</button>
+        <a class="layui-btn" id="manageBtn">账号管理</a>
     </div>
     <form class="layui-form" action="">
         <div class="layui-form-item">
@@ -284,7 +284,24 @@
                     //监听提交
                     form.on('submit(innerForm)', function (data) {
                         layer.msg(JSON.stringify(data.field));
-                        return false;
+                        $.ajax({
+                            url: '/user/lazada/edit_user',
+                            type: 'POST',
+                            data: {
+                                account: data.field.newAccount,
+                                pwd: data.field.newPwd
+                            },
+                            success: function (res) {
+                                if (res.status === 'success') {
+                                    layer.msg(res.msg)
+                                } else {
+                                    layer.msg(res.msg);
+                                }
+                            },
+                            error: function (res) {
+                                console.log(res);
+                            }
+                        });
                     });
                 });
 
@@ -297,7 +314,6 @@
                     , url: '/user/lazada/allUsers'
                     , page: false
                     , cols: [[
-                        {field: 'id', title: 'ID', align: 'center', sort: true, fixed: 'left'},
                         {field: 'account', title: '用户名', align: 'center'},
                         {field: 'pwd', title: '密码', align: 'center'},
                         {fixed: 'right', title: '操作', width: 150, align: 'center', toolbar: '#bar'}
@@ -416,6 +432,7 @@
             console.log(data)
             layer.open({
                 type: 1,
+                title: '编辑账号',
                 content: '<div id="innerForm">\n' +
                     '    <form class="layui-form" action="">\n' +
                     '        <div class="layui-form-item">\n' +
@@ -447,7 +464,7 @@
                     '        </div>\n' +
                     '        <div class="layui-form-item">\n' +
                     '            <div class="layui-input-block">\n' +
-                    '                <button class="layui-btn innerBtn" lay-submit lay-filter="innerForm">确定</button>\n' +
+                    '                <a class="layui-btn innerBtn" lay-submit lay-filter="innerForm">确定</a>\n' +
                     '            </div>\n' +
                     '        </div>\n' +
                     '    </form>\n' +

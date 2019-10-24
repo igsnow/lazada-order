@@ -283,3 +283,26 @@
 [2019-10-24T18:38:15.094] [INFO] cheese - 账号已经填写: igsnow@qq.com
 [2019-10-24T18:38:15.633] [INFO] cheese - 密码已经填写: test4
 [2019-10-24T18:38:15.701] [INFO] cheese - 开始拖动滑块，预期拖动值： 384
+[2019-10-24T18:38:48.700] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.waitForNavigation (D:\lazada-order\node_modules\puppeteer\lib\Page.js:694:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:283:32
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-24T18:38:49.081] [INFO] cheese - 关闭浏览器
+[2019-10-24T20:19:01.870] [INFO] cheese - 随机获取的账号: [{"id":9,"account":"xiaowu@qq.com","pwd":"test8"}]
+[2019-10-24T20:19:11.538] [INFO] cheese - 当前刷单账号: xiaowu@qq.com
+[2019-10-24T20:19:11.539] [INFO] cheese - sku参数已经收到 {"account":"xiaowu@qq.com","pwd":"test8","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
+[2019-10-24T20:19:12.414] [INFO] cheese - 准备跳转到详情页
+[2019-10-24T20:19:23.534] [ERROR] cheese - Error: net::ERR_NAME_NOT_RESOLVED at https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?
+    at navigate (D:\lazada-order\node_modules\puppeteer\lib\FrameManager.js:120:37)
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.goto (D:\lazada-order\node_modules\puppeteer\lib\Page.js:674:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:50:32
+    at process._tickCallback (internal/process/next_tick.js:68:7)
+[2019-10-24T20:19:24.158] [INFO] cheese - 关闭浏览器
