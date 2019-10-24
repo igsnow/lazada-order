@@ -275,7 +275,7 @@ module.exports = function (router, io) {
                 } catch (e) {
                     logger.warn('没有登录按钮，直接拖动')
                 } finally {
-                    await handleSide(page, frame);
+                    await handleSide(page, frame, browser);
                 }
 
                 try {
@@ -344,25 +344,30 @@ module.exports = function (router, io) {
         }
 
         // 滑块处理函数
-        async function handleSide(page, frame) {
-            // 拖动验证滑块
-            const start = await frame.waitForSelector('.nc_iconfont.btn_slide');
-            const startInfo = await start.boundingBox();
+        async function handleSide(page, frame, browser) {
+            try {
+                // 拖动验证滑块
+                const start = await frame.waitForSelector('.nc_iconfont.btn_slide');
+                const startInfo = await start.boundingBox();
 
-            const end = await frame.waitForSelector('.nc-lang-cnt');
-            const endInfo = await end.boundingBox();
+                const end = await frame.waitForSelector('.nc-lang-cnt');
+                const endInfo = await end.boundingBox();
 
-            await page.mouse.move(startInfo.x, endInfo.y);
-            await page.mouse.down();
+                await page.mouse.move(startInfo.x, endInfo.y);
+                await page.mouse.down();
 
-            let msg = '开始拖动滑块，预期拖动值： ' + endInfo.y;
-            logger.info(msg);
-            io.emit('successMsg', msg);
+                let msg = '开始拖动滑块，预期拖动值： ' + endInfo.y;
+                logger.info(msg);
+                io.emit('successMsg', msg);
 
-            for (let i = 0; i < endInfo.width; i = i + 5) {
-                await page.mouse.move(startInfo.x + i, 2000);   // endInfo.y
+                for (let i = 0; i < endInfo.width; i = i + 5) {
+                    await page.mouse.move(startInfo.x + i, 2000);   // endInfo.y
+                }
+                await page.mouse.up();
+            } catch (e) {
+                await handleBrowserClose(e, browser);
+                return
             }
-            await page.mouse.up();
         }
 
         // 提取sku元素的className
