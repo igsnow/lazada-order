@@ -274,8 +274,20 @@
                     btnAlign: 'l',
                     skin: 'btn-class',
                     yes: function (index, layero) {
+                        // 打开内联表单
+                        handleInnerForm()
                     }
                 });
+
+                layui.use('form', function () {
+                    let form = layui.form;
+                    //监听提交
+                    form.on('submit(innerForm)', function (data) {
+                        layer.msg(JSON.stringify(data.field));
+                        return false;
+                    });
+                });
+
             });
             layui.use('table', function () {
                 let table = layui.table;
@@ -285,10 +297,10 @@
                     , url: '/user/lazada/allUsers'
                     , page: false
                     , cols: [[
-                        {field: 'id', title: 'ID', sort: true, fixed: 'left'}
-                        , {field: 'account', title: '用户名'}
-                        , {field: 'pwd', title: '密码'}
-                        , {fixed: 'right', width: 150, align: 'center', toolbar: '#bar'}
+                        {field: 'id', title: 'ID', align: 'center', sort: true, fixed: 'left'},
+                        {field: 'account', title: '用户名', align: 'center'},
+                        {field: 'pwd', title: '密码', align: 'center'},
+                        {fixed: 'right', title: '操作', width: 150, align: 'center', toolbar: '#bar'}
                     ]]
                 });
                 table.on('tool(tab)', function (obj) {
@@ -298,12 +310,14 @@
 
                     if (layEvent === 'del') {
                         layer.confirm('真的删除行么', function (index) {
+                            console.log(data);
                             obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
                             layer.close(index);
                             //向服务端发送删除指令
                         });
-                    } else if (layEvent === 'edit') { //编辑
-                        //do something
+                    } else if (layEvent === 'edit') {
+                        // 打开内敛表单
+                        handleInnerForm(data);
                         //同步更新缓存对应的值
                         obj.update({
                             account: 'zhangzhiyong',
@@ -395,6 +409,55 @@
                 newArrList.push(arr);
             }
             return newArrList;
+        }
+
+        // 编辑或者新增弹出内部form表单
+        function handleInnerForm(data) {
+            console.log(data)
+            layer.open({
+                type: 1,
+                content: '<div id="innerForm">\n' +
+                    '    <form class="layui-form" action="">\n' +
+                    '        <div class="layui-form-item">\n' +
+                    '            <label class="layui-form-label">账号</label>\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '                <input id="newAccountIpt"\n' +
+                    '                       type="text"\n' +
+                    '                       name="newAccount"\n' +
+                    '                       required lay-verify="required"\n' +
+                    '                       placeholder="请输入账号"\n' +
+                    '                       autocomplete="off"\n' +
+                    '                       class="layui-input"\n' +
+                    '                       style="width: 200px"\n' +
+                    '                >\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item">\n' +
+                    '            <label class="layui-form-label">密码</label>\n' +
+                    '            <div class="layui-input-inline">\n' +
+                    '                <input id="newPwdIpt"\n' +
+                    '                       type="text"\n' +
+                    '                       name="newPwd"\n' +
+                    '                       required lay-verify="required"\n' +
+                    '                       placeholder="请输入密码"\n' +
+                    '                       autocomplete="off" class="layui-input"\n' +
+                    '                       style="width: 200px"\n' +
+                    '                >\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div class="layui-form-item">\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '                <button class="layui-btn innerBtn" lay-submit lay-filter="innerForm">确定</button>\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '    </form>\n' +
+                    '</div>'
+            });
+            // 如果data有值，则说明是edit状态，账号和密码自动填入表单
+            if (data) {
+                $('#newAccountIpt').val(data.account);
+                $('#newPwdIpt').val(data.pwd);
+            }
         }
     })
 </script>

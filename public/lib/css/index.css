@@ -75,3 +75,20 @@ body .btn-class .layui-layer-btn0 {
     border: 1px solid #009688;
     background: #009688;
 }
+
+#innerForm {
+    width: 320px;
+    margin-top: 20px;
+}
+
+#innerForm .layui-form-label {
+    width: 50px;
+}
+
+#innerForm .layui-input-block {
+    margin-left: 0;
+}
+
+#innerForm .innerBtn {
+    margin-left: 80px;
+}
