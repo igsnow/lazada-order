@@ -509,7 +509,7 @@ module.exports = function (router, io) {
         })
     });
 
-    // 编辑账号数据
+    // 编辑、新增账号数据
     router.post("/lazada/edit_user", async function (req, res) {
         let id = req.body.id;
         let account = req.body.account;
@@ -556,15 +556,26 @@ function handleReadFile() {
 // 写入或者更新文件内容
 function handleWriteFile(id, account, pwd, data) {
     return new Promise((resolve, reject) => {
+        let ids = [];
         for (let i = 0; i < data.length; i++) {
+            ids.push(data[i].id);
             // 如果匹配到对应的id，则更新数据
             if (data[i].id === Number(id)) {
                 console.log('edit');
                 data[i].account = account;
                 data[i].pwd = pwd;
-            } else {
-                console.log('no find')
             }
+        }
+        let lastId = ids.pop();
+        // 如果id为undefined则新增数据
+        if (!id) {
+            lastId++;
+            let addItem = {
+                id: lastId,
+                account: account,
+                pwd: pwd
+            };
+            data.push(addItem);
         }
         let newData = JSON.stringify({
             list: data
