@@ -619,7 +619,7 @@ function handleWriteFile(id, account, pwd, data) {
 // 分页
 function handlePagination(page, limit, data) {
     //page为页数，比如第一页传0，第二页传1,limit为每页多少条数据
-    return data.slice(limit * page, (page + 1) * limit);
+    return data.slice(page * limit, (page + 1) * limit);
 }
 
 
