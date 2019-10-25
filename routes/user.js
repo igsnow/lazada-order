@@ -510,9 +510,12 @@ module.exports = function (router, io) {
     });
 
     // 编辑账号数据
-    router.post("/lazada/edit_user", function (req, res) {
+    router.post("/lazada/edit_user", async function (req, res) {
+        let id = req.body.id;
         let account = req.body.account;
         let pwd = req.body.pwd;
+        let data = await handleReadFile();
+        await handleWriteFile(id, account, pwd, data);
         res.json({
             code: 200,
             status: 'success',
@@ -546,6 +549,29 @@ function handleReadFile() {
             }
             let res = JSON.parse(data) && JSON.parse(data).list;
             resolve(res);
+        })
+    });
+}
+
+// 写入或者更新文件内容
+function handleWriteFile(id, account, pwd, data) {
+    return new Promise((resolve, reject) => {
+        for (let i = 0; i < data.length; i++) {
+            // 如果匹配到对应的id，则更新数据
+            if (data[i].id === id) {
+                data[i].account = account;
+                data[i].pwd = pwd;
+            }
+        }
+        let newData = JSON.stringify({
+            list: data
+        });
+
+        fs.writeFile(path.join(__dirname, '../db/whiteList.json'), newData, 'utf8', function (err) {
+            if (err) {
+                reject(err);
+            }
+            resolve('down success');
         })
     });
 }

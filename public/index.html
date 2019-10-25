@@ -283,11 +283,11 @@
                     let form = layui.form;
                     //监听提交
                     form.on('submit(innerForm)', function (data) {
-                        layer.msg(JSON.stringify(data.field));
                         $.ajax({
                             url: '/user/lazada/edit_user',
                             type: 'POST',
                             data: {
+                                id: data.field.id,
                                 account: data.field.newAccount,
                                 pwd: data.field.newPwd
                             },
@@ -314,6 +314,7 @@
                     , url: '/user/lazada/all_users'
                     , page: false
                     , cols: [[
+                        {field: 'id', title: 'ID', align: 'center', sort: true, fixed: 'left'},
                         {field: 'account', title: '用户名', align: 'center'},
                         {field: 'pwd', title: '密码', align: 'center'},
                         {fixed: 'right', title: '操作', width: 150, align: 'center', toolbar: '#bar'}
@@ -332,6 +333,7 @@
                             //向服务端发送删除指令
                         });
                     } else if (layEvent === 'edit') {
+                        console.log(data);
                         // 打开内敛表单
                         handleInnerForm(data);
                         //同步更新缓存对应的值
@@ -434,6 +436,20 @@
                 title: '编辑账号',
                 content: '<div id="innerForm">\n' +
                     '    <form class="layui-form" action="">\n' +
+                    '        <div class="layui-form-item" style="display: none">\n' +
+                    '            <label class="layui-form-label">ID</label>\n' +
+                    '            <div class="layui-input-block">\n' +
+                    '                <input id="idIpt"\n' +
+                    '                       type="text"\n' +
+                    '                       name="id"\n' +
+                    '                       required lay-verify="required"\n' +
+                    '                       placeholder="请输入ID"\n' +
+                    '                       autocomplete="off"\n' +
+                    '                       class="layui-input"\n' +
+                    '                       style="width: 200px"\n' +
+                    '                >\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
                     '        <div class="layui-form-item">\n' +
                     '            <label class="layui-form-label">账号</label>\n' +
                     '            <div class="layui-input-block">\n' +
@@ -471,6 +487,7 @@
             });
             // 如果data有值，则说明是edit状态，账号和密码自动填入表单
             if (data) {
+                $('#idIpt').val(data.id);
                 $('#newAccountIpt').val(data.account);
                 $('#newPwdIpt').val(data.pwd);
             }
