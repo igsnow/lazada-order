@@ -278,33 +278,6 @@
                         handleInnerForm()
                     }
                 });
-
-                layui.use('form', function () {
-                    let form = layui.form;
-                    //监听提交
-                    form.on('submit(innerForm)', function (data) {
-                        $.ajax({
-                            url: '/user/lazada/edit_user',
-                            type: 'POST',
-                            data: {
-                                id: data.field.id,
-                                account: data.field.newAccount,
-                                pwd: data.field.newPwd
-                            },
-                            success: function (res) {
-                                if (res.status === 'success') {
-                                    layer.msg(res.msg)
-                                } else {
-                                    layer.msg(res.msg);
-                                }
-                            },
-                            error: function (res) {
-                                console.log(res);
-                            }
-                        });
-                    });
-                });
-
             });
             layui.use('table', function () {
                 let table = layui.table;
@@ -329,8 +302,6 @@
                             title: '提示',
                             skin: 'btn-class'
                         }, function (index) {
-                            obj.del();   //删除对应行（tr）的DOM结构，并更新缓存
-                            layer.close(index);
                             //向服务端发送删除指令
                             $.ajax({
                                 url: '/user/lazada/delete_user',
@@ -340,7 +311,10 @@
                                 },
                                 success: function (res) {
                                     if (res.status === 'success') {
-                                        layer.msg(res.msg)
+                                        layer.msg(res.msg);
+                                        //删除对应行（tr）的DOM结构，并更新缓存
+                                        obj.del();
+                                        layer.close(index);
                                     } else {
                                         layer.msg(res.msg);
                                     }
@@ -351,14 +325,8 @@
                             });
                         });
                     } else if (layEvent === 'edit') {
-                        console.log(data);
                         // 打开内敛表单
-                        handleInnerForm(data);
-                        //同步更新缓存对应的值
-                        // obj.update({
-                        //     account: 'zhangzhiyong',
-                        //     pwd: 'xxx'
-                        // });
+                        handleInnerForm(obj);
                     }
                 });
             });
@@ -446,8 +414,9 @@
         }
 
         // 编辑或者新增弹出内部form表单
-        function handleInnerForm(data) {
-            layer.open({
+        function handleInnerForm(obj) {
+            // 先获取关闭层的索引
+            let index = layer.open({
                 type: 1,
                 title: '编辑账号',
                 content: '<div id="innerForm">\n' +
@@ -501,11 +470,44 @@
                     '</div>'
             });
             // 如果data有值，则说明是edit状态，账号和密码自动填入表单
-            if (data) {
-                $('#idIpt').val(data.id);
-                $('#newAccountIpt').val(data.account);
-                $('#newPwdIpt').val(data.pwd);
+            if (obj) {
+                $('#idIpt').val(obj.data.id);
+                $('#newAccountIpt').val(obj.data.account);
+                $('#newPwdIpt').val(obj.data.pwd);
             }
+            layui.use('form', function () {
+                let form = layui.form;
+                //监听提交
+                form.on('submit(innerForm)', function (data) {
+                    $.ajax({
+                        url: '/user/lazada/edit_user',
+                        type: 'POST',
+                        data: {
+                            id: data.field.id,
+                            account: data.field.newAccount,
+                            pwd: data.field.newPwd
+                        },
+                        success: function (res) {
+                            if (res.status === 'success') {
+                                layer.msg(res.msg);
+                                layer.close(index);
+                                //编辑同步更新缓存对应的值
+                                if (obj) {
+                                    obj.update({
+                                        account: data.field.newAccount,
+                                        pwd: data.field.newPwd
+                                    });
+                                }
+                            } else {
+                                layer.msg(res.msg);
+                            }
+                        },
+                        error: function (res) {
+                            console.log(res);
+                        }
+                    });
+                });
+            });
         }
     })
 </script>
