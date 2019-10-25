@@ -499,10 +499,9 @@ module.exports = function (router, io) {
     });
 
     // 获取白名单所有账号
-    router.get("/lazada/allUsers", function (req, res) {
+    router.get("/lazada/all_users", async function (req, res) {
         // 读取文件所有内容
-        let data = handleReadFile();
-        console.log(data);
+        let data = await handleReadFile();
         res.json({
             code: 0,
             status: 'success',
@@ -538,14 +537,17 @@ function shuffle(arrList, num) {
     return newArrList;
 }
 
-// 读取文件内容
+// 读取文件内容(注：是异步获取文件)
 function handleReadFile() {
-    fs.readFileSync(path.join(__dirname, '../db/whiteList.json'), 'utf8', function (err, data) {
-        if (err) {
-            console.log(err);
-        }
-        return JSON.parse(data) && JSON.parse(data).list
-    })
+    return new Promise((resolve, reject) => {
+        fs.readFile(path.join(__dirname, '../db/whiteList.json'), 'utf8', function (err, data) {
+            if (err) {
+                reject(err);
+            }
+            let res = JSON.parse(data) && JSON.parse(data).list;
+            resolve(res);
+        })
+    });
 }
 
 
