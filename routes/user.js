@@ -516,12 +516,20 @@ module.exports = function (router, io) {
         let pwd = req.body.pwd;
         let data = await handleReadFile();
         await handleWriteFile(id, account, pwd, data);
-        res.json({
-            code: 200,
-            status: 'success',
-            msg: '编辑成功！'
-        })
-    })
+        if (id) {
+            res.json({
+                code: 200,
+                status: 'success',
+                msg: '编辑成功！'
+            })
+        } else {
+            res.json({
+                code: 200,
+                status: 'success',
+                msg: '新增成功！'
+            })
+        }
+    });
 
     // 删除账号数据
     router.post("/lazada/delete_user", async function (req, res) {
