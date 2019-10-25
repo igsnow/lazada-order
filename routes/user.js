@@ -584,7 +584,7 @@ function handleWriteFile(id, account, pwd, data) {
             if (err) {
                 reject(err);
             }
-            resolve('down success');
+            resolve('write success');
         })
     });
 }
