@@ -476,6 +476,7 @@ module.exports = function (router, io) {
             });
         }
     });
+
     // 白名单随机获取账号
     router.get("/lazada/users", async function (req, res) {
         // 随机返回n个账号
@@ -502,7 +503,7 @@ module.exports = function (router, io) {
     router.get("/lazada/all_users", async function (req, res) {
         // 读取文件所有内容
         let data = await handleReadFile();
-        let page = req.query.page - 1;
+        let page = req.query.page;
         let limit = req.query.limit;
         let list = handlePagination(page, limit, data);
         res.json({
@@ -619,7 +620,7 @@ function handleWriteFile(id, account, pwd, data) {
 // 分页
 function handlePagination(page, limit, data) {
     //page为页数，比如第一页传0，第二页传1,limit为每页多少条数据
-    return data.slice(page * limit, (page + 1) * limit);
+    return data.slice((page - 1) * limit, page * limit);
 }
 
 
