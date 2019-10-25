@@ -522,6 +522,18 @@ module.exports = function (router, io) {
             msg: '编辑成功！'
         })
     })
+
+    // 删除账号数据
+    router.post("/lazada/delete_user", async function (req, res) {
+        let id = req.body.id;
+        let data = await handleReadFile();
+        await handleWriteFile(id, null, null, data);
+        res.json({
+            code: 200,
+            status: 'success',
+            msg: '删除成功！'
+        })
+    })
 };
 
 // 随机从白名单获取n条数据
@@ -560,10 +572,13 @@ function handleWriteFile(id, account, pwd, data) {
         for (let i = 0; i < data.length; i++) {
             ids.push(data[i].id);
             // 如果匹配到对应的id，则更新数据
-            if (data[i].id === Number(id)) {
+            if (data[i].id === Number(id) && account && pwd) {
                 console.log('edit');
                 data[i].account = account;
                 data[i].pwd = pwd;
+            } else if (data[i].id === Number(id) && !account && !pwd) {
+                // 删除数据
+                data.splice(i, 1)
             }
         }
         let lastId = ids.pop();

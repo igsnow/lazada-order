@@ -325,11 +325,30 @@
                     let layEvent = obj.event;
                     let tr = obj.tr;
                     if (layEvent === 'del') {
-                        layer.confirm('真的删除行么', function (index) {
-                            console.log(data);
-                            obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                        layer.confirm('确定删除此账号么？', {
+                            title: '提示',
+                            skin: 'btn-class'
+                        }, function (index) {
+                            obj.del();   //删除对应行（tr）的DOM结构，并更新缓存
                             layer.close(index);
                             //向服务端发送删除指令
+                            $.ajax({
+                                url: '/user/lazada/delete_user',
+                                type: 'POST',
+                                data: {
+                                    id: data.id
+                                },
+                                success: function (res) {
+                                    if (res.status === 'success') {
+                                        layer.msg(res.msg)
+                                    } else {
+                                        layer.msg(res.msg);
+                                    }
+                                },
+                                error: function (res) {
+                                    console.log(res);
+                                }
+                            });
                         });
                     } else if (layEvent === 'edit') {
                         console.log(data);
@@ -342,8 +361,6 @@
                         // });
                     }
                 });
-
-
             });
         });
 
