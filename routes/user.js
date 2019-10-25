@@ -505,7 +505,8 @@ module.exports = function (router, io) {
         res.json({
             code: 0,
             status: 'success',
-            data: data
+            data: data,
+            count: data.length
         })
     });
 

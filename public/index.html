@@ -285,7 +285,9 @@
                     elem: '#tab'
                     , height: 350
                     , url: '/user/lazada/all_users'
-                    , page: false
+                    , page: true
+                    , limit: 10
+                    , limits: [5, 10, 15]
                     , cols: [[
                         {field: 'id', title: 'ID', align: 'center', sort: true, fixed: 'left'},
                         {field: 'account', title: '用户名', align: 'center'},

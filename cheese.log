@@ -371,3 +371,42 @@
 [2019-10-25T15:12:43.466] [INFO] cheese - 当前刷单账号: 95559@gmail.com
 [2019-10-25T15:12:43.468] [INFO] cheese - sku参数已经收到 {"account":"95559@gmail.com","pwd":"test2","detailUrl":"https://www.lazada.com.my/products/new-plus-size-s-5xl-floral-bomber-jacket-men-hip-hop-slim-fit-flowers-pilot-bomber-jacket-coat-mens-hooded-jackets-i581532837-s1164964719.html?","sku":"{\"Color\":\"White\",\"Size\":\"3XL\",\"Quantity\":3}"}
 [2019-10-25T15:12:43.813] [INFO] cheese - 准备跳转到详情页
+[2019-10-25T15:12:52.877] [INFO] cheese - 已经跳转到详情页
+[2019-10-25T15:12:52.878] [INFO] cheese - 开始整理sku信息
+[2019-10-25T15:12:52.907] [INFO] cheese - sku全部信息已经整理完 [[{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap-selected","title":"","skuName":"Blue","value":"White"}],[{"className":"sku-variable-size-selected","title":"L","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"3XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"4XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"5XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"}]]
+[2019-10-25T15:12:52.985] [INFO] cheese - 第1个sku已重置sku默认点击
+[2019-10-25T15:12:53.015] [INFO] cheese - 第2个sku已重置sku默认点击
+[2019-10-25T15:12:53.015] [INFO] cheese - 是否有图片sku信息: true 0
+[2019-10-25T15:12:53.015] [INFO] cheese - 图片sku信息 [{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Blue","value":"White"},{"className":"sku-variable-img-wrap-selected","title":"","skuName":"Blue","value":"White"}]
+[2019-10-25T15:12:53.015] [INFO] cheese - 开始点击图片sku
+[2019-10-25T15:12:53.052] [INFO] cheese - imgSkuArr2 [{"className":"sku-variable-img-wrap-selected","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Sky Blue","value":"White"}]
+[2019-10-25T15:12:53.083] [INFO] cheese - imgSkuArr2 [{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap-selected","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"Green","value":"White"}]
+[2019-10-25T15:12:53.112] [INFO] cheese - imgSkuArr2 [{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap-selected","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"},{"className":"sku-variable-img-wrap","title":"","skuName":"White","value":"White"}]
+[2019-10-25T15:12:53.112] [INFO] cheese - img selected success 2
+[2019-10-25T15:12:53.112] [INFO] cheese - 选中图片sku的className: sku-variable-img-wrap-selected
+[2019-10-25T15:12:53.112] [INFO] cheese - 预期的图片sku有货
+[2019-10-25T15:12:53.113] [INFO] cheese - sku除图片信息sku [[{"className":"sku-variable-size-selected","title":"L","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"3XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"4XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"},{"className":"sku-variable-size","title":"5XL","skuName":"<span class=\"sku-tabpath-single\"> Int </span>","value":"3XL"}]]
+[2019-10-25T15:12:53.113] [INFO] cheese - 开始点击无图sku
+[2019-10-25T15:12:53.113] [INFO] cheese - sku default selected error 0 0
+[2019-10-25T15:12:53.113] [INFO] cheese - sku selected success 0 1
+[2019-10-25T15:12:53.187] [INFO] cheese - selected sku className: {"preClassName":"sku-variable-size","afterClassName":"sku-variable-size-selected"}
+[2019-10-25T15:12:53.187] [INFO] cheese - 预期的无图sku有货
+[2019-10-25T15:12:53.188] [INFO] cheese - 等待sku数量输入框
+[2019-10-25T15:12:53.207] [INFO] cheese - 商品数量已经填写: 3,预期数量: 3
+[2019-10-25T15:12:53.207] [INFO] cheese - 等待购买按钮
+[2019-10-25T15:12:53.297] [INFO] cheese - 已点击购买按钮
+[2019-10-25T15:12:53.297] [INFO] cheese - 开始捕捉登录iframe弹框
+[2019-10-25T15:12:53.311] [INFO] cheese - 登录iframe弹框已捕捉，url: //member.lazada.com.my/user/pure-login
+[2019-10-25T15:12:54.605] [INFO] cheese - 账号已经填写: 95559@gmail.com
+[2019-10-25T15:12:54.645] [INFO] cheese - 密码已经填写: test2
+[2019-10-25T15:12:54.724] [INFO] cheese - 点击登录按钮，显示拖动滑块
+[2019-10-25T15:12:56.871] [INFO] cheese - 开始拖动滑块，预期拖动值： 384
+[2019-10-25T15:13:28.570] [ERROR] cheese - { TimeoutError: Navigation Timeout Exceeded: 30000ms exceeded
+    at Promise.then (D:\lazada-order\node_modules\puppeteer\lib\LifecycleWatcher.js:142:21)
+  -- ASYNC --
+    at Frame.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:111:15)
+    at Page.waitForNavigation (D:\lazada-order\node_modules\puppeteer\lib\Page.js:694:49)
+    at Page.<anonymous> (D:\lazada-order\node_modules\puppeteer\lib\helper.js:112:23)
+    at D:\lazada-order\routes\user.js:284:32
+    at process._tickCallback (internal/process/next_tick.js:68:7) name: 'TimeoutError' }
+[2019-10-25T15:13:28.872] [INFO] cheese - 关闭浏览器
