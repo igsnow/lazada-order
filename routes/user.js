@@ -1,5 +1,4 @@
 const puppeteer = require('puppeteer');
-const whiteList = require('../db/whiteList');
 const fs = require('fs');
 const path = require('path');
 const log4js = require('log4js');
@@ -478,22 +477,23 @@ module.exports = function (router, io) {
         }
     });
     // 白名单随机获取账号
-    router.get("/lazada/users", function (req, res) {
+    router.get("/lazada/users", async function (req, res) {
         // 随机返回n个账号
+        let data = await handleReadFile();
         let num = req.query.num;
-        if (num > whiteList.length) {
+        if (num > data.length) {
             res.json({
                 code: 200,
                 status: 'fail',
-                msg: '随机获取的账号数不能超过10个！'
+                msg: '随机获取的账号数不能超过' + data.length + '个！'
             })
         } else {
-            let data = shuffle(whiteList, num);
+            let list = shuffle(data, num);
             logger.info('随机获取的账号: ' + JSON.stringify(data));
             res.json({
                 code: 200,
                 status: 'success',
-                data: data
+                data: list
             })
         }
     });
