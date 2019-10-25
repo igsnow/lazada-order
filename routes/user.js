@@ -586,7 +586,6 @@ function handleWriteFile(id, account, pwd, data) {
             ids.push(data[i].id);
             // 如果匹配到对应的id，则更新数据
             if (data[i].id === Number(id) && account && pwd) {
-                console.log('edit');
                 data[i].account = account;
                 data[i].pwd = pwd;
             } else if (data[i].id === Number(id) && !account && !pwd) {
