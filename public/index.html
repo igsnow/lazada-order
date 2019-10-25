@@ -497,6 +497,9 @@
                                         account: data.field.newAccount,
                                         pwd: data.field.newPwd
                                     });
+                                } else {
+                                    // 新增数据后重载表格
+                                    reloadTable()
                                 }
                             } else {
                                 layer.msg(res.msg);
@@ -507,6 +510,14 @@
                         }
                     });
                 });
+            });
+        }
+
+        // 新增账号后，表格重载
+        function reloadTable() {
+            let table = layui.table;
+            table.reload('tab', {
+                url: '/user/lazada/all_users'
             });
         }
     })
