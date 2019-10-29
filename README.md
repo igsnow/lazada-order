@@ -1,2 +1,2 @@
 # lazada-order
-auto-order
+smart order
