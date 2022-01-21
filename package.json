@@ -23,7 +23,7 @@
     "ejs": "^2.7.1",
     "express": "^4.17.1",
     "http-errors": "~1.6.3",
-    "log4js": "^5.2.2",
+    "log4js": "^6.4.0",
     "morgan": "~1.9.1",
     "puppeteer": "^1.18.1",
     "socket.io": "^2.3.0",
